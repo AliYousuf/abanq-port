@@ -1,0 +1,43 @@
+facturalux (1.3-0) unstable; urgency=low
+
+  * Upstream release 
+
+ -- Raúl Alexis Betancort Santana <rabs@dimension-virtual.com>  Fri, 10 Sep 2004 18:32:58 +0100
+
+facturalux (1.2-0) unstable; urgency=low
+
+  * Upstream release 
+
+ -- Raúl Alexis Betancort Santana <rabs@dimension-virtual.com>  Thu,  8 Jul 2004 21:12:34 +0100
+
+facturalux (1.1-0) unstable; urgency=low
+
+  * Upstream bugfixed release.
+  * Corrected build dependencies. 
+
+ -- Raúl Alexis Betancort Santana <rabs@dimension-virtual.com>  Sat, 29 May 2004 19:06:13 +0100
+
+facturalux (1.0-4) unstable; urgency=low
+
+  * Upstream bugfixed release. 
+
+ -- Raúl Alexis Betancort Santana <rabsdimension-virtual.com>  Wed, 19 May 2004 16:42:43 +0100
+
+facturalux (1.0-3) unstable; urgency=low
+
+  * Version 1.0 final release 
+
+ -- Raúl Alexis Betancort Santana <rabs@dimension-virtual.com>  Wed, 28 Apr 2004 00:11:02 +0100
+
+facturalux (1.0-2) unstable; urgency=low
+
+  * Upstream bugfixed release.  
+
+ -- Raúl Alexis Betancort Santana <rabs@dimension-virtual.com>  Fri,  2 Apr 2004 11:58:36 +0100
+
+facturalux (1.0-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Raúl Alexis Betancort Santana <rabs@dimension-virtual.com>  Wed, 26 Nov 2003 19:49:19 +0000
+
