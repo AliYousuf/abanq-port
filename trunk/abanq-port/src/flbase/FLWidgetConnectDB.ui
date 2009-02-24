@@ -1,0 +1,909 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>FLWidgetConnectDB</class>
+<comment>Implementa la clase Session para generar
+una conexion a un DSN.</comment>
+<author>InfoSiAL, S.L.</author>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>FLWidgetConnectDB</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>669</width>
+            <height>293</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>0</hsizetype>
+            <vsizetype>0</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>0</width>
+            <height>0</height>
+        </size>
+    </property>
+    <property name="maximumSize">
+        <size>
+            <width>32767</width>
+            <height>32767</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>Conectar</string>
+    </property>
+    <property name="icon">
+        <pixmap>image0</pixmap>
+    </property>
+    <property name="modal">
+        <bool>false</bool>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>6</number>
+        </property>
+        <property name="spacing">
+            <number>2</number>
+        </property>
+        <property name="resizeMode">
+            <enum>Fixed</enum>
+        </property>
+        <spacer>
+            <property name="name">
+                <cstring>spacer3</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Fixed</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>15</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout12</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QFrame">
+                    <property name="name">
+                        <cstring>frameConnect</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>0</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>0</width>
+                            <height>200</height>
+                        </size>
+                    </property>
+                    <property name="focusPolicy">
+                        <enum>StrongFocus</enum>
+                    </property>
+                    <property name="frameShape">
+                        <enum>Box</enum>
+                    </property>
+                    <property name="frameShadow">
+                        <enum>Plain</enum>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLayoutWidget">
+                            <property name="name">
+                                <cstring>layout12</cstring>
+                            </property>
+                            <vbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <widget class="QLayoutWidget">
+                                    <property name="name">
+                                        <cstring>layout3</cstring>
+                                    </property>
+                                    <hbox>
+                                        <property name="name">
+                                            <cstring>unnamed</cstring>
+                                        </property>
+                                        <widget class="QLabel">
+                                            <property name="name">
+                                                <cstring>textLabelDataBase</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>Base de datos:</string>
+                                            </property>
+                                            <property name="alignment">
+                                                <set>AlignVCenter|AlignLeft</set>
+                                            </property>
+                                        </widget>
+                                        <widget class="QComboBox">
+                                            <property name="name">
+                                                <cstring>comboBoxNameDB</cstring>
+                                            </property>
+                                            <property name="sizePolicy">
+                                                <sizepolicy>
+                                                    <hsizetype>1</hsizetype>
+                                                    <vsizetype>0</vsizetype>
+                                                    <horstretch>0</horstretch>
+                                                    <verstretch>0</verstretch>
+                                                </sizepolicy>
+                                            </property>
+                                            <property name="minimumSize">
+                                                <size>
+                                                    <width>200</width>
+                                                    <height>0</height>
+                                                </size>
+                                            </property>
+                                            <property name="editable">
+                                                <bool>true</bool>
+                                            </property>
+                                            <property name="autoCompletion">
+                                                <bool>true</bool>
+                                            </property>
+                                            <property name="duplicatesEnabled">
+                                                <bool>false</bool>
+                                            </property>
+                                            <property name="toolTip" stdset="0">
+                                                <string>Nombre de la base de datos a conectar</string>
+                                            </property>
+                                        </widget>
+                                    </hbox>
+                                </widget>
+                                <widget class="QLayoutWidget">
+                                    <property name="name">
+                                        <cstring>layout5</cstring>
+                                    </property>
+                                    <hbox>
+                                        <property name="name">
+                                            <cstring>unnamed</cstring>
+                                        </property>
+                                        <widget class="QLabel">
+                                            <property name="name">
+                                                <cstring>TextLabelUser</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>Usuario:</string>
+                                            </property>
+                                            <property name="alignment">
+                                                <set>AlignVCenter|AlignLeft</set>
+                                            </property>
+                                            <property name="hAlign" stdset="0">
+                                            </property>
+                                        </widget>
+                                        <widget class="QLineEdit">
+                                            <property name="name">
+                                                <cstring>lineEditUser</cstring>
+                                            </property>
+                                            <property name="sizePolicy">
+                                                <sizepolicy>
+                                                    <hsizetype>1</hsizetype>
+                                                    <vsizetype>0</vsizetype>
+                                                    <horstretch>0</horstretch>
+                                                    <verstretch>0</verstretch>
+                                                </sizepolicy>
+                                            </property>
+                                            <property name="minimumSize">
+                                                <size>
+                                                    <width>200</width>
+                                                    <height>0</height>
+                                                </size>
+                                            </property>
+                                            <property name="toolTip" stdset="0">
+                                                <string>Usuario de la base de datos</string>
+                                            </property>
+                                            <property name="whatsThis" stdset="0">
+                                                <string>Usuario de la base de datos</string>
+                                            </property>
+                                        </widget>
+                                    </hbox>
+                                </widget>
+                                <widget class="QLayoutWidget">
+                                    <property name="name">
+                                        <cstring>layout6</cstring>
+                                    </property>
+                                    <hbox>
+                                        <property name="name">
+                                            <cstring>unnamed</cstring>
+                                        </property>
+                                        <widget class="QLabel">
+                                            <property name="name">
+                                                <cstring>TextLabelPassword</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>Contraseña:</string>
+                                            </property>
+                                            <property name="alignment">
+                                                <set>AlignVCenter|AlignLeft</set>
+                                            </property>
+                                            <property name="hAlign" stdset="0">
+                                            </property>
+                                        </widget>
+                                        <widget class="QLineEdit">
+                                            <property name="name">
+                                                <cstring>lineEditPassword</cstring>
+                                            </property>
+                                            <property name="sizePolicy">
+                                                <sizepolicy>
+                                                    <hsizetype>1</hsizetype>
+                                                    <vsizetype>0</vsizetype>
+                                                    <horstretch>0</horstretch>
+                                                    <verstretch>0</verstretch>
+                                                </sizepolicy>
+                                            </property>
+                                            <property name="minimumSize">
+                                                <size>
+                                                    <width>200</width>
+                                                    <height>0</height>
+                                                </size>
+                                            </property>
+                                            <property name="echoMode">
+                                                <enum>Password</enum>
+                                            </property>
+                                            <property name="toolTip" stdset="0">
+                                                <string>Contraseña para el usuario de la base de datos</string>
+                                            </property>
+                                            <property name="whatsThis" stdset="0">
+                                                <string>Contraseña para el usuario de la base de datos</string>
+                                            </property>
+                                        </widget>
+                                    </hbox>
+                                </widget>
+                                <spacer>
+                                    <property name="name">
+                                        <cstring>spacer4</cstring>
+                                    </property>
+                                    <property name="orientation">
+                                        <enum>Vertical</enum>
+                                    </property>
+                                    <property name="sizeType">
+                                        <enum>Fixed</enum>
+                                    </property>
+                                    <property name="sizeHint">
+                                        <size>
+                                            <width>20</width>
+                                            <height>20</height>
+                                        </size>
+                                    </property>
+                                </spacer>
+                                <widget class="QLayoutWidget">
+                                    <property name="name">
+                                        <cstring>layout25</cstring>
+                                    </property>
+                                    <hbox>
+                                        <property name="name">
+                                            <cstring>unnamed</cstring>
+                                        </property>
+                                        <widget class="QToolButton">
+                                            <property name="name">
+                                                <cstring>pbMarks</cstring>
+                                            </property>
+                                            <property name="sizePolicy">
+                                                <sizepolicy>
+                                                    <hsizetype>1</hsizetype>
+                                                    <vsizetype>1</vsizetype>
+                                                    <horstretch>0</horstretch>
+                                                    <verstretch>0</verstretch>
+                                                </sizepolicy>
+                                            </property>
+                                            <property name="minimumSize">
+                                                <size>
+                                                    <width>32</width>
+                                                    <height>32</height>
+                                                </size>
+                                            </property>
+                                            <property name="focusPolicy">
+                                                <enum>NoFocus</enum>
+                                            </property>
+                                            <property name="text">
+                                                <string></string>
+                                            </property>
+                                            <property name="accel">
+                                                <string></string>
+                                            </property>
+                                            <property name="iconSet">
+                                                <iconset>image1</iconset>
+                                            </property>
+                                            <property name="toolTip" stdset="0">
+                                                <string>Marcadores de conexión</string>
+                                            </property>
+                                            <property name="whatsThis" stdset="0">
+                                                <string>Marcadores de conexión</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QPushButton">
+                                            <property name="name">
+                                                <cstring>pushButtonConnect</cstring>
+                                            </property>
+                                            <property name="sizePolicy">
+                                                <sizepolicy>
+                                                    <hsizetype>7</hsizetype>
+                                                    <vsizetype>0</vsizetype>
+                                                    <horstretch>0</horstretch>
+                                                    <verstretch>0</verstretch>
+                                                </sizepolicy>
+                                            </property>
+                                            <property name="minimumSize">
+                                                <size>
+                                                    <width>0</width>
+                                                    <height>32</height>
+                                                </size>
+                                            </property>
+                                            <property name="focusPolicy">
+                                                <enum>StrongFocus</enum>
+                                            </property>
+                                            <property name="text">
+                                                <string>&amp;Conectar</string>
+                                            </property>
+                                            <property name="accel">
+                                                <string>Alt+C</string>
+                                            </property>
+                                            <property name="autoDefault">
+                                                <bool>true</bool>
+                                            </property>
+                                            <property name="default">
+                                                <bool>true</bool>
+                                            </property>
+                                            <property name="iconSet">
+                                                <iconset>image2</iconset>
+                                            </property>
+                                            <property name="flat">
+                                                <bool>false</bool>
+                                            </property>
+                                            <property name="toolTip" stdset="0">
+                                                <string>Conectar a la base de datos (Alt+C)</string>
+                                            </property>
+                                            <property name="whatsThis" stdset="0">
+                                                <string>Conectar a la base de datos (Alt+C)</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QPushButton">
+                                            <property name="name">
+                                                <cstring>pushButtonCancel</cstring>
+                                            </property>
+                                            <property name="sizePolicy">
+                                                <sizepolicy>
+                                                    <hsizetype>7</hsizetype>
+                                                    <vsizetype>0</vsizetype>
+                                                    <horstretch>0</horstretch>
+                                                    <verstretch>0</verstretch>
+                                                </sizepolicy>
+                                            </property>
+                                            <property name="minimumSize">
+                                                <size>
+                                                    <width>0</width>
+                                                    <height>32</height>
+                                                </size>
+                                            </property>
+                                            <property name="focusPolicy">
+                                                <enum>StrongFocus</enum>
+                                            </property>
+                                            <property name="text">
+                                                <string>Cancelar</string>
+                                            </property>
+                                            <property name="accel">
+                                                <string>Esc</string>
+                                            </property>
+                                            <property name="autoDefault">
+                                                <bool>false</bool>
+                                            </property>
+                                            <property name="default">
+                                                <bool>false</bool>
+                                            </property>
+                                            <property name="iconSet">
+                                                <iconset>image3</iconset>
+                                            </property>
+                                            <property name="toolTip" stdset="0">
+                                                <string>Cancelar y terminar (Esc)</string>
+                                            </property>
+                                            <property name="whatsThis" stdset="0">
+                                                <string>Cancelar y terminar (Esc)</string>
+                                            </property>
+                                        </widget>
+                                    </hbox>
+                                </widget>
+                            </vbox>
+                        </widget>
+                        <widget class="QPushButton">
+                            <property name="name">
+                                <cstring>pbnMore</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>0</hsizetype>
+                                    <vsizetype>1</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="minimumSize">
+                                <size>
+                                    <width>25</width>
+                                    <height>120</height>
+                                </size>
+                            </property>
+                            <property name="maximumSize">
+                                <size>
+                                    <width>30</width>
+                                    <height>32767</height>
+                                </size>
+                            </property>
+                            <property name="autoMask">
+                                <bool>false</bool>
+                            </property>
+                            <property name="text">
+                                <string></string>
+                            </property>
+                            <property name="toggleButton">
+                                <bool>true</bool>
+                            </property>
+                            <property name="on">
+                                <bool>false</bool>
+                            </property>
+                            <property name="iconSet">
+                                <iconset>image4</iconset>
+                            </property>
+                            <property name="flat">
+                                <bool>false</bool>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>Más opciones</string>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+                <widget class="QFrame">
+                    <property name="name">
+                        <cstring>frMore</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>true</bool>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>0</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>0</width>
+                            <height>200</height>
+                        </size>
+                    </property>
+                    <property name="frameShape">
+                        <enum>Box</enum>
+                    </property>
+                    <property name="frameShadow">
+                        <enum>Plain</enum>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>lblCredito</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>7</hsizetype>
+                                    <vsizetype>5</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="frameShape">
+                                <enum>Box</enum>
+                            </property>
+                            <property name="frameShadow">
+                                <enum>Raised</enum>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>InfoSiAL, S.L. Creadores de AbanQ</string>
+                            </property>
+                        </widget>
+                        <widget class="QLayoutWidget">
+                            <property name="name">
+                                <cstring>layout25</cstring>
+                            </property>
+                            <hbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <property name="spacing">
+                                    <number>0</number>
+                                </property>
+                                <widget class="QComboBox">
+                                    <property name="name">
+                                        <cstring>comboBoxMarks</cstring>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy>
+                                            <hsizetype>7</hsizetype>
+                                            <vsizetype>0</vsizetype>
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                    <property name="minimumSize">
+                                        <size>
+                                            <width>143</width>
+                                            <height>0</height>
+                                        </size>
+                                    </property>
+                                    <property name="editable">
+                                        <bool>true</bool>
+                                    </property>
+                                    <property name="autoCompletion">
+                                        <bool>true</bool>
+                                    </property>
+                                    <property name="duplicatesEnabled">
+                                        <bool>false</bool>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Lista de marcadores con datos de conexión</string>
+                                    </property>
+                                </widget>
+                                <widget class="QToolButton">
+                                    <property name="name">
+                                        <cstring>pbAddMark</cstring>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy>
+                                            <hsizetype>1</hsizetype>
+                                            <vsizetype>1</vsizetype>
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                    <property name="minimumSize">
+                                        <size>
+                                            <width>22</width>
+                                            <height>22</height>
+                                        </size>
+                                    </property>
+                                    <property name="focusPolicy">
+                                        <enum>NoFocus</enum>
+                                    </property>
+                                    <property name="text">
+                                        <string></string>
+                                    </property>
+                                    <property name="iconSet">
+                                        <iconset>image5</iconset>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Agregar marcador con los datos actuales de conexión</string>
+                                    </property>
+                                    <property name="whatsThis" stdset="0">
+                                        <string>Agregar marcador con los datos actuales de conexión</string>
+                                    </property>
+                                </widget>
+                                <widget class="QToolButton">
+                                    <property name="name">
+                                        <cstring>pbRemoveMark</cstring>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy>
+                                            <hsizetype>1</hsizetype>
+                                            <vsizetype>1</vsizetype>
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                    <property name="minimumSize">
+                                        <size>
+                                            <width>22</width>
+                                            <height>22</height>
+                                        </size>
+                                    </property>
+                                    <property name="focusPolicy">
+                                        <enum>NoFocus</enum>
+                                    </property>
+                                    <property name="text">
+                                        <string></string>
+                                    </property>
+                                    <property name="iconSet">
+                                        <iconset>image6</iconset>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Eliminar marcador de la lista</string>
+                                    </property>
+                                    <property name="whatsThis" stdset="0">
+                                        <string>Eliminar marcador de la lista</string>
+                                    </property>
+                                </widget>
+                            </hbox>
+                        </widget>
+                        <widget class="QLayoutWidget">
+                            <property name="name">
+                                <cstring>layout3_2</cstring>
+                            </property>
+                            <hbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <widget class="QLabel">
+                                    <property name="name">
+                                        <cstring>textLabelDB</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>Controlador:</string>
+                                    </property>
+                                    <property name="alignment">
+                                        <set>AlignVCenter|AlignLeft</set>
+                                    </property>
+                                </widget>
+                                <widget class="QComboBox">
+                                    <property name="name">
+                                        <cstring>comboBoxDB</cstring>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy>
+                                            <hsizetype>1</hsizetype>
+                                            <vsizetype>0</vsizetype>
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                    <property name="minimumSize">
+                                        <size>
+                                            <width>200</width>
+                                            <height>0</height>
+                                        </size>
+                                    </property>
+                                    <property name="editable">
+                                        <bool>true</bool>
+                                    </property>
+                                    <property name="autoCompletion">
+                                        <bool>true</bool>
+                                    </property>
+                                    <property name="duplicatesEnabled">
+                                        <bool>false</bool>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Controlador para la base de datos</string>
+                                    </property>
+                                </widget>
+                            </hbox>
+                        </widget>
+                        <widget class="QLayoutWidget">
+                            <property name="name">
+                                <cstring>layout4_2</cstring>
+                            </property>
+                            <hbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <widget class="QLabel">
+                                    <property name="name">
+                                        <cstring>TextLabelHost</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>Servidor:</string>
+                                    </property>
+                                    <property name="alignment">
+                                        <set>AlignVCenter|AlignLeft</set>
+                                    </property>
+                                    <property name="hAlign" stdset="0">
+                                    </property>
+                                </widget>
+                                <widget class="QLineEdit">
+                                    <property name="name">
+                                        <cstring>lineEditHost</cstring>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy>
+                                            <hsizetype>1</hsizetype>
+                                            <vsizetype>0</vsizetype>
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                    <property name="minimumSize">
+                                        <size>
+                                            <width>200</width>
+                                            <height>0</height>
+                                        </size>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Nombre o dir. IP del servidor de la base de datos</string>
+                                    </property>
+                                </widget>
+                            </hbox>
+                        </widget>
+                        <widget class="QLayoutWidget">
+                            <property name="name">
+                                <cstring>layout6_2</cstring>
+                            </property>
+                            <hbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <widget class="QLabel">
+                                    <property name="name">
+                                        <cstring>TextLabelPort</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>Puerto:</string>
+                                    </property>
+                                    <property name="alignment">
+                                        <set>AlignVCenter|AlignLeft</set>
+                                    </property>
+                                    <property name="hAlign" stdset="0">
+                                    </property>
+                                </widget>
+                                <widget class="QLineEdit">
+                                    <property name="name">
+                                        <cstring>lineEditPort</cstring>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy>
+                                            <hsizetype>1</hsizetype>
+                                            <vsizetype>0</vsizetype>
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                    <property name="minimumSize">
+                                        <size>
+                                            <width>200</width>
+                                            <height>0</height>
+                                        </size>
+                                    </property>
+                                    <property name="echoMode">
+                                        <enum>Normal</enum>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Puerto de conexión</string>
+                                    </property>
+                                </widget>
+                            </hbox>
+                        </widget>
+                    </vbox>
+                </widget>
+            </hbox>
+        </widget>
+        <spacer>
+            <property name="name">
+                <cstring>spacer6</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Fixed</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>60</height>
+                </size>
+            </property>
+        </spacer>
+    </vbox>
+</widget>
+<images>
+    <image name="image0">
+        <data format="PNG" length="1511">89504e470d0a1a0a0000000d4948445200000020000000200806000000737a7af4000005ae49444154789ced964f881cc715c67f0a2da80eb3500d63e80a43980e3a78363968d604ac0d9868ec08323141acd1c15e7291c8c5eb108c6d7cd0e6106c1f1c6dc821f229d6861c2441648d0d51c660e2750e427b30d98560ed08b450035a528d35a80acfa06eb203e543cf8ef730b332768c2e7950547757d5fbf3bdefbd2ebcf7ec8de34f9df650f5e7de7cdbeffffe4d8e6f314114f1a4cfdf884c74c0903e5c0778d808f0b011f83f07fe071cf0f66ee6e9e38d29666df6bd67f8ac8f0708269fff4a08780c64250873881e096117d44c0840329ad54c0819840230f8afcf815d3c197e4b5b9014213d325a3b3ce54c385a535310f8d21cb078e34006305b8920877006d83dc0f87ec9be06078cc9bc4ec16209255897c10c64d99734be0b845fb10fd8db78bb93638790942232075129040b613852fe2039cc74040ee280be63bd4e0de9c0a04aa07b164a60061994f621f020270e42602a070cde6ce774524d5c52e40e542902074a84301821f0a034ec71a43fb50cbf40606373cb8b3c44f70c4ad6d04623870aed0cb31581768e5aac30830c2543f41d8bed3accc0d0383a4f58de87c8be39cb0ac24ee5c08df7377c9234fc63733fe3fbf30d9efef9223f3af1246b57364987a0448476a044810479c8d2ab2b7cefbb733cf64483a79b8b7cfb3b098b2796d1eb96c689650e1d4ab8f0c7bf177d2004ec14042e5d6ef3caabaf53ad269c7b7399702079ebdd4b743ed960f5bd15f420433edfa0b60f81279bcfd0f9640380e77ef132c91141ee2c17fe7c8976b38d94b2c8e2208510ac854800936e4450f5675f3ceff7e4c30f6efa77fe72d32f3cfbda78fddc1b1ffa6b1fdcf337ff7ddf3fffab731eaa5ecabaffd78dff78ffa9f7febfdefbcfbcbf7fcffbfad185f1b9f3bfbfe6fd3deffd7deffda77e72279432e2a5df9c06c0decdc8ee846897b2f0f802d5237300b4debf481440dad3b4aeb40038fbcbb344150925b00e10900770fe772b63ddc6752100d3cb404ce1c0c2a9265154f46e8621dd3c4395620c29cde34d003ab73a74ee68b21ea4a901a0f6931ab108477d0170100530ff8384b89214c18998cc810842b676a638d038726cfcbcb9ad917bb92326173900ae6788878a8f3637c77be78ecca25dc12ce38a08b7762c590049450190ba941cd03d43183ca80ff4012730a4a852519a7b3314fd32166afc6e7720a2a80e4188e942144474528828f6c940d2e9814092edd8c955d0d9d623f841dfd5308c3183141524ac773b85a2b22a9029655f9ceb6c21f290d972c2daad2d12a9703d472c6336ba3700d0a90667d9341a39882623d0bad2865dd84a418e222c3860d8f87894ef471ba418eac91cb25cec695d6fa144cc8d8e051bb17e5b93f504ab975b639e0822366fe788a1a23b34931d70ce7266699990ace8f941c181f5eb6b74b7db00d47f98504591f60d8de367468eb758df5c47e6900e0a8e748ce6ea954b63dd5d6b8929d6b3a19a9c82fad13956ff7491f6dfd6683ebe483a346cddb263e3c79f7a86c6b126691fe21945f3a460e3e306ddee1a2ffcfa0cc77edca4569a45e79af5eb6ba394cde17a1bc428f4d0a20245964f21e173cf9ee69dbf9e0760f5bd15dad72ed2dd6e234444f3e4224ba75e22ed9b2292be2141f1fa6f975838f53200ebff6cb37a6d858ffe7195b89ab0f4e2dbc872a13bc5000a931b1470c87b3fc90700328d7febf2553a3b1d94aca12a8a582ad281208ec06586384ac87348ca02478824e3c2bb2d54499197a05ead930e60e50fcb746fb5397d7299da4f1750028cd3d37e46858415882a11f38fce232b1131aac86d00ae6f8851b8dc8c8c3b12094838736a115189a997eba443472c047b979cf4b02101ccc040901cec00403da9613128214903884b8a14431c295c20486482cb4312a91043486448ad0af3b5593410cfc423d345ff8877151a43228bca39d881c31c2a6eba097ad0211e66a4b91db35f4560f394b80c26b788329861462821390a8d7a446a53e2803102284ba33e8b7605073e07038015c1d7d504b10000000049454e44ae426082</data>
+    </image>
+    <image name="image1">
+        <data format="PNG" length="1777">89504e470d0a1a0a0000000d4948445200000020000000200806000000737a7af4000006b849444154789cc5975f8c1b5715c67f9b1daa63b111331090873ac823bc62d74a91d634526c9e320194ba410a5bfad0a0aaea9f0889b6aa221a5e6890400912281120d817d0a60fcd1689244422ff5495cc46daca8e48625784d8557795b1c0ac87c65d9b66b3be84a92e0f636737c926d9cd0bdfcbe7eb7bee77be737ce7de719fd69aff270c80bebebe55ac1013d3d980985f42ec382801e9a01a01f3ed2af3fe6542f5d1aa0cac08f1ef6d21ce0ed63dff35282730dc358405305c083d30728017128efc8360ec2d0226681e7ce77eb27d5aeb7b77c04c6e64e8891f3130fc3846be4fc463d8ce63c7cbc4075ca0800a73f8c149fc6686e0aa0774cd34cd63bcf7d25ee683bfde55ff9e7b20957f85ad573e62db11bd796c41ffe64f97b5d65aeb05bd3ce6b49e9bd5fab9035ac777cf6ab61ed2b2ed7293e4e617566b600d1b76fc826db33ab9f384bef2bed673dda40b37babcb03cf770f1fd393dba4f6bb61dd2b27d563334fa93951bd8b0e367b26b4e67772d44d5f6c43f5825cf697dc2d35ab61fd2b27b4e3334fac3fb1b48649f9127a3ca173ed0faf29539ad17a28a56cd37b4befcf739fddc01add97e489b4fcd86c447466f6df5528899341f9df8394681fddf7a1caf0eb66171f45d70e401f842b4de1d81e18d7914857ef3d143fb11b19735201b4677b3b6f2b9b8b8945b15aa218c5fa8601b3076a1826f3cc0f85c856113e2aa8c9083cffa8ea4465fbec3800cc4bf2883ee772499032930bc368d7f1e2c23cdd854099b34e52988b18a71116c49337ebe849b7411a384245d64d87d56c47c18969c033294ffbeb9f9c87e420f1117675d999891236e96d8fbcd0c857a835cc25e150f9b367b8e17801c7ed3a3359f45851ee0d27e7bcb7755adf8db9e817e73eb99e3a6c3636e324bb10ee6500c552b7066570ecbe681717212f69c0612a0663cb2892c5e3d46fbd2d13fb4cf7efba9e82730c414cbff32469662bd88488c762d727ee01dffc1b30307cb253040d5a3ce16ebc568c20c1ec1904f450606ccb86c185d173362c8900b46817c2a8708782d8742f5c192ef3d06be6410a3403ee58201927289191ee6c88e8731e4d36b0044ac75d40b8608502f2092a310941001552f3136099dceea927b975a9c2a83344bd0d33380a07b8105051111b3f714f4c7526e1f1470533900249501a3c2e85006bf09d5da2ab2b7a034638194c8a73288d1d593126e2a8718104bbaa81023321076ae512f7e2c468e423daa9ca0424cd214830ad600bc7abc02ff5d59fe9333f0c76a056b204331a810ebea899189f40de8d4bd8f415d5f03a0e6837f651323d730162bcf3b693060f3601a04dcc1342f1e5e41f12d38305561f49125eb0d6eea45fa25dc78a68952ff8e3aa0d487de8537a731807a89989166b2e1230614bb5cbeea536bc344b1754f032f1cf6b106d237d7f578b2e113ebea2319bcf3e3d3846aaeb707aeab8659c4a8e03a1900363b0e18e00e3a488f05daca82abcb277fed34649d25f15dc6e8ead1d50f41d5ad73c0f5c593705d72cbc8cbfe5b3250e9b7240d868f88033410c3468511b7558317b336eef0adc98f5eeaf0663986dc16afc20660a3948f0a1d3aaa42bb9956e55fdbdf603e98ba7917a866add87e6fff599c348a0aaee300e00edaf08945ce0fdb8c976f7b2caf829a8f61c6ee8c7707a363d4751c0801274debd26b6f331f5c845b6fc385c6d4c15fa96a2984349e1f9d809edf802414ea2d240985a0850cc2ab7f5edc0b7bdbe02d9defc693ecae8748cf00552e7482731363c0c2ed0668d7aba71b93d5d73b40767de4d8756ca8819bb220807cca4202c8252cc6cf43eb1af87f83fcd0e23c4137bed65d1f467a9d101a93d5dfa966cdebe55ceeadf8f323cf5e3c626fb2b3828d480319b4216821490bea2ddca48557ef402206b50e6e328657ef104bc4e8d45a90b050b516c42dd47403a56c54e8e39f9d38533dbce719e09fbd64b7be1145982dff7ecbce6453951590b36dd47454b1aa45ecd5c04dc4a04e377934eed496c4c52dd4348cd8360a4806ad62f5d8be579626bf5b072288a4879f3cf34b6793fd751970a2dd3d6843bd85a42ca8b5a0db915ec592b45033ddf17403858d9af7f1cf8e9fa81edbf70342eeb8d696eb4004a52ad537befa74e58d533f6dd5688eacb7694f43266ed1ae46ac661639b7e4fbf6348cacb769cc7841e9f5a33fae1edeb773b9e4f7eec022fa6520be29be29ffb49dddff98156f7f41061c305a08168a06828da205a1856a576805b6ef4fbd74bafdeea90935dfbe00dcb89bf84a0cf4f010860c9ac9914d6662f82bf98dcf3bc576f53392ca3ea46626ff9335873f3c757ec26fd7ca17dbf5f25f089901d4fd4457636029fa81b5c02789fee086c07560befb79c5f81f84920c37ab7b7c5f0000000049454e44ae426082</data>
+    </image>
+    <image name="image2">
+        <data format="PNG" length="1876">89504e470d0a1a0a0000000d4948445200000020000000200806000000737a7af40000071b49444154789cc5975f6c53e719c67f81d3ea3b5ad0ced9a2c9670d938f9668b11526d91312f6c4454ed6a9b85c40222e9a0e5585a249a37f54317643376953995409b44d5d6e36512e48ca45c3902606aaaa3aa84c361a60572b1c574dc4b18a179f1637f68a89bfd1537dbb380e4e52fe24bbd973f39cd7febee77ddef77bcf397697528aff273480aeaeae35ec1006863d8830be87b02220058816b2ead36c94687ad708e4e76b32b02a447e364c84317af6fe088abd68ce3a821c680e0459d0d240362048dcc01f7f1b9f496a6ffcfd61b25d4aa90777c0886e6660f45774c79e44cb740991256665b0224522dd0e904306693cff6f78b524fecd2cd03653334ef3e1f3afd2f4ff795ffd07ce405fe6259eb8fe39dba7d4d0f882fae35faf29a594520beade98576a7e4ea93d47958a1c9c533c31a1c4f66b35a243cfadd5c03a06c77ec7f63915dd77465dff48a9f976d2853b6d5eb8372fe2ca47f36ae4b0526c9f5062c79c6260e437ab373038f69a78795ea55e5e08ab5d14ff748d3cafd499ac5262c7841207e7150323871e6ea037f58cd81556bef0a952d7aecf2bb51056b466be13ee1f3baa143b2694f1d45c402431727f03c2881a3bae7f229e9a525367953a53506afe63a5a672ff1b4fbcd7eedec74a255e5b5062d79432b65fbb8e1056e7ac97400c8e1c6483fbad887028d65d4a011cbbec6269307ed9c5d3d6105f7449f4400b60231cd9d6c0e876c0f46cd137f2c2570c88eec87745bff3b488a641e4886d88e35d024bc499bc54c01671bce2eae263970ac48c38f11ed0f550dfd964e10c9ad09b46c49c6785301e8325cf01319039600c4d1d21c8228483dd53c41469649043686b63487368679d74ccbcdb5df7468b9fbc0ed55a163487c63bc33f95e5fc9f163bb05e440f0c0bf264fa1c7440f6a4a93673242269ea4d68455617c78c34635b59969c5bf097699d6a334f66c041081d113d300cac0b0d68c210a6f77db414f94a1e21746439ac245bce2181c6ecc3e3864c63581e4f6fede46e7d01fb4fc2b1cb59ac6e87bc9f0fbf30fc4d68e2eba1816e232206477a744d470c38a0e570fad2e1c2681ab4c243e3546f9aa1017865a7bdec2ecbbf0fd3b33946071dd040441d742d8b91187b0c4d7c631d8010660f959c260450c921449a9c5f208c0b082d49ae729fd82f4090c40f5cc6f72ccb8debc1cf4fe7308cb69e06f8ed17989f134208e3ee0ce87d4e17742a177d49a080134d0290e94b82e692892541a3cd2e4e3489d503a75e8c2f4b5ebf09cf9d2c90194c23b4b69e083b2734d0a30e32400b0d04ad5b54f25f0a2dbda45217d34892d854677f14ce565c7411277fc3451784acc529d65c4ebdb8bc72be80d1132e422429fae17a7cb7d3390d5a95ec97206faf03904dff93546fe2168b4e3517c78eb3672b8c264c46b7c1decd618543fd71d0426e0113bbe3acc4e87170ec38a6e8accfd82187fa059c48b28694ff0e3b20e567d9cb6fcea085670c71bc96c7939bda8a26a4065a18dd307dc3436830ed791cd909a6b93cf9fe37abc8008a373dd0205f6dafaf7ae88bfa2249f6d2b1190239bf3803b765d5c8879527d135486fb4a1de118e5b3afb8720d36f2381038fdb24970f3caf9e03dbb4300438fd36420b190d866c1b08f5094056cc8bc0edce93b0273a9c78c17b5b74bbeb4d1147e2114bd91c1a0053ef2439556c013ace8acfc72fd4c9ce9808ad8ad02c64d061b090d24306362de9d2a8c565f175ebc734fd0b77df05b256ce373e3c721e3b8ec425d36fe315a1545971be099dd1c115a63e08cfc9d8004ebf058fac60c0b16d08003b4efd8357dea1e95f81e56fc385ea8537fe204b8500e264bdf0ec8ee6abb8d51553f648e7327703ce4a28d4ea8828e4fc3657ea1085ac176ece7ae14cc862aee55f9c1c0716561aa051299dab4e978eb780d4c6d071a6dfe2f034d46ff155dc826a03840f993e1396b0d36742191cdb8220d46b05509d2efd59d6cad945897bfd2afe76e2d92b53d6162b25b010a28ae8b790953a933bccbbd5d75b30ee8377b54526aa93adb4d07b755ae53af49ac8721d222672a68a941632f0f0ce4fbe5b7aeb97cf00ff5a4cb6ac036dcc154f0eef8bd664510269cb42ce80d36bb2f74c6791d700ef2aede4e0f4eab4ca90ee35916548474ce40c242c0b0944fd7abe74faf04b4b93dfaf03218488c776bdfb7b7b8bf5b8e8b6115441b330f43ad6a08977b58e889a50e9542ca22672b61dcf549158c8a68777fed899d2e9c3bf20a0b432cdbd3a10424ab774e287bbdd13677f5b2f534b6cb49001c47b4c4af97685b3906c733a62d22885716306121b2daab359bf70fcd4af4b6f1dde77afe40fee4007eb4577644b644b66b7953ab2cd8c34be23ba6dd0ea084c24550416923a0426b2e152f72dcfbbf0fcb9c6fb672765b37119b8733ff1d51858c4a368a2df8826b618bdb11f6436efb5f38dd237455fea51393bfd9f9411fbececa549af512e5e69548aff206016900f135d8b81a5580f6c00be46f80737006e03cdf6f5aaf15f8f466ba1d48b851d0000000049454e44ae426082</data>
+    </image>
+    <image name="image3">
+        <data format="PNG" length="1641">89504e470d0a1a0a0000000d4948445200000020000000200806000000737a7af40000063049444154789cc5975f885c7715c73f9b8ce5b619e196b63ad1b54ce91633e9203be91677d68add6dc176484106f2b250846d2338359430e6a10e013104916928d1cd833211c48d60bde421bd44ac9d558a3bb14b772381bb5b8acc4a2a3325b637eba23793edead787fb7726ab49f4c1039733f7fece3de77bbee79cdfefce9024fe9f9202181a1abae5170c303390bf133e6b42c67fc4b57578ff2aacae83d3838ddb02702b928527f6c2f4343c7911864b6973c7720aa60c83f95e8f7dbd1ee77bbdad1cbc77067eb50667fe04bfbba9e39b9520038f96e1b52afcd3192baa79b4262dbb72571c4992e7ba9224f792232dbb6a1ea9ca192da80a1f95e155133ef75f0328c08b166c34c68bd2b22b6da85fbc011d8a2ba9d55163b4200b3e28c0f3b70b60c724bc5203d9872abed30d3f8a77b9b3ad76dbedbefbd0de7a765a36a808dfb9650093f0bd26c83e38236d4abae44857242d06d95d0e32dd18d0ed607d71c9d72b3e3bd6817208a276530039f86a0d343b9295965db5cfd952aba3f659cba7da1be47b40363ce98ad47ed592163bd1fbf5e18c6cd8ca4239196f4852348626641bf0d62a7ce285c3b3ac65615f3a07bd35a83c77237defe10fe207c0ee81b56bb0fc8397d9979980f58b747f7d9553f65172b0f63c7ca107dd1b0094e054112a5340f7a912a5fb4c2e9abb99f8fecbb1df6e973b7fd1a5f5ce69267a3de6b77a4ca50c5a698389b16fc2d326dc77b76f7c15e65f7c8e620aceafadb1fadbdf00701ebe7b01bed55702131eacc2fa02a80eeaec99913d5ef46b3920cd0365b9f98aecb1a2dcf1a2ecb182dcb1aaac7c41defe63526b21365e74658d16d4d933a33a68015481ae019fee0350806a187c09d400e968339eac37134e37253b5f50e75e53d670469de18cac4c46ee705673a62977242b3704b129e9c0b41a29df6f1d740c9483af2501ec9c85f3c9e09db4e977b5fc6e764d534be148061d6fa54d750c4356da909b36651981067963c5783aced96a077e431075f839b0034918704f05fe5c07cd82daa0e6939371b04315cd813aa0f689d9f8f94fdab2406eca0834b252f1bd7ee844a6d67046edc0ff0268065680bb9184090fdbd00b83cf81743aa6bf99cdca05d920d730a473760ce284251be405eb5eca909d422e48fb4bb1dd57ea9a0bfcd77ddbbf1af02092c8c0976ab015d10fea9c6e4892bc15479e61f405d1bd1979cb4bbe63cf93f697a2f526c84b057623d968df708e54d54994a106d74d78240430d5847fcc06c16d90de0cb6d42b92524801754a19f2401ac949ef861d2a69bca866b02e02fb4c2666e0745356e07fd68f71dd84cf87001eadc1a613d0ef823aa7825a5fee4869c30f1e820832d55851728333a2dd96b2d97ebbd1823f05929caf57e406fe1d50153c03f26113de6fc3878d240327ac08bc335688b2524061747fb41167d992649af1fac19978edf19aec0403165c063e138ee1ae69f87dc880075acae7e2974f2e454e43ed24ef8fd72353f7cc5cfcbc1dbb5848fba59b0bd6cad00476451bd124bc12f680077edd5f0f266143d268210aaa011002a9d589a3bd54938e24c6f5785d0a980da7a008c707b7e2278ec15623e88105901e9b8c6aa84b8e94cdaa1d04bc41a78dbe8ca353b3d39186335a08fc367c20d70cf8e2e0717c5719de70fcfac49925f603ad487aea581f0b7dd748a26ca11c9e8dca6605ac95e01c70d70ddf031978a6061fb5c3460c693ee5f43bbde4ca3d38233d3629379f931e9f9477b8ea33b099b03b6445650ae9af8167c297a3a0490040aa063f0a7ba199cceea4b5edc9b8adbc2be9703d0aee05feeafef89d043ef6ef00007c6a1a5a83201c90f6e4e49da8f76719caa62457f25eaa49994c14bc9918bd32bc41780c07d2f741128a010fcfc24f7b502803abc054d2206d40fe0578e82ae44bf087b3b06ac23b3f865e8f15602f700d5807cefa6f5df8061c049cbe60db3010cade32bc5e0f6a1736e64292916df44240b99518b912bc06e4b68df21f00007cb202c7abf097e4361d1e3c2198f0b283f570bbad40b702dfc6ff72dc56b62dc180ec3460bc00cf16e0e907e0fe127001bf2c2d600298078af8747761ed02fc7215cef4e06d60f37f0110ca1dc0435918df0d8f94e1818b70cf14dc310fd70bf0e1cf60ad0b4befc322f047a07733a7b70320293b818f03bbf0ffe06e017f07fe16fcbe65f917d22bbe5100f4e3f00000000049454e44ae426082</data>
+    </image>
+    <image name="image4">
+        <data format="PNG" length="1866">89504e470d0a1a0a0000000d4948445200000020000000200806000000737a7af40000071149444154789cc597516c5b7715c67f696fa763e10a5fc8902f4b91af7044621584432b35e6a9378056af0f6daa3dac684c6da990d0a6696acbcb6012882081320182bc80d23dac190f6b5509ba56d334a752875d91d4ae986a574bd46bd14b7cd9b2d8ac6efca7dce9cfc3bd6992364dd327be97cfc73ee73bdf39fefbdeeb2ead35ff4f18005d5d5d8f50210912f67624f115c44a8212900eaae1d36ed568bbd708d4278f64604348fe70882407e93ef22da8f460389b088a60381014c0c8018580207b137fec6d7c26983ff9dec364bbb4d6eb6f2091da49df815788f73f8591ef1229d06fe5b1921592710728a2821caeff16eefc00fe47052032339f38cbf5e77f4edbfffb03f5d73d03e9fc8b3c79e313f69ed6bbc716f5efff7c4d6badb55ed46b6341eb8539ad0fbfaa75f2c49ce6c9535af65e9b27b5fbfb8f6a6013db0ffe9abd733a75f49cbef181d60b51d3c53b112faecd4bb8f2c1821e1ed19abda7b4ec9bd3f40dff6ce306b61ffca5bcb4a0075f5a0ca75d12fff0117941eb7305ad65df292d2716347dc32f3fdc40cfe073f27438f9e2875a5fbbb1a0f56238915ed4faafd5d5f1ba7c47eb6bff58d0875fd59a7da774e299b980647678f5aa574212a9c48e895f611419ddff14050f2cc3e4cc55b024e45c328aa3f76d5987a7c33c270bfd3bf3288a9b133b4e8d2262ad6940b60f9f606bf50b4971a834abd402189fae6219307eb9ca811d80090706e17cdda5068c5d0e3f1f9baee21acbf977e3cb55fa13905415841c3ceeda921e7ee13e03124f7e597a9def4a2a0752a47f6b06770a2cc9303e55c68e67607ed9ec91dd365903ec7886f152195b32b895307fa2b23a1e9f2ae3a41cc428232907e9770e89249e8015d701e9cb1f4bec3e3d4a5040c4c1eeae604a0e1514097fd745de3a91832dab8f4cf56687939331cab3456212e68911d6ad6477be40b33d880a0a8043eb9da11fa87ae90f4b1bd82ca9634342897cda2106a8ee1c8d76916c32475341a73b47b97eff0f26b32dc6e833307e28472728d29fc8d1684327b95cdf68033d0e3123d4178921a96343c0a6d080210931ddaf610c52f24a88c450f570f242bd0840ab5e642075bf0100b6806d43e1951c1da9a202685d5f511f80f2c2cd96bc525893f0bf8a219f0d0dc41349d93edc1d3362489f034611279d0b1353e15a9d740ebc07185881b1c3195ede0fc35fcfa182a8de28924f3b6080a41d62468144f6e01318f2b94d002266375ed11001bc2222398a7e99302e8391a3e895a1e7e106000eec84237b60743fe0976149cf00fce806e61745441277cf402ced74dd9d1490f4001855f2e90144c2b8bc810d2cc132c1d909a37b062088f4a48c93ce2106c4520e2ac0080d049d5b78a54f259a5404f0abc42443c9af1233c278c0deb8816607ca351899ac62c6c37a3106427d033a5ee15350b73701a8b6ffafc19eecadf03b8a26b73360c0eede90f3bd19b8b9b1e66517ce4fc3f10b51bd70572fd42fe32407e651eadfe10694fab830fdc60c06e095891919261b2e6240a9e1221232db1ede7cfc52939177e08df75dcc78546fc064c30d37e9954106284c8dcf10a885a533705b3512258c2a8e3d00c06edb06039c5e1b89b8da58bff9f1b3d06c9b8801f9fee53a8c488f483f00e5999781dbcb57c2eed450f605f76d8957379b9201c345c4061a6058103498f89e757fd7ff42a30dc7ffd2002ca08118162a5866b050ca4505361d55a5359f5195df59dfa1ed5fba7b2f50f3f552ebfae845ec0c8a2a8e1d9e38a7d74222e6a37b9adf82623dfcae9d5e0b8945795bee6108f502c0ced07cffc7efd0f6afc0eabbe162e3d2c9dfaa5a39800c05d705a0e036c086a2d784c797930b331dceccc2d8d526895e28fa4d24b582bd26a4a27a08f50c509562c7bf3c31062cde6b809657bbd098acbdd60106b7858e1ddb020f9c94c95874151d9f82463b46c183e13e137cc8a757b39336a11ed507a15e2780c664ed8f6abe5e58eab9d653f117b387ae9cb676598382854803e9b5c06f428f097e13e931c1eb104bc5e8781d9c9e1805af43ac2746a71ee6a97a1392266aa68152162a70712f4ebc5b7bf327cf01ff5c6ab6fa8928c45ce54f434753f3aaa2809c65a16620d763869b58e2548c8e47d43ce44e3dcc53f5f0c949cd40d6b25040ca6f966a67475e5cd9fc411b082192e97ffadddfd8bbac6f4bdc468836e13591b409f526a44cf096279694899a8de299060a0bd576712f8e9fab9d1df91101b57bdbacb581104a556baf7ff3d9eaebe77fd1ac339fdd66d19a8181a449ab16b29a5de6dc8af75b3390dd66d1982df8e5d7cefcb4f6e6c8d1b59aafbf81656c967872577257fe596b70748f996c7d49e236184d04134503c142d184c044b5aa347dcb752f3d7fa175f5fc846ab7a6813b0f12df8881253c8621bd89547657a2a7ff1bf99d47ec52abf679490f3ea66627ff3398e8fff8fcd484dbaa57aeb4bccadf089805d4c3441fc5c04a6c06b6029f21fc831b00b78176f47ac3f81fc61a025c1dd6dece0000000049454e44ae426082</data>
+    </image>
+    <image name="image5">
+        <data format="PNG" length="470">89504e470d0a1a0a0000000d49484452000000100000001008060000001ff3ff610000019d49444154789c7d93b16b536114c57fd60b1ef40d7708d831430603191ab443a6ead03fc074eb6807a15bdbbfa03876ed986e19835357071145902808916a055104b588b43a98e1d9ebf05e62deeb8bdf72f8beef9e73cfe5de7b59800166909e03c07aa2edd70b76f385d9d23bb3e563b39504bbfef93c3da2ea08700997c0205aed18418429864684143bd2f732af5e1691042646ad6604c421fc43e94d21dec462a51d836835e3514e1e408411f7a46139b45a402296da0507614424feac52a05bf3fb51f39f7de94b24fad0aff9db68b5a7e4418e3de94fb80f7b8946e1febe97e8abc332d168ee867b9669b6e6191c54bd9b42b0c67abdbe15eed3a072f0e4decf713fc707100eab44e3c7d6c4c1bcccd3324a285865b351df0df7b9e4fe1cdccf1cdce58efbc69ef42b4cdf764c1f433a3ecc1d4d49a608f7b32e3c0978d98551c027c14af51cdcea9c156c1bd18187555d5fb8282048c757d680036003384841a6ab9573539c214d1c5ca8b9038fbbff232f269e2d93c4d31bd92eec155bf7aa8a7709b2451acf8a19b74f5312e077fe7f6d0c2763785e16f80bfc960b74bca3e0fb0000000049454e44ae426082</data>
+    </image>
+    <image name="image6">
+        <data format="PNG" length="264">89504e470d0a1a0a0000000d49484452000000100000001008060000001ff3ff61000000cf49444154789ced93b16a02511045cfea2b26a95eb1c536c22bfc87f436e984341696920f10c14fb052ac2c2d2d5306ffc0d232ffb1e50ae2b5d817955551b0130786c385b9c3656012493c52b587dccfb120c91c1f2d679d7c5b6c70b6bbc7645007de97453145cd30519a49ceca36d39f43b2a35e57f42a6a0fdf74431828f5fa0509cef813b9889c478e411ebe50087da5fea2b9ba645ea1419b6e0843a5d961e81aaf276886d13a265880e4ac1cfa276876623ad51e7a09d0c8e033878dc1ae28afcc0dd681b71c96c9eb17d803aaada58bef0f34c10000000049454e44ae426082</data>
+    </image>
+</images>
+<connections>
+    <connection>
+        <sender>pushButtonConnect</sender>
+        <signal>clicked()</signal>
+        <receiver>FLWidgetConnectDB</receiver>
+        <slot>tryConnect()</slot>
+    </connection>
+    <connection>
+        <sender>pushButtonCancel</sender>
+        <signal>clicked()</signal>
+        <receiver>FLWidgetConnectDB</receiver>
+        <slot>cancel()</slot>
+    </connection>
+    <connection>
+        <sender>pbnMore</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>frMore</receiver>
+        <slot>setShown(bool)</slot>
+    </connection>
+    <connection>
+        <sender>pbnMore</sender>
+        <signal>stateChanged(int)</signal>
+        <receiver>FLWidgetConnectDB</receiver>
+        <slot>adjustSize()</slot>
+    </connection>
+    <connection>
+        <sender>comboBoxDB</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>FLWidgetConnectDB</receiver>
+        <slot>driverChanged(const QString&amp;)</slot>
+    </connection>
+    <connection>
+        <sender>pbAddMark</sender>
+        <signal>clicked()</signal>
+        <receiver>FLWidgetConnectDB</receiver>
+        <slot>addMark()</slot>
+    </connection>
+    <connection>
+        <sender>pbRemoveMark</sender>
+        <signal>clicked()</signal>
+        <receiver>FLWidgetConnectDB</receiver>
+        <slot>removeMark()</slot>
+    </connection>
+    <connection>
+        <sender>comboBoxMarks</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>FLWidgetConnectDB</receiver>
+        <slot>selectMark(const QString&amp;)</slot>
+    </connection>
+    <connection>
+        <sender>pbMarks</sender>
+        <signal>clicked()</signal>
+        <receiver>FLWidgetConnectDB</receiver>
+        <slot>popupMarks()</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>comboBoxNameDB</tabstop>
+    <tabstop>lineEditUser</tabstop>
+    <tabstop>lineEditPassword</tabstop>
+    <tabstop>pushButtonConnect</tabstop>
+    <tabstop>pushButtonCancel</tabstop>
+</tabstops>
+<slots>
+    <slot access="protected">init()</slot>
+    <slot access="protected">destroy()</slot>
+    <slot access="protected">cancel()</slot>
+    <slot access="protected">tryConnect()</slot>
+    <slot access="protected">driverChanged(const QString&amp;)</slot>
+    <slot access="protected">addMark()</slot>
+    <slot access="protected">removeMark()</slot>
+    <slot access="protected">selectMark(const QString &amp;)</slot>
+    <slot access="protected">popupMarks()</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>
