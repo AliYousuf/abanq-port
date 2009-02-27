@@ -42,14 +42,14 @@
 // #include "qsabreakpointsettingsimpl.h"
 // #include "qsdebugger.h"
 
-static QPtrList<QSAEditorInterface> *editorInterfaces = 0;
+static Q3PtrList<QSAEditorInterface> *editorInterfaces = 0;
 bool QSAEditorInterface::debuggerEnabled = TRUE;
 
 QSAEditorInterface::QSAEditorInterface()
     : viewManager( 0 )
 {
     if ( !editorInterfaces )
-	editorInterfaces = new QPtrList<QSAEditorInterface>;
+  editorInterfaces = new Q3PtrList<QSAEditorInterface>;
     editorInterfaces->append( this );
     updateTimer = new QTimer( this );
     connect( updateTimer, SIGNAL( timeout() ), this, SLOT( update() ) );

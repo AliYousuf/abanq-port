@@ -1654,11 +1654,11 @@ void QSSystemClass::setenv( QSEnv *env )
  */
 void QSAbstractBaseClass::replace(QSClassClass *newBase)
 {
-    QPtrList<QSClassClass> userClasses;
-    QPtrList<QSClass> allClasses = env()->classes();
+    Q3PtrList<QSClassClass> userClasses;
+    Q3PtrList<QSClass> allClasses = env()->classes();
 
     // Build a list of the user classes, excluding this one.
-    QPtrListIterator<QSClass> it(allClasses);
+    Q3PtrListIterator<QSClass> it(allClasses);
     QSClass *tmp;
     while ((tmp = it()))
 	if (tmp->asClass() && tmp != newBase)
@@ -1667,8 +1667,8 @@ void QSAbstractBaseClass::replace(QSClassClass *newBase)
 
     // Check if userclasses have this abstract class definition as parent and update
     // member table if so.
-    QPtrListIterator<QSClassClass> userIt(userClasses);
-    QPtrList<QSClassClass> directChildren;
+    Q3PtrListIterator<QSClassClass> userIt(userClasses);
+    Q3PtrList<QSClassClass> directChildren;
     QSClassClass *userClass;
     while ((userClass = userIt())) {
 	QSClass *baseClass = userClass->base();

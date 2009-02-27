@@ -887,7 +887,7 @@ bool QuickInterpreter::construct( const QString &className,
 
 QStringList QuickInterpreter::classes() const
 {
-    QPtrList<QSClass> clsLst = env()->classes();
+    Q3PtrList<QSClass> clsLst = env()->classes();
     QStringList lst;
     for ( QSClass *cls = clsLst.first(); cls; cls = clsLst.next() ) {
 	if ( cls->asClass() )

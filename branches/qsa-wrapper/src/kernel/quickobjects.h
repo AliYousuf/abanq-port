@@ -33,11 +33,11 @@
 
 #include <qvariant.h>
 #include <qobject.h>
-#include <qptrvector.h>
-#include <qptrdict.h>
+#include <q3ptrvector.h>
+#include <q3ptrdict.h>
 #include <qmetaobject.h>
 #include "dlldefs.h"
-#include <qintdict.h>
+#include <q3intdict.h>
 #include <qmap.h>
 
 #include <qsclass.h>
@@ -134,14 +134,14 @@ public:
 
 #if defined(Q_TEMPLATEDLL)
 // MOC_SKIP_BEGIN
-template class QUICKCORE_EXPORT QPtrList<QuickScriptReceiver>;
+template class QUICKCORE_EXPORT Q3PtrList<QuickScriptReceiver>;
 template class QUICKCORE_EXPORT QMap<QObject*, QuickScriptReceiver*>;
 template class QUICKCORE_EXPORT QMap<QString, QSOT::QuickScriptObjectType>;
 template class QUICKCORE_EXPORT QPtrVector<QObject>;
 template class QUICKCORE_EXPORT QMap<QString, QuickScriptProperty>;
 template class QUICKCORE_EXPORT QValueList<QuickMetaData>;
 template class QUICKCORE_EXPORT QIntDict<char>;
-template class QUICKCORE_EXPORT QPtrList<QMetaProperty>;
+template class QUICKCORE_EXPORT Q3PtrList<QMetaProperty>;
 //template class QUICKCORE_EXPORT QValueList<QVariant>;
 // MOC_SKIP_END
 #endif

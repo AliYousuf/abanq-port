@@ -37,7 +37,7 @@
 #include "qstypes.h"
 #include "qsdebugger.h"
 #include <qstring.h>
-#include <qptrlist.h>
+#include <q3ptrlist.h>
 
 class QSObject;
 class QSCheckData;
@@ -1162,10 +1162,10 @@ public:
     QSMember member;
 };
 
-class QSNodeList : public QPtrList<QSNode>
+class QSNodeList : public Q3PtrList<QSNode>
 {
 public:
-    QSNodeList() : QPtrList<QSNode>() { }
+    QSNodeList() : Q3PtrList<QSNode>() { }
 };
 
 #endif
