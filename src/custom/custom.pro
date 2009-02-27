@@ -13,3 +13,5 @@ INCLUDEPATH     += $$QT_SOURCE_TREE/tools/designer/interfaces
 target.path=$$plugins.path
 isEmpty(target.path):target.path=$$QT_PREFIX/plugins
 INSTALLS += target
+#The following line was inserted by qt3to4
+QT +=  qt3support 

@@ -30,16 +30,19 @@
 #include "qsinterpreter.h"
 #include "qsproject.h"
 #include "qsscript.h"
+//Added by qt3to4:
+#include <QResizeEvent>
+#include <QEvent>
 
 #include "../editor/qsacompletion.h"
 #include "../editor/qsaeditor.h"
 #include "../editor/qsaeditorinterface.h"
 
 #include <qapplication.h>
-#include <qobjectlist.h>
+#include <qobject.h>
 #include <qmetaobject.h>
 #include <qsizepolicy.h>
-#include <qtextedit.h>
+#include <q3textedit.h>
 
 class QSEditorPrivate
 {
@@ -503,7 +506,7 @@ bool QSEditor::eventFilter( QObject *o, QEvent *e )
   QTextEdit. This might be 0 if an error occurred while initializing
   the editor.
 */
-QTextEdit *QSEditor::textEdit() const
+Q3TextEdit *QSEditor::textEdit() const
 {
     return d->editor;
 }

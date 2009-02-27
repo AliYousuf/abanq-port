@@ -31,9 +31,12 @@
 
 #include <qsaglobal.h>
 #include <qwidget.h>
+//Added by qt3to4:
+#include <QResizeEvent>
+#include <QEvent>
 
 struct EditorInterface;
-class QTextEdit;
+class Q3TextEdit;
 class QSInterpreter;
 class QSProject;
 class QSScript;
@@ -83,7 +86,7 @@ public:
     QSize sizeHint() const;
     QSize minimumSizeHint() const;
 
-    QTextEdit *textEdit() const;
+    Q3TextEdit *textEdit() const;
     QSProject *project() const;
 
 signals:

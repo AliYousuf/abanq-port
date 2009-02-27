@@ -32,6 +32,8 @@
 #include <qwidgetplugin.h>
 #include <qseditor.h>
 #include "qsa.xpm"
+//Added by qt3to4:
+#include <QPixmap>
 
 class QSEditorProvider : public QWidgetPlugin
 {
@@ -63,12 +65,12 @@ class QSEditorProvider : public QWidgetPlugin
 	return QString::null;
     }
 
-    QIconSet iconSet( const QString &key ) const
+    QIcon iconSet( const QString &key ) const
     {
 	static QPixmap icon( (const char **)qsa_xpm );
 	if ( key == "QSEditor" )
-	    return QIconSet( icon );
-	return QIconSet();
+	    return QIcon( icon );
+	return QIcon();
     }
 };
 

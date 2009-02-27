@@ -3,7 +3,8 @@ HEADERS	+= $$IDEDIR/qsworkbench.h \
 
 SOURCES	+= $$IDEDIR/qsworkbench.cpp
 
-FORMS = $$IDEDIR/findtext.ui \
+#The following line was changed from FORMS to FORMS3 by qt3to4
+FORMS3 = $$IDEDIR/findtext.ui \
 	$$IDEDIR/gotoline.ui \
 	$$IDEDIR/idewindow.ui \
 	$$IDEDIR/outputcontainer.ui \
@@ -44,3 +45,8 @@ IMAGES	= $$IDEDIR/images/d_editcopy.png \
 	$$IDEDIR/images/stop.png
 
 headers.files = $$headers.files $$IDEDIR/qsscripter.h
+#The following line was inserted by qt3to4
+QT += qt3support 
+#The following line was inserted by qt3to4
+CONFIG += uic3
+

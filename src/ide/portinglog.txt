@@ -1,0 +1,6 @@
+Log for qt3to4 on Vie 27. Feb 10:49:54 2009. Number of log entries: 3
+In file ide.pri: Added entry QT += qt3support 
+In file ide.pri: Added entry CONFIG += uic3
+
+In file ide.pri: Renamed FORMS to FORMS3
+

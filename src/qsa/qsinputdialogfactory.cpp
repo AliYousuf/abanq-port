@@ -32,9 +32,9 @@
 #include <qwidget.h>
 #include <qvariant.h>
 #include <qdatetime.h>
-#include <qhbox.h>
+#include <q3hbox.h>
 #include <qdialog.h>
-#include <qfiledialog.h>
+#include <q3filedialog.h>
 #include <qinputdialog.h>
 #include <qlayout.h>
 #include <qmessagebox.h>
@@ -44,16 +44,21 @@
 #include <qcheckbox.h>
 #include <qradiobutton.h>
 #include <qspinbox.h>
-#include <qtextedit.h>
+#include <q3textedit.h>
 #include <qtabwidget.h>
-#include <qbuttongroup.h>
-#include <qdatetimeedit.h>
+#include <q3buttongroup.h>
+#include <q3datetimeedit.h>
 #include <qvalidator.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
 #include <qtooltip.h>
 
 #if defined (QT_THREAD_SUPPORT) && QT_VERSION >= 0x030300
 #include <qthread.h>
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <Q3GridLayout>
+#include <Q3CString>
+#include <Q3VBoxLayout>
 extern Q_EXPORT Qt::HANDLE qt_get_application_thread_id();
 #endif
 
@@ -104,7 +109,7 @@ extern Q_EXPORT Qt::HANDLE qt_get_application_thread_id();
 class QSInput : public QObject
 {
     Q_OBJECT
-    Q_OVERRIDE(QCString name SCRIPTABLE false )
+    Q_OVERRIDE(Q3CString name SCRIPTABLE false )
 public:
     QSInput():QObject(0,"Input"){};
 public slots:
@@ -190,7 +195,7 @@ QVariant QSInput::getItem(const QString &label,
 class QSFileDialog : public QObject
 {
     Q_OBJECT
-    Q_OVERRIDE( QCString name SCRIPTABLE false )
+    Q_OVERRIDE( Q3CString name SCRIPTABLE false )
 
 public:
     QSFileDialog() : QObject( 0, "FileDialog" ) { }
@@ -217,7 +222,7 @@ private:
 QVariant QSFileDialog::getOpenFileName( const QString &filter, const QString &title,
 					QWidget *parent )
 {
-    QString str = QFileDialog::getOpenFileName( QString::null, filter,
+    QString str = Q3FileDialog::getOpenFileName( QString::null, filter,
 						parent ? parent : qApp->mainWidget(),
 						0, title );
     return str.isNull() ? QVariant() : QVariant( str );
@@ -226,7 +231,7 @@ QVariant QSFileDialog::getOpenFileName( const QString &filter, const QString &ti
 QVariant QSFileDialog::getSaveFileName( const QString &filter, const QString &title,
 					QWidget *parent )
 {
-    QString str = QFileDialog::getSaveFileName( QString::null, filter,
+    QString str = Q3FileDialog::getSaveFileName( QString::null, filter,
 						parent ? parent : qApp->mainWidget(),
 						0, title );
     return str.isNull() ? QVariant() : QVariant( str );
@@ -235,7 +240,7 @@ QVariant QSFileDialog::getSaveFileName( const QString &filter, const QString &ti
 QVariant QSFileDialog::getExistingDirectory( const QString &dir, const QString &title,
 					     QWidget *parent )
 {
-    QString str =  QFileDialog::getExistingDirectory( dir, parent ? parent : qApp->mainWidget(),
+    QString str =  Q3FileDialog::getExistingDirectory( dir, parent ? parent : qApp->mainWidget(),
 						      0, title );
     return str.isNull() ? QVariant() : QVariant( str );
 }
@@ -245,7 +250,7 @@ QStringList QSFileDialog::getOpenFileNames( const QString &dir,
 					    const QString &title,
 					    QWidget *parent )
 {
-    return QFileDialog::getOpenFileNames( filter, dir, parent ? parent : qApp->mainWidget(),
+    return Q3FileDialog::getOpenFileNames( filter, dir, parent ? parent : qApp->mainWidget(),
 					  0, title );
 }
 
@@ -253,7 +258,7 @@ QStringList QSFileDialog::getOpenFileNames( const QString &dir,
 class QSMessageBox : public QObject
 {
     Q_OBJECT
-    Q_OVERRIDE( QCString name SCRIPTABLE false )
+    Q_OVERRIDE( Q3CString name SCRIPTABLE false )
     Q_ENUMS( ButtonType )
 public:
     enum ButtonType { NoButton, Ok, Cancel, Yes, No, Abort,
@@ -264,8 +269,8 @@ public:
 public slots:
     int information( const QString &text,
 		     ButtonType button0 = Ok,
-		     ButtonType button1 = NoButton,
-		     ButtonType button2 = NoButton,
+		     ButtonType button1 = Qt::NoButton,
+		     ButtonType button2 = Qt::NoButton,
 		     const QString &title = QString::null,
 		     QWidget *parent = 0);
 // QMessageBox::question is not part of Qt 3.1
@@ -278,14 +283,14 @@ public slots:
     int warning( const QString &text,
 		 ButtonType button0 = Retry,
 		 ButtonType button1 = Abort,
-		 ButtonType button2 = NoButton,
+		 ButtonType button2 = Qt::NoButton,
 		 const QString &title = QString::null,
 		 QWidget *parent = 0);
 
     int critical( const QString &text,
 		  ButtonType button0 = Retry,
-		  ButtonType button1 = NoButton,
-		  ButtonType button2 = NoButton,
+		  ButtonType button1 = Qt::NoButton,
+		  ButtonType button2 = Qt::NoButton,
 		  const QString &title = QString::null,
 		  QWidget *parent = 0);
 
@@ -340,7 +345,7 @@ class QSWidget : public QObject
     Q_OBJECT
     Q_PROPERTY(QString whatsThis READ whatsThis WRITE setWhatsThis)
     Q_PROPERTY(QString toolTip READ toolTip WRITE setToolTip)
-    Q_OVERRIDE(QCString name SCRIPTABLE false )
+    Q_OVERRIDE(Q3CString name SCRIPTABLE false )
 public:
     QSWidget(QWidget *w = 0) : widget(w) {}
     QWidget *widget;
@@ -353,11 +358,11 @@ public:
 
 QString QSWidget::whatsThis() const
 {
-    return QWhatsThis::textFor(widget);
+    return Q3WhatsThis::textFor(widget);
 }
 void QSWidget::setWhatsThis(const QString &text) const
 {
-    QWhatsThis::add(widget, text);
+    Q3WhatsThis::add(widget, text);
 }
 
 QString QSWidget::toolTip() const
@@ -461,7 +466,7 @@ class QSDateEditEnums : public QObject
 {
     Q_OBJECT
     Q_ENUMS( Order )
-    Q_OVERRIDE( QCString name SCRIPTABLE false )
+    Q_OVERRIDE( Q3CString name SCRIPTABLE false )
 public:
     enum Order { DMY, MDY, YMD, YDM };
 };
@@ -478,12 +483,12 @@ class QSDateEdit : public QSLabeled
     QS_WIDGET( DateEdit )
 public:
     enum Order { DMY, MDY, YMD, YDM };
-    QSDateEdit() : QSLabeled( tr("Date:"), new QDateEdit(0))
+    QSDateEdit() : QSLabeled( tr("Date:"), new Q3DateEdit(0))
     { d()->setAutoAdvance(TRUE); }
     int order() const
     { return (Order)d()->order(); }
     void setOrder(int order)
-    { d()->setOrder((QDateEdit::Order)order); }
+    { d()->setOrder((Q3DateEdit::Order)order); }
     QDate date() const
     { return d()->date(); }
     void setDate(QDate date)
@@ -508,21 +513,21 @@ class QSTimeEdit : public QSLabeled
     Q_PROPERTY(QTime maximum READ maximum WRITE setMaximum)
     QS_WIDGET( TimeEdit )
 public:
-    QSTimeEdit() : QSLabeled( tr("Time:"), new QTimeEdit(0))
+    QSTimeEdit() : QSLabeled( tr("Time:"), new Q3TimeEdit(0))
     { d()->setAutoAdvance(TRUE); }
     bool seconds() const
-    { return d()->display() & QTimeEdit::Seconds; }
+    { return d()->display() & Q3TimeEdit::Seconds; }
     void setSeconds(bool b)
     {
 	uint disp = d()->display();
-	d()->setDisplay( b ? (disp|QTimeEdit::Seconds):(disp&~QTimeEdit::Seconds));
+	d()->setDisplay( b ? (disp|Q3TimeEdit::Seconds):(disp&~Q3TimeEdit::Seconds));
     }
     bool ampm() const
-    { return d()->display() & QTimeEdit::AMPM; }
+    { return d()->display() & Q3TimeEdit::AMPM; }
     void setAmpm(bool b)
     {
 	uint disp = d()->display();
-	d()->setDisplay( b ? (disp|QTimeEdit::AMPM):(disp&~QTimeEdit::AMPM));
+	d()->setDisplay( b ? (disp|Q3TimeEdit::AMPM):(disp&~Q3TimeEdit::AMPM));
     }
     QTime time() const
     { return d()->time(); }
@@ -541,7 +546,7 @@ public:
 class QSTextEdit : public QSWidget
 {
     Q_OBJECT
-    Q_ENUMS(TextFormat)
+    Q_ENUMS(Qt::TextFormat)
     Q_PROPERTY(QString text READ text WRITE setText)
     Q_PROPERTY(int textFormat READ textFormat WRITE setTextFormat)
     QS_WIDGET( TextEdit )
@@ -552,14 +557,14 @@ public:
       AutoText = Qt::AutoText,
       LogText = Qt::LogText
     };
-    QSTextEdit() : QSWidget(new QTextEdit(0))
-    { d()->setTextFormat(QTextEdit::AutoText); }
+    QSTextEdit() : QSWidget(new Q3TextEdit(0))
+    { d()->setTextFormat(Q3TextEdit::AutoText); }
     QString text() const
     { return d()->text(); }
     void setText( const QString &txt )
     { d()->setText(txt); }
     int textFormat() const
-    { return (TextFormat)d()->textFormat(); }
+    { return (Qt::TextFormat)d()->textFormat(); }
     void setTextFormat(int textFormat)
     { d()->setTextFormat((Qt::TextFormat)textFormat); }
 };
@@ -683,17 +688,17 @@ public slots:
     void newColumn();
     void addSpace(int space);
 private:
-    QButtonGroup *invisibleButtonGroup;
-    QHBoxLayout *hbox;
-    QGridLayout *grid;
+    Q3ButtonGroup *invisibleButtonGroup;
+    Q3HBoxLayout *hbox;
+    Q3GridLayout *grid;
 };
 
 QSGroupBox::QSGroupBox()
-    : QSWidget( new QGroupBox ), invisibleButtonGroup(0)
+    : QSWidget( new Q3GroupBox ), invisibleButtonGroup(0)
 {
     d()->setColumnLayout(0, Qt::Horizontal);
-    hbox = new QHBoxLayout(d()->layout() );
-    grid = new QGridLayout(hbox, 0, 0, 5);
+    hbox = new Q3HBoxLayout(d()->layout() );
+    grid = new Q3GridLayout(hbox, 0, 0, 5);
     grid->setAlignment( AlignTop );
 }
 
@@ -716,7 +721,7 @@ void QSGroupBox::add(QSWidget *widget)
 
     if ( w && w->isA("QRadioButton") ) {
 	if (!invisibleButtonGroup )
-	    (invisibleButtonGroup = new QButtonGroup(d()))->hide();
+	    (invisibleButtonGroup = new Q3ButtonGroup(d()))->hide();
 	invisibleButtonGroup->insert((QButton*)w);
     }
 
@@ -732,7 +737,7 @@ void QSGroupBox::addSpace(int space)
 void QSGroupBox::newColumn() {
     if (grid->numRows()) {
 	hbox->addSpacing(17);
-	grid = new QGridLayout(hbox, 0, 0, 5);
+	grid = new Q3GridLayout(hbox, 0, 0, 5);
 	grid->setAlignment( AlignTop );
     }
 }
@@ -780,14 +785,14 @@ public:
     { return QDialog::sizeHint().expandedTo( QSize(width, 0) ); }
     QWidget *lastWidget;
 
-    QHBoxLayout *hbox;
-    QGridLayout *grid;
+    Q3HBoxLayout *hbox;
+    Q3GridLayout *grid;
 
-    QButtonGroup *invisibleButtonGroup;
+    Q3ButtonGroup *invisibleButtonGroup;
     QTabWidget *tabWidget;
-    QGroupBox *groupBox;
+    Q3GroupBox *groupBox;
 
-    QHBoxLayout *buttonRow;
+    Q3HBoxLayout *buttonRow;
     void fixTabOrder();
 
     QPushButton *okButton, *cancelButton;
@@ -804,16 +809,16 @@ QSDialogPrivate::QSDialogPrivate(QWidget *parent)
      invisibleButtonGroup(0), tabWidget(0), groupBox(0)
 {
     this->parent = this;
-    QLayout *vbox = new QVBoxLayout(this, 11, 7);
-    hbox = new QHBoxLayout(vbox);
-    grid = new QGridLayout(hbox, 0, 0);
+    QLayout *vbox = new Q3VBoxLayout(this, 11, 7);
+    hbox = new Q3HBoxLayout(vbox);
+    grid = new Q3GridLayout(hbox, 0, 0);
     grid->setAlignment( AlignTop );
     okButton = new QPushButton(QMessageBox::tr("OK"), this);
     okButton->setDefault(TRUE);
     QObject::connect(okButton, SIGNAL(clicked()), this, SLOT(accept()));
     cancelButton = new QPushButton(QMessageBox::tr("Cancel"), this);
     QObject::connect(cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
-    buttonRow = new QHBoxLayout(vbox);
+    buttonRow = new Q3HBoxLayout(vbox);
     buttonRow->addStretch(10);
     buttonRow->addWidget(okButton);
     buttonRow->addWidget(cancelButton);
@@ -859,7 +864,7 @@ void QSDialogPrivate::add(QSWidget *widget)
 
     if ( w && w->isA("QRadioButton") ) {
 	if (!invisibleButtonGroup )
-	    (invisibleButtonGroup = new QButtonGroup(this))->hide();
+	    (invisibleButtonGroup = new Q3ButtonGroup(this))->hide();
 	invisibleButtonGroup->insert((QButton*)w);
     }
 
@@ -898,8 +903,8 @@ void QSDialog::newTab(const QString &label)
     QWidget *w = new QWidget;
     d->tabWidget->addTab(w, label);
     d->parent = w;
-    d->hbox = new QHBoxLayout(w, 11, 7);
-    d->grid = new QGridLayout(d->hbox, 0, 0);
+    d->hbox = new Q3HBoxLayout(w, 11, 7);
+    d->grid = new Q3GridLayout(d->hbox, 0, 0);
     d->grid->setAlignment(AlignTop);
 }
 
@@ -907,7 +912,7 @@ void QSDialog::newColumn()
 {
     if (d->grid->numRows()) {
 	d->hbox->addSpacing(17);
-	d->grid = new QGridLayout(d->hbox, 0, 0);
+	d->grid = new Q3GridLayout(d->hbox, 0, 0);
 	d->grid->setAlignment(AlignTop);
     }
 }

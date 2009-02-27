@@ -31,9 +31,13 @@
 #include <qtimer.h>
 #include <qimage.h>
 #include <qbuffer.h>
+//Added by qt3to4:
+#include <QPaintEvent>
+#include <QResizeEvent>
+#include <QPixmap>
 
 PaintWidget::PaintWidget( QWidget *parent, const char *name )
-    : QWidget( parent, name, WRepaintNoErase | WResizeNoErase ), buffer( size() )
+    : QWidget( parent, name, Qt::WNoAutoErase | Qt::WResizeNoErase ), buffer( size() )
 {
     updateTimer = new QTimer( this );
     connect( updateTimer, SIGNAL( timeout() ),

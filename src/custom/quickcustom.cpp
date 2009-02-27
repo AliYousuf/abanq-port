@@ -29,6 +29,8 @@
 #include "quickcustom.h"
 #include "quickpaintwidget.h"
 #include "quickcolorbutton.h"
+//Added by qt3to4:
+#include <QPixmap>
 
 static const char *pixlabel_pixmap[] = {
     "22 22 156 2",
@@ -302,13 +304,13 @@ QString QuickCustomWidgetInterface::group( const QString& feature ) const
     return QString::null;
 }
 
-QIconSet QuickCustomWidgetInterface::iconSet( const QString &feature ) const
+QIcon QuickCustomWidgetInterface::iconSet( const QString &feature ) const
 {
     if ( feature == "PaintWidget" )
-	return QIconSet( QPixmap( pixlabel_pixmap ) );
+	return QIcon( QPixmap( pixlabel_pixmap ) );
     else if ( feature == "ColorButton" )
-	return QIconSet( QPixmap( pushbutton_pixmap ) );
-    return QIconSet();
+	return QIcon( QPixmap( pushbutton_pixmap ) );
+    return QIcon();
 }
 
 QString QuickCustomWidgetInterface::includeFile( const QString& feature ) const

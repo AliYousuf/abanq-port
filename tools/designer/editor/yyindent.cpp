@@ -1100,20 +1100,20 @@ int indentForBottomLine( const QStringList& program, QChar typedIn )
 */
 
 #include <qfile.h>
-#include <qtextstream.h>
+#include <q3textstream.h>
 
 #include <errno.h>
 
 static QString fileContents( const QString& fileName )
 {
     QFile f( fileName );
-    if ( !f.open(IO_ReadOnly) ) {
+    if ( !f.open(QIODevice::ReadOnly) ) {
 	qWarning( "yyindent error: Cannot open file '%s' for reading: %s",
 		  fileName.latin1(), strerror(errno) );
 	return QString::null;
     }
 
-    QTextStream t( &f );
+    Q3TextStream t( &f );
     QString contents = t.read();
     f.close();
     if ( contents.isEmpty() )

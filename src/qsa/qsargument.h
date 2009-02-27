@@ -31,7 +31,7 @@
 
 #include <qsaglobal.h>
 #include <qvariant.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 
 class QObject;
 
@@ -63,17 +63,17 @@ private:
 bool operator==( const QSArgument &a, const QSArgument &b );
 
 #if defined(Q_TEMPLATEDLL)
-// MOC_SKIP_BEGIN
-QSA_TEMPLATE_EXTERN template class QSA_EXPORT QValueList<QSArgument>;
-// MOC_SKIP_END
+#ifndef Q_MOC_RUN
+QSA_TEMPLATE_EXTERN template class QSA_EXPORT Q3ValueList<QSArgument>;
+#endif
 #endif
 
-class QSA_EXPORT QSArgumentList : public QValueList<QSArgument>
+class QSA_EXPORT QSArgumentList : public Q3ValueList<QSArgument>
 {
 public:
     QSArgumentList() {}
-    QSArgumentList( const QValueList<QVariant> &l ) {
-	for ( QValueList<QVariant>::ConstIterator it = l.begin(); it != l.end(); ++it )
+    QSArgumentList( const Q3ValueList<QVariant> &l ) {
+	for ( Q3ValueList<QVariant>::ConstIterator it = l.begin(); it != l.end(); ++it )
 	    append( *it );
     }
     QSArgumentList( const QVariant &v ) { append( v ); }

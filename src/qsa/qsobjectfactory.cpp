@@ -32,6 +32,8 @@
 #include "qsenv.h"
 
 #include <qmetaobject.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 class QSObjectFactoryPrivate
 {
@@ -96,7 +98,7 @@ QSObjectFactory::~QSObjectFactory()
 {
     if( interpreter() )
 	interpreter()->removeObjectFactory( this );
-    QValueList<QObject*> objects = d->staticDescriptors.values();
+    Q3ValueList<QObject*> objects = d->staticDescriptors.values();
     while( objects.count() > 0 ) {
 	const QObject *obj = objects.front();
 	objects.pop_front();

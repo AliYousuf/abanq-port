@@ -1,0 +1,215 @@
+Log for qt3to4 on Vie 27. Feb 10:52:29 2009. Number of log entries: 193
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 37 column 20: qpopupmenu.h -> q3popupmenu.h
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 38 column 16: qaccel.h -> q3accel.h
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 41 column 15: QTextEdit -> Q3TextEdit
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 46 column 34: QScrollView -> Q3ScrollView
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 47 column 34: QScrollView -> Q3ScrollView
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 55 column 45: red -> Qt::red
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 56 column 47: yellow -> Qt::yellow
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 66 column 29: QAccel -> Q3Accel
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 67 column 60: ALT -> Qt::ALT
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 67 column 68: Key_C -> Qt::Key_C
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 69 column 31: QAccel -> Q3Accel
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 70 column 64: ALT -> Qt::ALT
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 70 column 72: Key_U -> Qt::Key_U
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 95 column 29: IO_ReadOnly -> QIODevice::ReadOnly
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 97 column 12: QCString -> Q3CString
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 156 column 13: QTextEdit -> Q3TextEdit
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 217 column 10: QPopupMenu -> Q3PopupMenu
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 219 column 14: QPopupMenu -> Q3PopupMenu
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 219 column 32: QTextEdit -> Q3TextEdit
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 233 column 20: QTextEdit -> Q3TextEdit
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 240 column 13: QTextEdit -> Q3TextEdit
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 246 column 10: QTextEdit -> Q3TextEdit
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 251 column 17: Key_Left -> Qt::Key_Left
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 252 column 18: Key_Right -> Qt::Key_Right
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 253 column 15: Key_Up -> Qt::Key_Up
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 254 column 17: Key_Down -> Qt::Key_Down
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 255 column 17: Key_Home -> Qt::Key_Home
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 256 column 16: Key_End -> Qt::Key_End
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 257 column 18: Key_Prior -> Qt::Key_PageUp
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 258 column 17: Key_Next -> Qt::Key_PageDown
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 259 column 24: Key_Direction_L -> Qt::Key_Direction_L
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 260 column 24: Key_Direction_R -> Qt::Key_Direction_R
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp at line 261 column 10: QTextEdit -> Q3TextEdit
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.cpp: Added the following include directives:
+	#include <Q3CString> 	#include <QKeyEvent> 	#include <QEvent> 
+In file C:/Qt/qsa-wrapper/tools/designer/editor/parenmatcher.cpp at line 30 column 22: qtextedit.h -> q3textedit.h
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 35 column 18: qlistbox.h -> q3listbox.h
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 36 column 15: qvbox.h -> q3vbox.h
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 60 column 42: QListBoxItem -> Q3ListBoxItem
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 63 column 28: QListBox -> Q3ListBox
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 65 column 15: QListBoxItem -> Q3ListBoxItem
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 79 column 30: QListBox -> Q3ListBox
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 84 column 29: QListBox -> Q3ListBox
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 89 column 46: QListBoxItem -> Q3ListBoxItem
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 108 column 21: QListBoxItem -> Q3ListBoxItem
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 121 column 68: QListBoxItem -> Q3ListBoxItem
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 123 column 73: QListBoxItem -> Q3ListBoxItem
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 125 column 69: QListBoxItem -> Q3ListBoxItem
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 139 column 31: QVBox -> Q3VBox
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 139 column 68: WType_Popup -> Qt::WType_Popup
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 140 column 42: QFrame -> Q3Frame
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 140 column 56: QFrame -> Q3Frame
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 144 column 36: QListBox -> Q3ListBox
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 145 column 44: QFrame -> Q3Frame
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 147 column 53: QScrollView -> Q3ScrollView
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 148 column 53: QScrollView -> Q3ScrollView
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 189 column 10: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 197 column 18: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 199 column 14: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 287 column 14: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 296 column 17: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 314 column 25: QTextEdit -> Q3TextEdit
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 315 column 17: QTextEdit -> Q3TextEdit
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 316 column 17: QTextEdit -> Q3TextEdit
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 337 column 26: Key_Tab -> Qt::Key_Tab
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 361 column 29: Key_Up -> Qt::Key_Up
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 361 column 62: ControlButton -> Qt::ControlModifier
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 361 column 81: ControlButton -> Qt::ControlModifier
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 364 column 38: Key_Down -> Qt::Key_Down
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 364 column 71: ControlButton -> Qt::ControlModifier
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 364 column 90: ControlButton -> Qt::ControlModifier
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 370 column 55: AltButton -> Qt::AltModifier
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 372 column 81: ControlButton -> Qt::ControlModifier
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 373 column 30: Key_Tab -> Qt::Key_Tab
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 379 column 40: Key_Period -> Qt::Key_Period
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 383 column 27: Key_Greater -> Qt::Key_Greater
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 396 column 32: Key_Enter -> Qt::Key_Enter
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 396 column 59: Key_Return -> Qt::Key_Return
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 396 column 83: Key_Tab -> Qt::Key_Tab
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 397 column 27: Key_Tab -> Qt::Key_Tab
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 404 column 38: Key_Left -> Qt::Key_Left
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 404 column 64: Key_Right -> Qt::Key_Right
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 405 column 22: Key_Up -> Qt::Key_Up
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 405 column 47: Key_Down -> Qt::Key_Down
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 406 column 24: Key_Home -> Qt::Key_Home
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 406 column 48: Key_End -> Qt::Key_End
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 407 column 25: Key_Prior -> Qt::Key_PageUp
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 407 column 50: Key_Next -> Qt::Key_PageDown
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 409 column 39: Key_Shift -> Qt::Key_Shift
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 409 column 67: Key_Control -> Qt::Key_Control
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 410 column 23: Key_Alt -> Qt::Key_Alt
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 412 column 33: Key_Backspace -> Qt::Key_Backspace
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 439 column 33: Key_Escape -> Qt::Key_Escape
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 458 column 44: QTextEdit -> Q3TextEdit
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 459 column 16: QTextEdit -> Q3TextEdit
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 460 column 16: QTextEdit -> Q3TextEdit
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 523 column 17: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 531 column 16: QListBoxItem -> Q3ListBoxItem
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 542 column 14: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 543 column 20: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 550 column 20: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 613 column 14: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 622 column 20: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 689 column 10: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 691 column 21: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 698 column 55: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp at line 708 column 20: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.cpp: Added the following include directives:
+	#include <QKeyEvent> 	#include <Q3ValueList> 	#include <Q3Frame> 	#include <QEvent> 
+In file C:/Qt/qsa-wrapper/tools/designer/editor/viewmanager.cpp at line 41 column 21: qobjectlist.h -> qobject.h
+In file C:/Qt/qsa-wrapper/tools/designer/editor/viewmanager.cpp at line 48 column 15: QHBoxLayout -> Q3HBoxLayout
+In file C:/Qt/qsa-wrapper/tools/designer/editor/viewmanager.cpp at line 48 column 36: QHBoxLayout -> Q3HBoxLayout
+In file C:/Qt/qsa-wrapper/tools/designer/editor/viewmanager.cpp at line 70 column 28: QVBoxLayout -> Q3VBoxLayout
+In file C:/Qt/qsa-wrapper/tools/designer/editor/viewmanager.cpp at line 86 column 35: QFrame -> Q3Frame
+In file C:/Qt/qsa-wrapper/tools/designer/editor/viewmanager.cpp at line 86 column 52: QFrame -> Q3Frame
+In file C:/Qt/qsa-wrapper/tools/designer/editor/viewmanager.cpp at line 101 column 43: ChildInserted -> ChildAdded
+In file C:/Qt/qsa-wrapper/tools/designer/editor/viewmanager.cpp at line 213 column 50: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/tools/designer/editor/viewmanager.cpp at line 235 column 10: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/tools/designer/editor/viewmanager.cpp at line 237 column 14: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/tools/designer/editor/viewmanager.cpp at line 272 column 16: QTextEdit -> Q3TextEdit
+In file C:/Qt/qsa-wrapper/tools/designer/editor/viewmanager.cpp at line 281 column 16: QTextEdit -> Q3TextEdit
+In file C:/Qt/qsa-wrapper/tools/designer/editor/viewmanager.cpp: Added the following include directives:
+	#include <QResizeEvent> 	#include <QEvent> 	#include <Q3HBoxLayout> 	#include <Q3VBoxLayout> 	#include <Q3ValueList> 	#include <Q3Frame> 	#include <QChildEvent> 
+In file C:/Qt/qsa-wrapper/tools/designer/editor/markerwidget.cpp at line 38 column 20: qpopupmenu.h -> q3popupmenu.h
+In file C:/Qt/qsa-wrapper/tools/designer/editor/markerwidget.cpp at line 289 column 44: WRepaintNoErase -> Qt::WNoAutoErase
+In file C:/Qt/qsa-wrapper/tools/designer/editor/markerwidget.cpp at line 289 column 62: WStaticContents -> Qt::WStaticContents
+In file C:/Qt/qsa-wrapper/tools/designer/editor/markerwidget.cpp at line 289 column 79: WResizeNoErase -> Qt::WResizeNoErase
+In file C:/Qt/qsa-wrapper/tools/designer/editor/markerwidget.cpp at line 396 column 34: LeftButton -> Qt::LeftButton
+In file C:/Qt/qsa-wrapper/tools/designer/editor/markerwidget.cpp at line 436 column 14: QPopupMenu -> Q3PopupMenu
+In file C:/Qt/qsa-wrapper/tools/designer/editor/markerwidget.cpp: Added the following include directives:
+	#include <QContextMenuEvent> 	#include <QPaintEvent> 	#include <QResizeEvent> 	#include <QPixmap> 	#include <QMouseEvent> 
+In file C:/Qt/qsa-wrapper/tools/designer/editor/conf.cpp at line 85 column 11: red -> Qt::red
+In file C:/Qt/qsa-wrapper/tools/designer/editor/conf.cpp at line 85 column 22: green -> Qt::green
+In file C:/Qt/qsa-wrapper/tools/designer/editor/conf.cpp at line 85 column 32: blue -> Qt::blue
+In file C:/Qt/qsa-wrapper/tools/designer/editor/conf.cpp at line 118 column 8: red -> Qt::red
+In file C:/Qt/qsa-wrapper/tools/designer/editor/conf.cpp at line 121 column 10: green -> Qt::green
+In file C:/Qt/qsa-wrapper/tools/designer/editor/conf.cpp at line 124 column 9: blue -> Qt::blue
+In file C:/Qt/qsa-wrapper/tools/designer/editor/conf.cpp at line 136 column 14: red -> Qt::red
+In file C:/Qt/qsa-wrapper/tools/designer/editor/conf.cpp at line 136 column 21: green -> Qt::green
+In file C:/Qt/qsa-wrapper/tools/designer/editor/conf.cpp at line 136 column 27: blue -> Qt::blue
+In file C:/Qt/qsa-wrapper/tools/designer/editor/conf.cpp at line 167 column 135: red -> Qt::red
+In file C:/Qt/qsa-wrapper/tools/designer/editor/conf.cpp at line 168 column 139: green -> Qt::green
+In file C:/Qt/qsa-wrapper/tools/designer/editor/conf.cpp at line 169 column 137: blue -> Qt::blue
+In file C:/Qt/qsa-wrapper/tools/designer/editor/browser.cpp: Added the following include directives:
+	#include <QEvent> 	#include <QMouseEvent> 	#include <QKeyEvent> 
+In file C:/Qt/qsa-wrapper/tools/designer/editor/arghintwidget.cpp at line 167 column 12: QFrame -> Q3Frame
+In file C:/Qt/qsa-wrapper/tools/designer/editor/arghintwidget.cpp at line 167 column 39: WType_Popup -> Qt::WType_Popup
+In file C:/Qt/qsa-wrapper/tools/designer/editor/arghintwidget.cpp at line 169 column 25: QFrame -> Q3Frame
+In file C:/Qt/qsa-wrapper/tools/designer/editor/arghintwidget.cpp at line 169 column 39: QFrame -> Q3Frame
+In file C:/Qt/qsa-wrapper/tools/designer/editor/arghintwidget.cpp at line 172 column 15: QHBoxLayout -> Q3HBoxLayout
+In file C:/Qt/qsa-wrapper/tools/designer/editor/arghintwidget.cpp at line 172 column 39: QHBoxLayout -> Q3HBoxLayout
+In file C:/Qt/qsa-wrapper/tools/designer/editor/arghintwidget.cpp: Added the following include directives:
+	#include <Q3HBoxLayout> 	#include <Q3Frame> 
+No changes made to file C:/Qt/qsa-wrapper/tools/designer/editor/cindent.cpp
+In file C:/Qt/qsa-wrapper/tools/designer/editor/yyindent.cpp at line 684 column 21: qtextstream.h -> q3textstream.h
+In file C:/Qt/qsa-wrapper/tools/designer/editor/yyindent.cpp at line 691 column 28: IO_ReadOnly -> QIODevice::ReadOnly
+In file C:/Qt/qsa-wrapper/tools/designer/editor/yyindent.cpp at line 697 column 15: QTextStream -> Q3TextStream
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.h at line 34 column 19: qtextedit.h -> q3textedit.h
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.h at line 40 column 12: QAccel -> Q3Accel
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.h at line 42 column 31: QTextEdit -> Q3TextEdit
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.h at line 56 column 54: QTextEdit -> Q3TextEdit
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.h at line 57 column 67: QTextEdit -> Q3TextEdit
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.h at line 58 column 54: QTextEdit -> Q3TextEdit
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.h at line 59 column 54: QTextEdit -> Q3TextEdit
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.h at line 60 column 37: QTextEdit -> Q3TextEdit
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.h at line 77 column 41: QTextEdit -> Q3TextEdit
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.h at line 79 column 14: QPopupMenu -> Q3PopupMenu
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.h at line 103 column 10: QAccel -> Q3Accel
+In file C:/Qt/qsa-wrapper/tools/designer/editor/editor.h: Added the following include directives:
+	#include <QEvent> 	#include <QKeyEvent> 	#include <Q3PopupMenu> 
+In file C:/Qt/qsa-wrapper/tools/designer/editor/parenmatcher.h at line 31 column 20: qvaluelist.h -> q3valuelist.h
+In file C:/Qt/qsa-wrapper/tools/designer/editor/parenmatcher.h at line 47 column 18: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.h at line 40 column 11: QVBox -> Q3VBox
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.h at line 41 column 14: QListBox -> Q3ListBox
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.h at line 70 column 22: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.h at line 81 column 22: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.h at line 89 column 49: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.h at line 93 column 9: QVBox -> Q3VBox
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.h at line 94 column 12: QListBox -> Q3ListBox
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.h at line 99 column 14: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/tools/designer/editor/completion.h: Added the following include directives:
+	#include <QEvent> 	#include <Q3ValueList> 
+In file C:/Qt/qsa-wrapper/tools/designer/editor/viewmanager.h at line 36 column 20: qvaluelist.h -> q3valuelist.h
+In file C:/Qt/qsa-wrapper/tools/designer/editor/viewmanager.h at line 40 column 17: QVBoxLayout -> Q3VBoxLayout
+In file C:/Qt/qsa-wrapper/tools/designer/editor/viewmanager.h at line 41 column 15: QDockArea -> Q3DockArea
+In file C:/Qt/qsa-wrapper/tools/designer/editor/viewmanager.h at line 62 column 41: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/tools/designer/editor/viewmanager.h at line 63 column 14: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/tools/designer/editor/viewmanager.h at line 90 column 15: QVBoxLayout -> Q3VBoxLayout
+In file C:/Qt/qsa-wrapper/tools/designer/editor/viewmanager.h at line 91 column 13: QDockArea -> Q3DockArea
+In file C:/Qt/qsa-wrapper/tools/designer/editor/viewmanager.h: Added the following include directives:
+	#include <QResizeEvent> 	#include <Q3VBoxLayout> 	#include <QLabel> 	#include <QChildEvent> 
+In file C:/Qt/qsa-wrapper/tools/designer/editor/markerwidget.h: Added the following include directives:
+	#include <QPaintEvent> 	#include <QResizeEvent> 	#include <QMouseEvent> 	#include <QContextMenuEvent> 
+No changes made to file C:/Qt/qsa-wrapper/tools/designer/editor/conf.h
+In file C:/Qt/qsa-wrapper/tools/designer/editor/browser.h: Added the following include directives:
+	#include <QEvent> 
+In file C:/Qt/qsa-wrapper/tools/designer/editor/arghintwidget.h at line 32 column 16: qframe.h -> q3frame.h
+In file C:/Qt/qsa-wrapper/tools/designer/editor/arghintwidget.h at line 37 column 35: QFrame -> Q3Frame
+In file C:/Qt/qsa-wrapper/tools/designer/editor/arghintwidget.h: Added the following include directives:
+	#include <QLabel> 
+No changes made to file C:/Qt/qsa-wrapper/tools/designer/editor/cindent.h
+In file C:/Qt/qsa-wrapper/tools/designer/editor/preferences.ui.h: Added the following include directives:
+	#include <QPixmap> 
+In file editor.pro: Added entry QT +=  qt3support 
+In file editor.pro: Added entry CONFIG += uic3
+
+In file editor.pro: Renamed FORMS to FORMS3
+
+Log for qt3to4 on Vie 27. Feb 10:52:41 2009. Number of log entries: 3
+In file editor.pri: Added entry QT += qt3support 
+In file editor.pri: Added entry CONFIG += uic3
+
+In file editor.pri: Renamed FORMS to FORMS3
+

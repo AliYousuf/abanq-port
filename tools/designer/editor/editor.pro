@@ -22,7 +22,8 @@ SOURCES		= editor.cpp \
 		  cindent.cpp \
 		  yyindent.cpp
 
-FORMS		= preferences.ui
+#The following line was changed from FORMS to FORMS3 by qt3to4
+FORMS3		= preferences.ui
 
 TARGET		= qsaeditor
 DESTDIR		= ../../../lib
@@ -38,3 +39,8 @@ unix {
 	QMAKE_CFLAGS += $$QMAKE_CFLAGS_SHLIB
 	QMAKE_CXXFLAGS += $$QMAKE_CXXFLAGS_SHLIB
 }
+#The following line was inserted by qt3to4
+QT +=  qt3support 
+#The following line was inserted by qt3to4
+CONFIG += uic3
+

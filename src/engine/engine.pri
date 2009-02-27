@@ -58,3 +58,5 @@ HEADERS += $$ENGDIR/qsclass.h \
 	$$ENGDIR/qstimeouttrigger.h 
 
 
+#The following line was inserted by qt3to4
+QT += qt3support 

@@ -35,7 +35,9 @@
 
 #include <qobject.h>
 #include <qvariant.h>
-#include <qobjectlist.h>
+#include <qobject.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 class QSProject;
 class QSInterpreterPrivate;
@@ -66,7 +68,7 @@ private:
 
 bool operator==( const QSStackFrame &a, const QSStackFrame &b );
 
-class QSA_EXPORT QSStackTrace : public QValueList<QSStackFrame>
+class QSA_EXPORT QSStackTrace : public Q3ValueList<QSStackFrame>
 {
 public:
     QString toString() const;

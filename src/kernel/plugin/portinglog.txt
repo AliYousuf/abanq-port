@@ -1,0 +1,5 @@
+Log for qt3to4 on Vie 27. Feb 10:49:28 2009. Number of log entries: 3
+No changes made to file C:/Qt/qsa-wrapper/src/kernel/plugin/quickcore.cpp
+No changes made to file C:/Qt/qsa-wrapper/src/kernel/plugin/quickcore.h
+In file plugin.pro: Added entry QT +=  qt3support 
+

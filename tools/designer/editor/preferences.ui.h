@@ -1,3 +1,5 @@
+//Added by qt3to4:
+#include <QPixmap>
 /**********************************************************************
 ** Copyright (C) 2000-2002 Trolltech AS.  All rights reserved.
 **

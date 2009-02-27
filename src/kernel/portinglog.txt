@@ -1,0 +1,3 @@
+Log for qt3to4 on Vie 27. Feb 10:48:47 2009. Number of log entries: 1
+In file kernel.pri: Added entry QT += qt3support 
+

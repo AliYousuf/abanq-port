@@ -28,16 +28,24 @@
 #include "editor.h"
 #include "markerwidget.h"
 #include <qlayout.h>
+//Added by qt3to4:
+#include <QResizeEvent>
+#include <QEvent>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
+#include <Q3ValueList>
+#include <Q3Frame>
+#include <QChildEvent>
 #include <private/qrichtext_p.h>
 #include "paragdata.h"
-#include <qobjectlist.h>
+#include <qobject.h>
 #include <qlabel.h>
 #include <qtimer.h>
 
 ViewManager::ViewManager( QWidget *parent, const char *name )
     : QWidget( parent, name ), curView( 0 )
 {
-    QHBoxLayout *l = new QHBoxLayout( this );
+    Q3HBoxLayout *l = new Q3HBoxLayout( this );
     markerWidget = new MarkerWidget( this, "editor_markerwidget" );
     connect( markerWidget, SIGNAL( markersChanged() ),
 	     this, SIGNAL( markersChanged() ) );
@@ -59,7 +67,7 @@ ViewManager::ViewManager( QWidget *parent, const char *name )
     connect( messageTimer, SIGNAL( timeout() ), this, SLOT( clearStatusBar() ) );
     markerWidget->setFixedWidth( fontMetrics().width( QString::fromLatin1("0000") ) + 20 );
     l->addWidget( markerWidget );
-    layout = new QVBoxLayout( l );
+    layout = new Q3VBoxLayout( l );
 }
 
 void ViewManager::addView( QWidget *view )
@@ -75,7 +83,7 @@ void ViewManager::addView( QWidget *view )
     posLabel = new QLabel( this, "editor_poslabel" );
     posLabel->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
     posLabel->setText( QString::fromLatin1(" Line: 1 Col: 1") );
-    posLabel->setFrameStyle( QFrame::Sunken | QFrame::Panel );
+    posLabel->setFrameStyle( Q3Frame::Sunken | Q3Frame::Panel );
     posLabel->setLineWidth( 1 );
     posLabel->setFixedHeight( posLabel->fontMetrics().height() );
     layout->addWidget( posLabel );
@@ -90,7 +98,7 @@ QWidget *ViewManager::currentView() const
 
 void ViewManager::childEvent( QChildEvent *e )
 {
-    if ( e->type() == QEvent::ChildInserted &&
+    if ( e->type() == QEvent::ChildAdded &&
 #if (QT_VERSION) < 0x030200
 	 e->child()->inherits("Editor")
 #else
@@ -202,7 +210,7 @@ void ViewManager::clearErrorMarker()
     markerWidget->doRepaint();
 }
 
-void ViewManager::setBreakPoints( const QValueList<uint> &l )
+void ViewManager::setBreakPoints( const Q3ValueList<uint> &l )
 {
     QTextParagraph *p = ( (Editor*)curView )->document()->firstParagraph();
     int i = 0;
@@ -224,9 +232,9 @@ void ViewManager::setBreakPoints( const QValueList<uint> &l )
     markerWidget->doRepaint();
 }
 
-QValueList<uint> ViewManager::breakPoints() const
+Q3ValueList<uint> ViewManager::breakPoints() const
 {
-    QValueList<uint> l;
+    Q3ValueList<uint> l;
     int i = 0;
     QTextParagraph *p = ( (Editor*)curView )->document()->firstParagraph();
     while ( p ) {
@@ -261,7 +269,7 @@ void ViewManager::showMessage( const QString &msg )
 {
     int row;
     int col;
-    ( (QTextEdit*)currentView() )->getCursorPosition( &row, &col );
+    ( (Q3TextEdit*)currentView() )->getCursorPosition( &row, &col );
     posLabel->setText( msg );
     messageTimer->start( 1000, TRUE );
 }
@@ -270,6 +278,6 @@ void ViewManager::clearStatusBar()
 {
     int row;
     int col;
-    ( (QTextEdit*)currentView() )->getCursorPosition( &row, &col );
+    ( (Q3TextEdit*)currentView() )->getCursorPosition( &row, &col );
     posLabel->setText( QString( " Line: %1 Col: %2" ).arg( row + 1 ).arg( col + 1 ) );
 }

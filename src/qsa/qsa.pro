@@ -1,5 +1,5 @@
-exists(../../../../settings.pro) {
-        include(../../../../settings.pro)
+exists(../../settings.pro) {
+        include(../../settings.pro)
 }
 else {
         error("settings.pro missing, unable to build")
@@ -104,3 +104,5 @@ include( ../editor/editor.pri )
 include(../../tools/designer/editor/editor.pri)
 
 #win32:PRECOMPILED_HEADER = qsa_pch.h
+#The following line was inserted by qt3to4
+QT +=  qt3support 
