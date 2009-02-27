@@ -53,7 +53,7 @@
 
 // #define QSA_COMPLETION_DEBUG
 
-QPtrVector<QObject>* QSACompletion::interfaceObjects( const QSObject &o ) const
+Q3PtrVector<QObject>* QSACompletion::interfaceObjects( const QSObject &o ) const
 {
     return &interpreter()->wrapperClass()->objectVector( &o );
 }
@@ -323,7 +323,7 @@ void QSACompletion::completeQMetaObject( const QMetaObject *meta,
     }
 }
 
-void QSACompletion::completeQObject( const QPtrVector<QObject> &objects,
+void QSACompletion::completeQObject( const Q3PtrVector<QObject> &objects,
 				       const QString &object,
                Q3ValueList<CompletionEntry> &res )
 {
@@ -1214,7 +1214,7 @@ QSObject QSACompletion::queryQSObject( const QMetaObject *meta, const QString &p
     return env()->createUndefined();
 }
 
-QSObject QSACompletion::queryQSObject( const QPtrVector<QObject> &objects, const QString &property ) const
+QSObject QSACompletion::queryQSObject( const Q3PtrVector<QObject> &objects, const QString &property ) const
 {
     for ( uint i = 0; i < objects.count(); i++ ) {
 	const QMetaObject *mo = objects[i]->metaObject();
@@ -1254,7 +1254,7 @@ const QMetaObject *QSACompletion::queryQMetaObject( const QMetaObject *meta,
     return 0;
 }
 
-const QMetaObject *QSACompletion::queryQMetaObject( const QPtrVector<QObject> &objects, const QString &property ) const
+const QMetaObject *QSACompletion::queryQMetaObject( const Q3PtrVector<QObject> &objects, const QString &property ) const
 {
     for ( uint i = 0; i < objects.count(); i++ ) {
 	const QMetaObject *mo = objects[i]->metaObject();
@@ -1265,7 +1265,7 @@ const QMetaObject *QSACompletion::queryQMetaObject( const QPtrVector<QObject> &o
     return 0;
 }
 
-QPtrVector<QObject> QSACompletion::queryQObject( const QPtrVector<QObject> &objects, const QString &property ) const
+Q3PtrVector<QObject> QSACompletion::queryQObject( const Q3PtrVector<QObject> &objects, const QString &property ) const
 {
     QSObject obj = interpreter()->wrap( objects[0] );
 
@@ -1282,7 +1282,7 @@ QPtrVector<QObject> QSACompletion::queryQObject( const QPtrVector<QObject> &obje
 	}
     }
 
-    return QPtrVector<QObject>();
+    return Q3PtrVector<QObject>();
 }
 
 // =============================================================================

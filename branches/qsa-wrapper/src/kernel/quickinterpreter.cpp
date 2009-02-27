@@ -66,8 +66,8 @@ static QSObject qsConnectCommon( QSEnv *env,
 				 QSObject &arg2,
 				 QSWrapperShared *&sendObj,
 				 QSWrapperShared *&recObj,
-				 const QPtrVector<QObject> *&sendIfaces,
-				 const QPtrVector<QObject> *&recIfaces,
+         const Q3PtrVector<QObject> *&sendIfaces,
+         const Q3PtrVector<QObject> *&recIfaces,
 				 QString &sig,
 				 QString &sl,
 				 int &signal_index,
@@ -190,8 +190,8 @@ static QSObject qsConnectCommon( QSEnv *env,
     QSObject arg2; \
     QSWrapperShared *sendObj; \
     QSWrapperShared *recObj; \
-    const QPtrVector<QObject> *sendIfaces = 0; \
-    const QPtrVector<QObject> *recIfaces = 0; \
+    const Q3PtrVector<QObject> *sendIfaces = 0; \
+    const Q3PtrVector<QObject> *recIfaces = 0; \
     QString sig; \
     QString sl; \
     int signal_index; \
@@ -859,7 +859,7 @@ void QuickInterpreter::cleanTypeRev( QString &type )
 }
 
 bool QuickInterpreter::queryDispatchObjects( QObject *obj,
-					     QPtrVector<QObject> &result )
+               Q3PtrVector<QObject> &result )
 {
     Q_ASSERT( obj );
     QMetaObject *meta = obj->metaObject();
@@ -873,14 +873,14 @@ bool QuickInterpreter::queryDispatchObjects( QObject *obj,
 }
 
 bool QuickInterpreter::queryDispatchObjects( const Q3CString &name, void *ptr,
-					     QPtrVector<QObject> &result )
+               Q3PtrVector<QObject> &result )
 {
     return factory->constructInterface( name, ptr, result );
 }
 
 bool QuickInterpreter::construct( const QString &className,
           const Q3ValueList<QVariant> &vargs,
-				  QPtrVector<QObject> &result )
+          Q3PtrVector<QObject> &result )
 {
     return factory->constructInstance( className, vargs, result );
 }
