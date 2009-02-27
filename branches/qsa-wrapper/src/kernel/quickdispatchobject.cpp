@@ -75,7 +75,7 @@ QuickDispatchObjectFactory::~QuickDispatchObjectFactory()
     delete d;
 }
 
-bool QuickDispatchObjectFactory::constructInterface( const QCString &className,
+bool QuickDispatchObjectFactory::constructInterface( const Q3CString &className,
 						     void *ptr,
 						     QPtrVector<QObject> &result )
 {
@@ -227,7 +227,7 @@ void QuickDispatchObjectFactory::removeWrapperFactory( QSWrapperFactory *factory
 }
 
 
-bool QuickDispatchObjectFactory::createInterface( const QCString &className, void *ptr,
+bool QuickDispatchObjectFactory::createInterface( const Q3CString &className, void *ptr,
                                                   QPtrVector<QObject> *result )
 {
     Q3PtrList<QSWrapperFactory> factories = *(d->wrappersCache.find( className ));

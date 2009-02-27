@@ -872,7 +872,7 @@ bool QuickInterpreter::queryDispatchObjects( QObject *obj,
     return TRUE;
 }
 
-bool QuickInterpreter::queryDispatchObjects( const QCString &name, void *ptr,
+bool QuickInterpreter::queryDispatchObjects( const Q3CString &name, void *ptr,
 					     QPtrVector<QObject> &result )
 {
     return factory->constructInterface( name, ptr, result );
