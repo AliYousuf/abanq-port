@@ -6,7 +6,8 @@ TEMPLATE = app
 CONFIG -= moc
 CONFIG += console
 INCLUDEPATH += .
-
+DESTDIR = $$PWD
+message($$DESTDIR)
 # Input
 SOURCES += main.cpp configutils.cpp
 HEADERS += configutils.h
