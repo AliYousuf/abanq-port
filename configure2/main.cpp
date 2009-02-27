@@ -101,10 +101,10 @@ int main( int argc, char **argv )
     }
     *qtDir += "/";
 
-    if ( !checkLicense() ) {
+/*    if ( !checkLicense() ) {
 	dumpMessages();
 	return 1;
-    }
+    }*/
 
     if( !writeQSConfig( buildIde ) ) {
 	dumpMessages();
