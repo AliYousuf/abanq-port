@@ -30,8 +30,8 @@
 #define QUICKDISPATCHOBJECT_H
 
 #include <qobject.h>
-#include <qptrvector.h>
-#include <qvaluelist.h>
+#include <q3ptrvector.h>
+#include <q3valuelist.h>
 
 class QuickInterpreter;
 class QuickDispatchObjectFactoryPrivate;
@@ -45,7 +45,7 @@ public:
     QuickDispatchObjectFactory( QuickInterpreter *i );
     ~QuickDispatchObjectFactory();
 
-    bool constructInterface( const QCString &className,
+    bool constructInterface( const Q3CString &className,
 			     void *ptr,
 			     QPtrVector<QObject> &result );
 
@@ -69,12 +69,12 @@ public:
     void removeWrapperFactory( QSWrapperFactory *factory );
 
 private:
-    bool createInterface( const QCString &className, void *ptr, QPtrVector<QObject> *);
+    bool createInterface( const Q3CString &className, void *ptr, QPtrVector<QObject> *);
     bool createInstance( const QString &className,
-			 const QValueList<QVariant> &args,
+       const Q3ValueList<QVariant> &args,
                          QPtrVector<QObject> *);
 
-    void addInterface( QObject *iface, QPtrVector<QObject> *);
+    void addInterface( QObject *iface, Q3PtrVector<QObject> *);
     void addObject( QObject *obj, QPtrVector<QObject> *);
 
 private:

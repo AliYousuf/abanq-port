@@ -1199,7 +1199,7 @@ class NormalizeObject : public QObject
 {
 public:
     NormalizeObject() : QObject() {}
-    static QCString normalizeSignalSlot( const char *signalSlot ) { return QObject::normalizeSignalSlot( signalSlot ); }
+    static Q3CString normalizeSignalSlot( const char *signalSlot ) { return QObject::normalizeSignalSlot( signalSlot ); }
 };
 
 
@@ -2044,7 +2044,7 @@ QSObject QSApplicationClass::fetchValue( const QSObject *objPtr,
         return QSWritableClass::fetchValue( objPtr, mem );
 
     QObjectListIt it( *(interpreter()->topLevelObjects()) );
-    QCString n = mem.name().ascii();
+    Q3CString n = mem.name().ascii();
     while ( it.current() ) {
         if ( n == (*it)->name() )
             return interpreter()->wrap( *it );
@@ -2160,12 +2160,12 @@ QSObject uObjectToQS( QuickInterpreter *ip, QUObject *o, const void *extra,
         else if (qstrcmp((char*)extra, "uint") == 0)
             return ip->env()->createNumber( *(uint*) static_QUType_ptr.get(o) );
         else if (qobj != 0) { // Attempt to find it in the current object's namespace
-            QCString s = QCString(qobj->className());
+            Q3CString s = Q3CString(qobj->className());
 
             int pos = s.findRev( "::" );
             if ( pos >= 0 ) {
                 s = s.left( pos + 2 );
-                s += QCString( (char*)extra );
+                s += Q3CString( (char*)extra );
                 if ( QMetaObject::hasMetaObject( s ) )
                     return ip->wrap( (QObject*)static_QUType_ptr.get( o ) );
             }

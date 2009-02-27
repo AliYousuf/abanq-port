@@ -220,7 +220,7 @@ void QSACompletion::completeQMetaObject( const QMetaObject *meta,
     bool isUnnamed = (flags & IsUnnamed) == IsUnnamed;
 
     // properties
-    QMap<QCString,bool> override;
+    QMap<Q3CString,bool> override;
     const QMetaObject *m = meta;
     do {
 	int num = m->numProperties();

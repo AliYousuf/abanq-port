@@ -140,8 +140,8 @@ public:
     int sourceIdOfName( const QString &name ) const;
 
     bool queryDispatchObjects( QObject *obj, QPtrVector<QObject> &result );
-    bool queryDispatchObjects( const QCString &name, void *ptr,
-			       QPtrVector<QObject> &result );
+    bool queryDispatchObjects( const Q3CString &name, void *ptr,
+             QPtrVector<QObject> &result );
     bool construct( const QString &className, const QValueList<QVariant> &args,
 		    QPtrVector<QObject> &result );
 
