@@ -142,7 +142,7 @@ public:
     void check( QSCheckData * );
 
 private:
-    QValueList<QSAttribute> attrs;
+    Q3ValueList<QSAttribute> attrs;
 };
 
 class QSNullNode : public QSNode {

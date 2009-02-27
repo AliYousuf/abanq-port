@@ -32,7 +32,7 @@
 #include "qsobject.h"
 #include "qstimeouttrigger.h"
 #include <qstringlist.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qobject.h>
 
 class QSList;
@@ -124,7 +124,7 @@ public:
   /**
    * @return Return line of last error. -1 if last call didn't have an error.
    */
-  QValueList<uint> errorLines() const;
+  Q3ValueList<uint> errorLines() const;
   /**
    * @return Error message from last call to @ref evaluate(). Empty string
    * if no error occured.

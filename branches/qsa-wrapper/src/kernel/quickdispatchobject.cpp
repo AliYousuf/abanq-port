@@ -92,7 +92,7 @@ bool QuickDispatchObjectFactory::constructInterface( const Q3CString &className,
 }
 
 bool QuickDispatchObjectFactory::constructInstance( const QString &className,
-                                                    const QValueList<QVariant> &args,
+                                                    const Q3ValueList<QVariant> &args,
                                                     QPtrVector<QObject> &result )
 {
     if (recurseBlock) {
@@ -171,8 +171,8 @@ static void initWrapperFactory( QSWrapperFactory *factory,
 				 QuickDispatchObjectFactoryPrivate *d )
 {
     d->wrapperFactories.append( factory );
-    QValueList<QString> classes = factory->wrapperDescriptors().keys();
-    for( QValueList<QString>::ConstIterator it = classes.begin();
+    Q3ValueList<QString> classes = factory->wrapperDescriptors().keys();
+    for( Q3ValueList<QString>::ConstIterator it = classes.begin();
 	 it != classes.end(); ++it ) {
 	d->wrappersCache[*it].append( factory );
 	d->classes << *it;
@@ -248,14 +248,14 @@ bool QuickDispatchObjectFactory::createInterface( const Q3CString &className, vo
 
 
 bool QuickDispatchObjectFactory::createInstance( const QString &className,
-                                                 const QValueList<QVariant> &args,
+                                                 const Q3ValueList<QVariant> &args,
                                                  QPtrVector<QObject> *result )
 {
     if( !d->objectsCache.contains( className ) )
 	return FALSE;
 
     QSArgumentList qsArgs;
-    for ( QValueList<QVariant>::ConstIterator it = args.begin();
+    for ( Q3ValueList<QVariant>::ConstIterator it = args.begin();
 	  it != args.end(); ++it ) {
 	if ( (*it).type() == QVariant::String ) {
 		static const int length_of_Pointer = 7;

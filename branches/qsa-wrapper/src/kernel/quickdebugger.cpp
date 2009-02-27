@@ -150,7 +150,7 @@ void QuickDebugger::returnEvent()
     }
 }
 
-QValueList<QuickDebuggerStackFrame> QuickDebugger::backtrace()
+Q3ValueList<QuickDebuggerStackFrame> QuickDebugger::backtrace()
 {
     if( hadError )
 	return exceptionStack;
@@ -169,7 +169,7 @@ void QuickDebugger::storeExceptionStack()
 
     exceptionStack = cStack;
     if( exceptionScope == 0 )
-	exceptionScope = new QValueList<QSObject>();
+  exceptionScope = new Q3ValueList<QSObject>();
     *exceptionScope = env()->scope();
     hadError = TRUE;
     if( exceptionStack.count() == 0 ) {

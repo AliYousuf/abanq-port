@@ -160,7 +160,7 @@ QVariant QSArrayClass::toVariant( const QSObject *obj, QVariant::Type t ) const
 	    l << v.get( QString::number( i ) ).toString();
 	return QVariant( l.join( QString::fromLatin1(",") ) );
     } else {
-	QValueList<QVariant> l;
+  Q3ValueList<QVariant> l;
 	for ( int i = 0; i < len; ++i )
 	    l << v.get( QString::number( i ) ).toVariant( QVariant::Invalid );
 	QVariant var = l;

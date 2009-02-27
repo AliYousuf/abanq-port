@@ -468,8 +468,8 @@ void QuickInterpreter::init()
 
     QMap<QString,QObject*> statDescr = factory->staticDescriptors();
     QMap<QString,QString> instDescr = factory->instanceDescriptors();
-    QValueList<QString> features = instDescr.keys();
-    for ( QValueList<QString>::ConstIterator it = features.begin();
+    Q3ValueList<QString> features = instDescr.keys();
+    for ( Q3ValueList<QString>::ConstIterator it = features.begin();
 	  it != features.end(); ++it ) {
         if (env()->globalClass()->definedMembers()->contains(*it)) {
             qWarning("QSObjectFactory: Trying to register existing class: '%s'", (*it).latin1());
@@ -879,7 +879,7 @@ bool QuickInterpreter::queryDispatchObjects( const Q3CString &name, void *ptr,
 }
 
 bool QuickInterpreter::construct( const QString &className,
-				  const QValueList<QVariant> &vargs,
+          const Q3ValueList<QVariant> &vargs,
 				  QPtrVector<QObject> &result )
 {
     return factory->constructInstance( className, vargs, result );

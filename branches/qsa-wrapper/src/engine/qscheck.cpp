@@ -930,7 +930,7 @@ static int attrNo( int abit )
 void QSAttributeNode::check( QSCheckData *c )
 {
     int asum = AttributeNone;
-    QValueList<QSAttribute>::ConstIterator it = attrs.begin();
+    Q3ValueList<QSAttribute>::ConstIterator it = attrs.begin();
     for ( ; it != attrs.end(); ++it ) {
 	if ( asum & *it ) {
 	    QString msg = QString::fromLatin1( "Duplicate attribute `%1'" )

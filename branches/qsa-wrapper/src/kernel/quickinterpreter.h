@@ -142,7 +142,7 @@ public:
     bool queryDispatchObjects( QObject *obj, QPtrVector<QObject> &result );
     bool queryDispatchObjects( const Q3CString &name, void *ptr,
              QPtrVector<QObject> &result );
-    bool construct( const QString &className, const QValueList<QVariant> &args,
+    bool construct( const QString &className, const Q3ValueList<QVariant> &args,
 		    QPtrVector<QObject> &result );
 
     // use with caution
