@@ -35,7 +35,7 @@
 #include <qregexp.h>
 #include <qapplication.h>
 #include <stdlib.h>
-#ifdef Q_WS_WIN
+#if defined(Q_WS_WIN) && !defined(__MINGW32__)
 #include <windows.h>
 #endif
 
@@ -111,7 +111,11 @@ int main( int argc, char **argv )
 	return 1;
     }
 
+#if QT_VERSION >= 0x040403
+    if ( !prefix.isNull() )
+#else
     if ( !prefix )
+#endif
 	copyQSAHeaders();
 
     //installDocs();

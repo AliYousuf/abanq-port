@@ -8,11 +8,15 @@
 #include <qregexp.h>
 //Added by qt3to4:
 #include <Q3TextStream>
-#ifdef Q_WS_WIN
+#if defined(Q_WS_WIN) && !defined(__MINGW32__)
 #include <windows.h>
 #endif
 #ifdef Q_OS_UNIX
 #include <stdlib.h>
+#endif
+
+#if QT_VERSION >= 0x040403
+#include <QFileInfo>
 #endif
 
 QString *qtDir = 0;
@@ -239,6 +243,8 @@ void copy( const QString &source, const QString &dest )
 #ifdef Q_OS_UNIX
     system( "cp " + QFile::encodeName( s ) + " " + QFile::encodeName( d ) );
     system( "chmod +w " + QFile::encodeName( d ) );
+#elif __MINGW32__
+    system( "copy " + QFile::encodeName( s ) + " " + QFile::encodeName( d ) );
 #else
     QT_WA(
     {
@@ -408,20 +414,39 @@ bool writeQSConfig( bool buildIde )
 
 void rmDirRecursive( const QDir &dir )
 {
+#if QT_VERSION >= 0x040403
+  QFileInfoList list = dir.entryInfoList( QDir::All | QDir::System | QDir::Hidden );
+  if ( !list.isEmpty() ) {
+
+    QListIterator<QFileInfo> it( list );
+    QFileInfo fi;
+
+    while( it.hasNext() ) {
+      fi = it.next();
+      if( ( fi.fileName() != "." ) && ( fi.fileName() != ".." ) ){
+        if( fi.isDir() )
+          rmDirRecursive( QDir(fi.absFilePath()) );
+        else
+          QFile::remove( fi.absFilePath() );
+      }
+  }
+#else
     const QFileInfoList* list = dir.entryInfoList( QDir::All | QDir::System | QDir::Hidden );
     if ( list ) {
-	QFileInfoListIterator it( *list );
-	QFileInfo* fi;
+  QFileInfoListIterator it( *list );
+  QFileInfo* fi;
 
-	while( ( fi = it.current() ) ) {
-	    if( ( fi->fileName() != "." ) && ( fi->fileName() != ".." ) ){
-		if( fi->isDir() )
-		    rmDirRecursive( QDir(fi->absFilePath()) );
-		else
-		    QFile::remove( fi->absFilePath() );
-	    }
-	    ++it;
-	}
+  while( ( fi = it.current() ) ) {
+      if( ( fi->fileName() != "." ) && ( fi->fileName() != ".." ) ){
+    if( fi->isDir() )
+        rmDirRecursive( QDir(fi->absFilePath()) );
+    else
+        QFile::remove( fi->absFilePath() );
+      }
+      ++it;
+  }
+#endif
+
     }
     // Remove this dir as well
     dir.rmdir( dir.absPath() );
