@@ -32,8 +32,8 @@
 #include "qsobject.h"
 #include "qsclasslist.h"
 #include <qstring.h>
-#include <qvaluelist.h>
-#include <qptrlist.h>
+#include <q3valuelist.h>
+#include <q3ptrlist.h>
 #include <qstringlist.h>
 
 class QSEngine;
@@ -123,7 +123,7 @@ public:
 
     QSObject resolveValue( const QString &n ) const;
 
-    QPtrList<QSClass> classes() const { return classList; }
+    Q3PtrList<QSClass> classes() const { return classList; }
 
     QSObject throwError( ErrorType e, const QString &m = QString::null,
 			 int l = -1 );

@@ -527,7 +527,7 @@ const QSClass* QSObject::resolveMember( const QString &name,
     Q_ASSERT( !name.isEmpty() );
     if ( !owner )
 	owner = objectType();
-    QPtrList<QSClass> enclosing;
+    Q3PtrList<QSClass> enclosing;
     QSMember stackedMember;
     while ( owner ) {
 	if ( owner->member( *offset==0 ? this : 0, name, mem ) ) {

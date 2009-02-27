@@ -30,9 +30,9 @@
 #define QSCLASSLIST_H
 
 #include "qsclass.h"
-#include <qptrlist.h>
+#include <q3ptrlist.h>
 
-class QUICKCORE_EXPORT QSClassList : public QPtrList<QSClass>
+class QUICKCORE_EXPORT QSClassList : public Q3PtrList<QSClass>
 {
 };
 

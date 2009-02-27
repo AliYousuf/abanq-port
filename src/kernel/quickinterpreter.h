@@ -33,11 +33,11 @@
 #include <qobject.h>
 #include <qobjectlist.h>
 #include <qstringlist.h>
-#include <qvaluelist.h>
-#include <qptrvector.h>
+#include <q3valuelist.h>
+#include <q3ptrvector.h>
 #include <qmap.h>
 #include "dlldefs.h"
-#include <qptrlist.h>
+#include <q3ptrlist.h>
 #endif // QT_H
 
 #include "quickdispatchobject.h"
@@ -65,15 +65,15 @@ class QSWrapperShared;
 class QSPaletteClass;
 class QSColorGroupClass;
 
-typedef QPtrList<QSWrapperShared> QSWrapperSharedList;
+typedef Q3PtrList<QSWrapperShared> QSWrapperSharedList;
 
 #if defined(Q_TEMPLATEDLL)
 // MOC_SKIP_BEGIN
 template class QUICKCORE_EXPORT QMap<int, QObject *>;
 template class QUICKCORE_EXPORT QMap<QString, QObject*>;
 template class QUICKCORE_EXPORT QMap<QString, bool>;
-template class QPtrList<QuickDispatchObjectFactory>;
-template class QUICKCORE_EXPORT QMap<QString, QPtrList<QuickDispatchObjectFactory> >;
+template class Q3PtrList<QuickDispatchObjectFactory>;
+template class QUICKCORE_EXPORT QMap<QString, Q3PtrList<QuickDispatchObjectFactory> >;
 template class QUICKCORE_EXPORT QMap<QObject*, QSWrapperClass*>;
 //template class QUICKCORE_EXPORT QStringList;
 // MOC_SKIP_END

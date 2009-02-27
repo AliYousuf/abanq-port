@@ -765,7 +765,7 @@ void IdeWindow::setProject( QSProject *p )
     QObject::connect( project, SIGNAL( editorTextChanged() ),
 		      this, SLOT( textChanged() ) );
     projectChanged();
-    QPtrList<QSScript> scripts = project->scripts();
+    Q3PtrList<QSScript> scripts = project->scripts();
     if ( tabWidget->count() == 0 && scripts.count() )
 	addPage( scripts.first() );
     connect( project->interpreter(), SIGNAL( error( const QString &, const QString &, int ) ),
@@ -785,7 +785,7 @@ void IdeWindow::setProject( QSProject *p )
 void IdeWindow::savePreferences()
 {
     qsaEditorSyntax->save();
-    QPtrList<QSEditor> editors = project->editors();
+    Q3PtrList<QSEditor> editors = project->editors();
     QSEditor *editor = editors.first();
     while ( editor ) {
 	editor->readSettings();
@@ -795,7 +795,7 @@ void IdeWindow::savePreferences()
 
 void IdeWindow::projectChanged()
 {
-    QPtrList<QSScript> scripts = project->scripts();
+    Q3PtrList<QSScript> scripts = project->scripts();
     projectContainer->scriptsListView->clear();
     for ( QSScript *script = scripts.first(); script; script = scripts.next() ) {
 	ScriptListItem *item = new ScriptListItem( projectContainer->scriptsListView, script );

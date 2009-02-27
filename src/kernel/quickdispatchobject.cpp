@@ -41,10 +41,10 @@
 class QuickDispatchObjectFactoryPrivate
 {
 public:
-    QPtrList<QSObjectFactory> objectFactories;
-    QPtrList<QSWrapperFactory> wrapperFactories;
+    Q3PtrList<QSObjectFactory> objectFactories;
+    Q3PtrList<QSWrapperFactory> wrapperFactories;
     QMap<QString,QSObjectFactory*> objectsCache;
-    QMap<QString,QPtrList<QSWrapperFactory> > wrappersCache;
+    QMap<QString,Q3PtrList<QSWrapperFactory> > wrappersCache;
     QMap<QString,QString> instanceDescriptors;
     QMap<QString,QObject*> staticDescriptors;
     QStringList classes;
@@ -230,7 +230,7 @@ void QuickDispatchObjectFactory::removeWrapperFactory( QSWrapperFactory *factory
 bool QuickDispatchObjectFactory::createInterface( const QCString &className, void *ptr,
                                                   QPtrVector<QObject> *result )
 {
-    QPtrList<QSWrapperFactory> factories = *(d->wrappersCache.find( className ));
+    Q3PtrList<QSWrapperFactory> factories = *(d->wrappersCache.find( className ));
     bool added = FALSE;
     for( QSWrapperFactory *factory = factories.first(); factory;
  	 factory = factories.next() ) {

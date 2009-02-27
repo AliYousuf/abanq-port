@@ -49,7 +49,7 @@
 #include <qapplication.h>
 #include <qmetaobject.h>
 #include <qobjectlist.h>
-#include <qptrdict.h>
+#include <q3ptrdict.h>
 #include <private/qcom_p.h>
 #include <private/qpluginmanager_p.h>
 
@@ -69,7 +69,7 @@ static bool qsToUObject(  QUObject *o,
 			  const QSObject &v,
 			  QUType *t,
 			  const void *extra,
-			  QPtrList<qs_ptr_ref> *allocs,
+        Q3PtrList<qs_ptr_ref> *allocs,
                           qs_method_info *);
 
 static QValueList<QuickMetaData> getSlots( QObject* o, const char *s, bool super )
@@ -411,7 +411,7 @@ static QSObject executeSlot( QSEnv *env, QObject *qobj,
     int returnOffset = 0;
     bool ok = FALSE;
     QUObject *uo = 0;
-    QPtrList<qs_ptr_ref> pointers;
+    Q3PtrList<qs_ptr_ref> pointers;
     pointers.setAutoDelete( TRUE );
     QValueList<QuickMetaData>::ConstIterator md = mds.begin();
     while (md != mds.end()) {
@@ -2181,7 +2181,7 @@ QSObject uObjectToQS( QuickInterpreter *ip, QUObject *o, const void *extra,
 bool qsToUObject( QUObject *o, const QSObject &v,
                   QUType *t,
                   const void *extra,
-                  QPtrList<qs_ptr_ref> *allocs,
+                  Q3PtrList<qs_ptr_ref> *allocs,
                   qs_method_info *methodInfo )
 {
     Q_ASSERT( v.isValid() );
