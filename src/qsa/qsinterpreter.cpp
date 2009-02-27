@@ -234,8 +234,8 @@ QuickInterpreter *get_quick_interpreter( QSInterpreter *ip )
   \row \i \c QString*        \i \c String, \c Number, \c undefined
   \row \i \c QStringList     \i \c String, Array
   \row \i \c QStringList*    \i \c String, \c Array, \c undefined
-  \row \i \c QValueList<int> \i \c Array
-  \row \i \c QValueList<int>* \i \c Array
+  \row \i \c Q3ValueList<int> \i \c Array
+  \row \i \c Q3ValueList<int>* \i \c Array
   \row \i \c QVariant        \i \c All types except QObject* and wrapped pointer.
   \row \i \c QVariant*       \i \c All types except QObject* and wrapped pointer.
   \row \i \c bool            \i \c Boolean, \c Number (0 is FALSE), \c String ("", "0" and "false" is false)

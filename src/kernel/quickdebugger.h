@@ -56,7 +56,7 @@ struct QUICKCORE_EXPORT QuickDebuggerStackFrame
 
 #if defined(Q_TEMPLATEDLL)
 // MOC_SKIP_BEGIN
-template class QUICKCORE_EXPORT QValueList<QuickDebuggerStackFrame>;
+template class QUICKCORE_EXPORT Q3ValueList<QuickDebuggerStackFrame>;
 template class QUICKCORE_EXPORT QValueStack<bool>;
 // MOC_SKIP_END
 #endif
@@ -78,7 +78,7 @@ public:
     void clearAllBreakpoints( int i = 0 );
     void clear();
 
-    QValueList<QuickDebuggerStackFrame> backtrace();
+    Q3ValueList<QuickDebuggerStackFrame> backtrace();
 
     void storeExceptionStack();
 
@@ -93,9 +93,9 @@ protected:
     QString varInfo( const QString &ident );
 
 private:
-    QValueList<QuickDebuggerStackFrame> cStack;
-    QValueList<QuickDebuggerStackFrame> exceptionStack;
-    QValueList<QSObject> *exceptionScope;
+    Q3ValueList<QuickDebuggerStackFrame> cStack;
+    Q3ValueList<QuickDebuggerStackFrame> exceptionStack;
+    Q3ValueList<QSObject> *exceptionScope;
     QValueStack<bool> tmpCStack;
 
     uint hadError:1;

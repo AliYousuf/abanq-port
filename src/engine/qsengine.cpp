@@ -112,7 +112,7 @@ int QSEngine::errorType() const
     return rep->errType;
 }
 
-QValueList<uint> QSEngine::errorLines() const
+Q3ValueList<uint> QSEngine::errorLines() const
 {
     return rep->errLines;
 }

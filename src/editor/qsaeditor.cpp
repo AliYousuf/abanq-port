@@ -300,7 +300,7 @@ void QSAEditor::expand( bool all /*else only functions*/ )
 
 void QSAEditor::saveLineStates()
 {
-    QValueList<Q_UINT32> states;
+    Q3ValueList<Q_UINT32> states;
     QTextParagraph *p = document()->firstParagraph();
     while ( p ) {
 	if ( ( (ParagData*)p->extraData() )->lineState == ParagData::FunctionStart )
@@ -336,7 +336,7 @@ void QSAEditor::saveLineStates()
 
 void QSAEditor::loadLineStates()
 {
-    QValueList<Q_UINT32> states;
+    Q3ValueList<Q_UINT32> states;
 
     // hacky
     QString fn;
@@ -364,7 +364,7 @@ void QSAEditor::loadLineStates()
     f.close();
 
     QTextParagraph *p = document()->firstParagraph();
-    QValueList<Q_UINT32>::Iterator it = states.begin();
+    Q3ValueList<Q_UINT32>::Iterator it = states.begin();
     while ( p ) {
 	if ( p->extraData() &&
 	     ( (ParagData*)p->extraData() )->lineState == ParagData::FunctionStart ) {

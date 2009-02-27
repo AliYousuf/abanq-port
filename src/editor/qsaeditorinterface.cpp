@@ -395,14 +395,14 @@ int QSAEditorInterface::numLines() const
     return ( (QSAEditor*)viewManager->currentView() )->paragraphs();
 }
 
-// void QSAEditorInterface::breakPoints( QValueList<uint> &l ) const
+// void QSAEditorInterface::breakPoints( Q3ValueList<uint> &l ) const
 // {
 //     if ( !viewManager )
 // 	return;
 //     l = viewManager->breakPoints();
 // }
 
-// void QSAEditorInterface::setBreakPoints( const QValueList<uint> &l )
+// void QSAEditorInterface::setBreakPoints( const Q3ValueList<uint> &l )
 // {
 //     if ( !viewManager )
 // 	return;
@@ -443,7 +443,7 @@ void QSAEditorInterface::update()
 // 	return;
 //     int para, index;
 //     e->getCursorPosition( &para, &index );
-//     QValueList<uint> bps;
+//     Q3ValueList<uint> bps;
 //     iface->breakPoints( bps );
 //     if ( bps.find( para ) != bps.end() ) {
 // 	bps.remove( para );
@@ -474,14 +474,14 @@ void QSAEditorInterface::update()
 //     if ( e ) {
 // 	int para, index;
 // 	e->getCursorPosition( &para, &index );
-// 	QValueList<uint> bps;
+// 	Q3ValueList<uint> bps;
 // 	iface->breakPoints( bps );
 // 	if ( bps.find( para ) != bps.end() ) {
 // 	    // #### set some variable to initialize the dialog with that breakpoint
 // 	}
 // 	iface->release();
 //     }
-//     QMap<QString, QValueList<uint> > bps;
+//     QMap<QString, Q3ValueList<uint> > bps;
 //     dIface->currentProject()->breakPoints( bps );
 //     BreakPointSettings dlg( bps, dIface, 0, 0, TRUE );
 //     dlg.exec();

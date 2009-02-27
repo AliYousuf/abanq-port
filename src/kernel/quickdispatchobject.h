@@ -50,7 +50,7 @@ public:
 			     QPtrVector<QObject> &result );
 
     bool constructInstance( const QString &className,
-			    const QValueList<QVariant> &args,
+          const Q3ValueList<QVariant> &args,
 			    QPtrVector<QObject> &result );
 
     QMap<QString,QObject*> staticDescriptors() const;

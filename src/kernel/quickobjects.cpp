@@ -72,9 +72,9 @@ static bool qsToUObject(  QUObject *o,
         Q3PtrList<qs_ptr_ref> *allocs,
                           qs_method_info *);
 
-static QValueList<QuickMetaData> getSlots( QObject* o, const char *s, bool super )
+static Q3ValueList<QuickMetaData> getSlots( QObject* o, const char *s, bool super )
 {
-    QValueList<QuickMetaData> mds;
+    Q3ValueList<QuickMetaData> mds;
     const QMetaObject* meta = o->metaObject();
     QStrList slotList = meta->slotNames( super );
     int slen = qstrlen( s );
@@ -186,9 +186,9 @@ public:
     qs_ptr_ref(uchar *ptr) : ucharPtr(ptr), type(UCharPtr) { }
     qs_ptr_ref(short *ptr) : shortPtr(ptr), type(ShortPtr) { }
     qs_ptr_ref(ushort *ptr) : ushortPtr(ptr), type(UShortPtr) { }
-    qs_ptr_ref(QValueList<int> *ptr) : intListPtr(ptr), type(IntListPtr) { }
+    qs_ptr_ref(Q3ValueList<int> *ptr) : intListPtr(ptr), type(IntListPtr) { }
     qs_ptr_ref(QObjectList *ptr) : objListPtr(ptr), type(ObjectListPtr) { }
-    qs_ptr_ref(QValueList<QVariant> *ptr) : varListPtr(ptr), type(VariantListPtr) { }
+    qs_ptr_ref(Q3ValueList<QVariant> *ptr) : varListPtr(ptr), type(VariantListPtr) { }
     qs_ptr_ref(QStringList *ptr) : stringListPtr(ptr), type(StringListPtr) { }
 
     ~qs_ptr_ref()
@@ -244,9 +244,9 @@ public:
 	uchar *ucharPtr;
 	short *shortPtr;
 	ushort *ushortPtr;
-	QValueList<int> *intListPtr;
+  Q3ValueList<int> *intListPtr;
 	QObjectList *objListPtr;
-	QValueList<QVariant> *varListPtr;
+  Q3ValueList<QVariant> *varListPtr;
         QStringList *stringListPtr;
     };
     Type type;
@@ -289,7 +289,7 @@ struct qs_method_info
 #define QSA_SLOT_ARGUMENT_LIMIT 16
 
 static QSObject qsa_execute_slot_no_cast(QSEnv *env, QObject *qobj,
-                                         const QValueList<QuickMetaData> &mds, bool *matched)
+                                         const Q3ValueList<QuickMetaData> &mds, bool *matched)
 {
     const QString str_qobject = QString::fromLatin1("QObject");
     const QString str_pointer = QString::fromLatin1("Pointer");
@@ -301,7 +301,7 @@ static QSObject qsa_execute_slot_no_cast(QSEnv *env, QObject *qobj,
 
     QUObject slotargs[QSA_SLOT_ARGUMENT_LIMIT];
 
-    for (QValueList<QuickMetaData>::ConstIterator it = mds.begin(); it != mds.end(); ++it) {
+    for (Q3ValueList<QuickMetaData>::ConstIterator it = mds.begin(); it != mds.end(); ++it) {
         const QUMethod *m = (*it).method;
 
         if (m->count > QSA_SLOT_ARGUMENT_LIMIT)
@@ -396,7 +396,7 @@ static QSObject qsa_execute_slot_no_cast(QSEnv *env, QObject *qobj,
 }
 
 static QSObject executeSlot( QSEnv *env, QObject *qobj,
-                             const QValueList<QuickMetaData> &mds )
+                             const Q3ValueList<QuickMetaData> &mds )
 {
     bool exactMatch = false;
     QSObject obj = qsa_execute_slot_no_cast(env, qobj, mds, &exactMatch);
@@ -413,7 +413,7 @@ static QSObject executeSlot( QSEnv *env, QObject *qobj,
     QUObject *uo = 0;
     Q3PtrList<qs_ptr_ref> pointers;
     pointers.setAutoDelete( TRUE );
-    QValueList<QuickMetaData>::ConstIterator md = mds.begin();
+    Q3ValueList<QuickMetaData>::ConstIterator md = mds.begin();
     while (md != mds.end()) {
         m = (*md).method;
         if ( m && m->count && m->parameters[0].inOut == QUParameter::Out )
@@ -807,7 +807,7 @@ bool QSWrapperClass::member( const QSObject *objPtr, const QString &p,
                 } break;
                 case QSOT::Slot: {
                     for ( i = int(objects.count())-1; i >= 0; i-- ) {
-                        QValueList<QuickMetaData> mds = getSlots( objects[ i ], p.ascii(), TRUE);
+                        Q3ValueList<QuickMetaData> mds = getSlots( objects[ i ], p.ascii(), TRUE);
                         if ( !mds.isEmpty() ) {
                             mem->setExecutable( TRUE );
                             mem->setWritable( FALSE );
@@ -900,7 +900,7 @@ bool QSWrapperClass::member( const QSObject *objPtr, const QString &p,
             return TRUE;
         }
 
-        QValueList<QuickMetaData> mds = getSlots( o, p.ascii(), TRUE );
+        Q3ValueList<QuickMetaData> mds = getSlots( o, p.ascii(), TRUE );
         if ( !mds.isEmpty() ) {
             if ( key.isEmpty() )
                 key = p;
@@ -998,7 +998,7 @@ QSObject QSWrapperClass::invoke( QSObject *objPtr, const QSMember &mem ) const
     const char *asc = mem.name().ascii();
 
     for ( int i = int(objects.count())-1; i >= 0; i-- ) {
-        QValueList<QuickMetaData> mds = getSlots( objects[ i ], asc, TRUE );
+        Q3ValueList<QuickMetaData> mds = getSlots( objects[ i ], asc, TRUE );
         if ( !mds.isEmpty() ) {
             return executeSlot( env(), objects[ i ], mds );
         }
@@ -1262,7 +1262,7 @@ QSObject QSObjectConstructor::construct( const QSList &args ) const
 {
     if ( type == Class ) {
         QPtrVector<QObject> result;
-        QValueList<QVariant> vargs;
+        Q3ValueList<QVariant> vargs;
         for ( int i = 0; i < args.size(); i++ )
             vargs.append( args[i].toVariant( QVariant::Invalid ) );
         bool success = interpreter()->construct( cname, vargs, result );
@@ -1615,10 +1615,10 @@ void QSVariantShared::createObject( QuickInterpreter *ip )
         break;
     }
     case QVariant::List: {
-        QValueList<QVariant> lst = var.toList();
+        Q3ValueList<QVariant> lst = var.toList();
         QSArray array( env );
         int i = 0;
-        for ( QValueList<QVariant>::ConstIterator it = lst.begin(); it != lst.end(); ++it ) {
+        for ( Q3ValueList<QVariant>::ConstIterator it = lst.begin(); it != lst.end(); ++it ) {
             QuickScriptVariant qsvar =  QuickScriptVariant( ip, *it, 0 );
             array.put(QString::number( i++ ), qsvar.isNative() ? qsvar.toNative() : qsvar);
         }
@@ -1776,10 +1776,10 @@ QString QSVariantClass::toString( const QSObject *obj ) const
     case QVariant::StringList:
         return var->toStringList().join( QString::fromLatin1(",") );
     case QVariant::List: {
-        QValueList<QVariant> lst = var->toList();
+        Q3ValueList<QVariant> lst = var->toList();
         QString str;
         bool first = TRUE;
-        for ( QValueList<QVariant>::ConstIterator it = lst.begin();
+        for ( Q3ValueList<QVariant>::ConstIterator it = lst.begin();
               it != lst.end(); ++it ) {
             if ( !first )
                 str += QString::fromLatin1(",");
@@ -1855,10 +1855,10 @@ QString QSVariantClass::debugString( const QSObject *obj ) const
         return var->toStringList().join( QString::fromLatin1(",") )
             + QString::fromLatin1(":StringList");
     case QVariant::List: {
-        QValueList<QVariant> lst = var->toList();
+        Q3ValueList<QVariant> lst = var->toList();
         QString str = QString::fromLatin1("{");
         bool first = TRUE;
-        for ( QValueList<QVariant>::ConstIterator it = lst.begin();
+        for ( Q3ValueList<QVariant>::ConstIterator it = lst.begin();
               it != lst.end(); ++it ) {
             if ( !first )
                 str += QString::fromLatin1(",");
@@ -2264,8 +2264,8 @@ bool qsToUObject( QUObject *o, const QSObject &v,
             ushort *c = new ushort( (ushort)v.toNumber() );
             allocs->append( new qs_ptr_ref(c) );
             static_QUType_ptr.set(o, c);
-        } else if (qstrcmp((const char*) extra, "QValueList<int>") == 0 && v.isA("Array")) {
-            QValueList<int> *intList = new QValueList<int>;
+        } else if (qstrcmp((const char*) extra, "Q3ValueList<int>") == 0 && v.isA("Array")) {
+            Q3ValueList<int> *intList = new Q3ValueList<int>;
             int len = QSArrayClass::length(&v);
             for ( int i=0; i<len; ++i )
                 intList->append((int) v.get( QString::number( i ) ).toNumber());
@@ -2304,7 +2304,7 @@ bool qsToUObject( QUObject *o, const QSObject &v,
                    && v.objectType()->name() == QString::fromLatin1("ColorGroup")) {
             static_QUType_varptr.set(o, QSColorGroupClass::colorGroup(&v));
         } else if ((int)(*((char*)extra)) == QVariant::List && v.isA("Array")) {
-            QValueList<QVariant> *varList = new QValueList<QVariant>;
+            Q3ValueList<QVariant> *varList = new Q3ValueList<QVariant>;
             int len = QSArrayClass::length(&v);
             for ( int i=0; i<len; ++i )
                 varList->append(v.get(QString::number(i)).toVariant(QVariant::Invalid));
@@ -2357,9 +2357,9 @@ void QuickScriptReceiver::removeEventHandler( int id, QObject *ctx, const QStrin
         return;
     if ( (*handler)[id].targets.count() == 1 )
         QObject::disconnectInternal( qobj, id, this, QSLOT_CODE, id );
-    QValueList<EventTarget::Target>::Iterator it = (*handler)[id].targets.begin();
+    Q3ValueList<EventTarget::Target>::Iterator it = (*handler)[id].targets.begin();
     while ( it != (*handler)[id].targets.end() ) {
-        QValueList<EventTarget::Target>::Iterator it2 = it;
+        Q3ValueList<EventTarget::Target>::Iterator it2 = it;
         ++it;
         if ( (*it2).func == func &&
              ( (*it2).ctx == ctx || (*it2).qsctx.equals( qsctx ) ) )
@@ -2382,7 +2382,7 @@ bool QuickScriptReceiver::qt_invoke( int id, QUObject *o )
     // 0th element contains return value
     for ( int i = 1; i < md.method->count+1; i++, param++ )
         args.append( uObjectToQS( ip, &o[ i ], param->typeExtra, qobj ) );
-    for ( QValueList<EventTarget::Target>::ConstIterator sit = (*it).targets.begin(); sit != (*it).targets.end(); ++sit ) {
+    for ( Q3ValueList<EventTarget::Target>::ConstIterator sit = (*it).targets.begin(); sit != (*it).targets.end(); ++sit ) {
         if ( (*sit).ctx )
             ip->call( (*sit).ctx, (*sit).func, args );
         else
@@ -2397,7 +2397,7 @@ void QuickScriptReceiver::invalidate()
 {
     for( QuickScriptEventMap::Iterator it = handler->begin();
          it != handler->end(); ++it ) {
-        for( QValueList<EventTarget::Target>::Iterator targets = (*it).targets.begin();
+        for( Q3ValueList<EventTarget::Target>::Iterator targets = (*it).targets.begin();
              targets != (*it).targets.end(); ++targets ) {
             (*targets).qsctx.invalidate();
         }

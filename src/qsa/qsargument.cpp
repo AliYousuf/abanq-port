@@ -40,7 +40,7 @@
     var x = new AnotherCppObject( arg1, arg2 ); // Qt Script
   \endcode
   the arguments are passed to the QSObjectFactory::create() call as a
-  QValueList of QSArguments. A QSArgument can hold a QVariant, a
+  Q3ValueList of QSArguments. A QSArgument can hold a QVariant, a
   QObject pointer or a void pointer. The type held by a QSArgument is
   returned by type() and the value is returned by variant(), qobject(), or ptr(), depending on the QSArgument type.
 
@@ -172,10 +172,10 @@ QString QSArgument::typeName() const
 /*!
   \class QSArgumentList qsargument.h
 
-  \brief The QSArgumentList class provides a QValueList of QSArguments
+  \brief The QSArgumentList class provides a Q3ValueList of QSArguments
   with some convenience constructors.
 
-  This class inherits QValueList<QSArgument>, so the API of QValueList
+  This class inherits Q3ValueList<QSArgument>, so the API of Q3ValueList
   applies for this class. In addition, this class offers convenience
   constructors which make working with this class more comfortable.
 
@@ -186,7 +186,7 @@ QString QSArgument::typeName() const
 Creates an empty QSArgumentList.
 */
 
-/*! \fn QSArgumentList::QSArgumentList( const QValueList<QVariant> &l )
+/*! \fn QSArgumentList::QSArgumentList( const Q3ValueList<QVariant> &l )
 
   Converts the list \a l of QVariants into a QSArgumentList.
 */

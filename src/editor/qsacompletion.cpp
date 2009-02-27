@@ -73,7 +73,7 @@ struct Property
     }
 };
 
-static void getSlots( const QMetaObject *meta, QValueList<Property> &result,
+static void getSlots( const QMetaObject *meta, Q3ValueList<Property> &result,
 		      bool super, bool withArgs, bool sigs )
 {
     int nslots = meta->numSlots( super );
@@ -127,7 +127,7 @@ static void getSlots( const QMetaObject *meta, QValueList<Property> &result,
     }
 }
 
-static void addLayoutChildren( QObject *o, QValueList<CompletionEntry> &res )
+static void addLayoutChildren( QObject *o, Q3ValueList<CompletionEntry> &res )
 {
     const QObjectList *l = o->children();
     if ( !l )
@@ -177,7 +177,7 @@ static QStringList getArguments( const QString &s )
     return res;
 }
 
-void QSACompletion::completeQSObject( QSObject &obj, QValueList<CompletionEntry> &res, bool includeMembers )
+void QSACompletion::completeQSObject( QSObject &obj, Q3ValueList<CompletionEntry> &res, bool includeMembers )
 {
     QStringList funcs = interpreter()->functionsOf( obj, TRUE, TRUE, includeMembers );
     QStringList::Iterator it;
@@ -211,7 +211,7 @@ void QSACompletion::completeQSObject( QSObject &obj, QValueList<CompletionEntry>
 
 void QSACompletion::completeQMetaObject( const QMetaObject *meta,
 					 const QString &object,
-					 QValueList<CompletionEntry> &res,
+           Q3ValueList<CompletionEntry> &res,
 					 int flags,
 					 QSObject &obj )
 {
@@ -262,8 +262,8 @@ void QSACompletion::completeQMetaObject( const QMetaObject *meta,
     }
 
     // functions
-    QValueList<Property> lst;
-    QValueList<Property>::Iterator pit;
+    Q3ValueList<Property> lst;
+    Q3ValueList<Property>::Iterator pit;
     getSlots( meta, lst, includeSuperClass, FALSE, FALSE );
     for ( pit  = lst.begin(); pit != lst.end(); ++pit ) {
 	if ( (*pit).name == QString::fromLatin1("deleteLater") )
@@ -325,7 +325,7 @@ void QSACompletion::completeQMetaObject( const QMetaObject *meta,
 
 void QSACompletion::completeQObject( const QPtrVector<QObject> &objects,
 				       const QString &object,
-				       QValueList<CompletionEntry> &res )
+               Q3ValueList<CompletionEntry> &res )
 {
     bool deleteList = FALSE;
     for ( uint i = 0; i < objects.count(); i++ ) {
@@ -428,9 +428,9 @@ void QSACompletion::completeQObject( const QPtrVector<QObject> &objects,
 // =============================================================================
 // =============================================================================
 
-QString QSACompletion::resolveValue( const QString &value, const QValueList<QPair<QString, QString> > &assignments ) const
+QString QSACompletion::resolveValue( const QString &value, const Q3ValueList<QPair<QString, QString> > &assignments ) const
 {
-    for ( QValueList<QPair<QString, QString> >::ConstIterator it = assignments.begin(); it != assignments.end(); ++it ) {
+    for ( Q3ValueList<QPair<QString, QString> >::ConstIterator it = assignments.begin(); it != assignments.end(); ++it ) {
 	if ( (*it).first == value )
 	    return (*it).second;
     }
@@ -462,7 +462,7 @@ QString qsa_strip_down(const QString &str, char start, char stop)
 }
 
 QString QSACompletion::resolveFullyQualifiedValue(const QString &value,
-                                                  const QValueList<QPair<QString, QString> > &assignments ) const
+                                                  const Q3ValueList<QPair<QString, QString> > &assignments ) const
 {
     QString val = value;
 
@@ -496,7 +496,7 @@ do { \
 } while ( FALSE )
 
 
-QValueList<QPair<QString, QString> > QSACompletion::parseAssignments( const QString &code ) const
+Q3ValueList<QPair<QString, QString> > QSACompletion::parseAssignments( const QString &code ) const
 {
     QChar c, last;
     enum State { LeftHandSide, RightHandSight, Comment, String, Parentheses } state = LeftHandSide;
@@ -504,7 +504,7 @@ QValueList<QPair<QString, QString> > QSACompletion::parseAssignments( const QStr
     State lastState = LeftHandSide; // initialize to make compilers happy
     QChar ignoreEnd[2];
     QString leftHandBuffer, rightHandBuffer;
-    QValueList<QPair<QString, QString> > assignments;
+    Q3ValueList<QPair<QString, QString> > assignments;
     for ( uint i = 0; i < code.length(); ++i ) {
 	last = c;
 	c = code[ (int) i];
@@ -614,7 +614,7 @@ QValueList<QPair<QString, QString> > QSACompletion::parseAssignments( const QStr
 	APPEND_PARSED_CHAR( state );
     }
 
-    for ( QValueList<QPair<QString, QString> >::Iterator it = assignments.begin(); it != assignments.end(); ++it ) {
+    for ( Q3ValueList<QPair<QString, QString> >::Iterator it = assignments.begin(); it != assignments.end(); ++it ) {
 	QString key = (*it).first;
 	QString value = (*it).second;
 	QStringList l = QStringList::split( '.', value );
@@ -628,7 +628,7 @@ QValueList<QPair<QString, QString> > QSACompletion::parseAssignments( const QStr
 	    while ( ( replacedValue = resolveValue( valuePart, assignments ) )
 		    != QString::null ) {
 		if( ++counter > 1000 ) // Avoid recursion...
-		    return QValueList<QPair<QString,QString> >();
+        return Q3ValueList<QPair<QString,QString> >();
 		valuePart = replacedValue;
 	    }
 	    (*it).second = valuePart;
@@ -670,10 +670,10 @@ QString QSACompletion::functionCode() const
 
     QuickClassParser parser;
     parser.parse( curEditor->text() );
-    QValueList<QuickClass> classes = parser.classes();
+    Q3ValueList<QuickClass> classes = parser.classes();
     bool global = funcName.isNull() || !p;
     QString code;
-    for ( QValueList<QuickClass>::ConstIterator it = classes.begin(); it != classes.end(); ++it ) {
+    for ( Q3ValueList<QuickClass>::ConstIterator it = classes.begin(); it != classes.end(); ++it ) {
 	if ( (*it).type == QuickClass::Global ) {
 	    for ( QStringList::ConstIterator vit = (*it).variables.begin(); vit != (*it).variables.end(); ++vit )
 		code += *vit + QString::fromLatin1(";\n");
@@ -685,7 +685,7 @@ QString QSACompletion::functionCode() const
 	if ( global )
 	    continue;
 
-	for ( QValueList<LanguageInterface::Function>::ConstIterator fit = (*it).functions.begin();
+  for ( Q3ValueList<LanguageInterface::Function>::ConstIterator fit = (*it).functions.begin();
 	      fit != (*it).functions.end(); ++fit ) {
 	    if ( (*fit).name.left( (*fit).name.find( '(' ) ) == funcName ) {
 		if ( (*it).type != QuickClass::Global ) {
@@ -773,7 +773,7 @@ bool QSACompletion::doObjectCompletion( const QString &obj )
 	return FALSE;
     }
 
-    QValueList<CompletionEntry> res;
+    Q3ValueList<CompletionEntry> res;
 
     QSObject nullObject;
     switch ( o.type ) {
@@ -808,12 +808,12 @@ bool QSACompletion::doObjectCompletion( const QString &obj )
     return TRUE;
 }
 
-QValueList<QStringList> QSACompletion::functionParameters( const QString &f,
+Q3ValueList<QStringList> QSACompletion::functionParameters( const QString &f,
 							     QChar &separator,
 							     QString &,
 							     QString &postfix )
 {
-     QValueList<QStringList> l;
+     Q3ValueList<QStringList> l;
 
     separator = ',';
 
@@ -863,7 +863,7 @@ QValueList<QStringList> QSACompletion::functionParameters( const QString &f,
 	obj = ( (QSFactoryObjectProxy*) obj.qsobj.objectType() )
 	      ->staticInstance();
 	if( !obj.qsobj.isValid() )
-	    return QValueList<QStringList>();
+      return Q3ValueList<QStringList>();
     }
 
     obj.resolve();
@@ -871,7 +871,7 @@ QValueList<QStringList> QSACompletion::functionParameters( const QString &f,
 	return l;
     }
 
-    QValueList<Property> res2;
+    Q3ValueList<Property> res2;
     int i;
 
     switch ( obj.type ) {
@@ -887,7 +887,7 @@ QValueList<QStringList> QSACompletion::functionParameters( const QString &f,
     }
 
     QStringList funcs;
-    for ( QValueList<Property>::Iterator it = res2.begin(); it != res2.end(); ++it ) {
+    for ( Q3ValueList<Property>::Iterator it = res2.begin(); it != res2.end(); ++it ) {
 	if ( (*it).name.left( (*it).name.find( '(' ) ) == func ) {
 	    returnType = (*it).type;
 	    funcs << (*it).name;
@@ -920,8 +920,8 @@ QValueList<QStringList> QSACompletion::functionParameters( const QString &f,
 		obj = queryObject( obj_str );
 		obj.resolve();
 		if ( obj.isNull() || obj.type == QSCompletionObject::TQSObject )
-		    return QValueList<QStringList>();
-		QValueList<Property> res2;
+        return Q3ValueList<QStringList>();
+    Q3ValueList<Property> res2;
 		int j;
 
 		switch ( obj.type ) {
@@ -939,17 +939,17 @@ QValueList<QStringList> QSACompletion::functionParameters( const QString &f,
 		    break;
 		}
 
-		for ( QValueList<Property>::Iterator it = res2.begin(); it != res2.end(); ++it ) {
+    for ( Q3ValueList<Property>::Iterator it = res2.begin(); it != res2.end(); ++it ) {
 		    if ( (*it).name.left( (*it).name.find( '(' ) ) == func ) {
 			returnType = (*it).type;
 			funcs << (*it).name;
 		    }
 		}
 		if ( funcs.isEmpty() )
-		    return QValueList<QStringList>();
+        return Q3ValueList<QStringList>();
 	    }
 	} else {
-	    return QValueList<QStringList>();
+      return Q3ValueList<QStringList>();
 	}
     }
 

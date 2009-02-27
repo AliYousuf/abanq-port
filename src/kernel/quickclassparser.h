@@ -31,7 +31,7 @@
 
 #include "dlldefs.h"
 #include <qstring.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qstringlist.h>
 
 struct LanguageInterface
@@ -69,16 +69,16 @@ struct LanguageInterface
 
 #if defined(Q_TEMPLATEDLL)
 // MOC_SKIP_BEGIN
-template class QUICKCORE_EXPORT QValueList<LanguageInterface::Connection>;
-template class QUICKCORE_EXPORT QValueList<LanguageInterface::Function>;
+template class QUICKCORE_EXPORT Q3ValueList<LanguageInterface::Connection>;
+template class QUICKCORE_EXPORT Q3ValueList<LanguageInterface::Function>;
 // MOC_SKIP_END
 #endif
 
 struct QUICKCORE_EXPORT QuickClass
 {
     enum Type { Global, Class } type;
-    QValueList<LanguageInterface::Connection> connections;
-    QValueList<LanguageInterface::Function> functions;
+    Q3ValueList<LanguageInterface::Connection> connections;
+    Q3ValueList<LanguageInterface::Function> functions;
     QStringList variables;
     QString inherits;
     QString access;
@@ -98,7 +98,7 @@ struct QUICKCORE_EXPORT QuickClass
 
 #if defined(Q_TEMPLATEDLL)
 // MOC_SKIP_BEGIN
-template class QUICKCORE_EXPORT QValueList<QuickClass>;
+template class QUICKCORE_EXPORT Q3ValueList<QuickClass>;
 // MOC_SKIP_END
 #endif
 
@@ -108,7 +108,7 @@ public:
     QuickClassParser();
 
     void parse( const QString &code );
-    QValueList<QuickClass> classes() const { return clsses; }
+    Q3ValueList<QuickClass> classes() const { return clsses; }
     void setGlobalName( const QString &n ) { gname = n; }
 
 protected:
@@ -120,7 +120,7 @@ protected:
     void parseCComment();
 
 private:
-    QValueList<QuickClass> clsses;
+    Q3ValueList<QuickClass> clsses;
     QuickClass *currClass;
     QuickClass globalClass;
     int pos;

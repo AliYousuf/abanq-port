@@ -59,7 +59,7 @@ void qsKillTimers( QSEnv * );
 
 QUICKCORE_EXPORT QObjectList *extraChildren( QObject *o );
 QUICKCORE_EXPORT QObject *objectChild( QObject *wid, const char *objName, const char *inheritsClass, bool recursiveSearch );
-extern QUICKCORE_EXPORT QValueList<QString> *appArgs;
+extern QUICKCORE_EXPORT Q3ValueList<QString> *appArgs;
 
 struct EventTarget {
 public:
@@ -72,7 +72,7 @@ public:
 	QSObject qsctx;
 	QString func;
     };
-    QValueList<Target> targets;
+    Q3ValueList<Target> targets;
 
 };
 
@@ -139,10 +139,10 @@ template class QUICKCORE_EXPORT QMap<QObject*, QuickScriptReceiver*>;
 template class QUICKCORE_EXPORT QMap<QString, QSOT::QuickScriptObjectType>;
 template class QUICKCORE_EXPORT QPtrVector<QObject>;
 template class QUICKCORE_EXPORT QMap<QString, QuickScriptProperty>;
-template class QUICKCORE_EXPORT QValueList<QuickMetaData>;
+template class QUICKCORE_EXPORT Q3ValueList<QuickMetaData>;
 template class QUICKCORE_EXPORT QIntDict<char>;
 template class QUICKCORE_EXPORT Q3PtrList<QMetaProperty>;
-//template class QUICKCORE_EXPORT QValueList<QVariant>;
+//template class QUICKCORE_EXPORT Q3ValueList<QVariant>;
 // MOC_SKIP_END
 #endif
 

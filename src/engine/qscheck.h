@@ -32,7 +32,7 @@
 #include "qsclass.h"
 #include "qserrors.h"
 #include <qstringlist.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qmap.h>
 
 class QSNode;
@@ -40,7 +40,7 @@ class QSScopeResolution;
 class QSFuncDeclNode;
 
 typedef QMap<QString, QSClass*> QSTypeMap;
-typedef QValueList<QSScopeResolution> QSScopeResolutionList;
+typedef Q3ValueList<QSScopeResolution> QSScopeResolutionList;
 
 class QSScopeResolution
 {
@@ -134,7 +134,7 @@ public:
 
     bool hasError() const;
     QSErrorCode errorCode() const;
-    QValueList<uint> errorLines() const;
+    Q3ValueList<uint> errorLines() const;
     QStringList errorMessages() const;
 
     int lastAttributes() const { return lattrs; }
@@ -171,8 +171,8 @@ private:
     int vbCount;
     int switchLevel;
 
-    QValueList<QSErrorCode> ecodes;
-    QValueList<uint> elines;
+    Q3ValueList<QSErrorCode> ecodes;
+    Q3ValueList<uint> elines;
     QStringList emsgs;
 
     uint noGlobStatements : 1;
@@ -214,7 +214,7 @@ inline QSErrorCode QSCheckData::errorCode() const
     return ecodes.first();
 }
 
-inline QValueList<uint> QSCheckData::errorLines() const
+inline Q3ValueList<uint> QSCheckData::errorLines() const
 {
     return elines;
 }

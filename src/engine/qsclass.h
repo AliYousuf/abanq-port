@@ -36,8 +36,8 @@
 #include "qsobjectlist.h"
 
 #if defined(Q_TEMPLATEDLL) && (defined(Q_CC_MSVC_NET) || defined(Q_CC_MSVC))
-Q_TEMPLATE_EXTERN template class QUICKCORE_EXPORT QValueList<int>;
-Q_TEMPLATE_EXTERN template class QUICKCORE_EXPORT QValueList<bool>;
+Q_TEMPLATE_EXTERN template class QUICKCORE_EXPORT Q3ValueList<int>;
+Q_TEMPLATE_EXTERN template class QUICKCORE_EXPORT Q3ValueList<bool>;
 Q_TEMPLATE_EXTERN template class QUICKCORE_EXPORT QMap<QString,QString>;
 #endif
 
@@ -159,7 +159,7 @@ private:
     int attrs;
     QSMemberMap *mmap;
     QSObjectList staticMembers;
-    QValueList<int> replacedVars;
+    Q3ValueList<int> replacedVars;
     int numVars;
     int numStaticVars;
 };

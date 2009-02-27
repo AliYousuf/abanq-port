@@ -59,7 +59,7 @@ class QSFuncRefClass;
 class QSDebugClass;
 class QSSystemClass;
 
-typedef QValueList<QSObject> ScopeChain;
+typedef Q3ValueList<QSObject> ScopeChain;
 
 class QUICKCORE_EXPORT QSEnv {
 public:

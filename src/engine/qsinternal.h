@@ -146,7 +146,7 @@ private:
     QSEnv *en;
     Global *glob;
     int errType;
-    QValueList<uint> errLines;
+    Q3ValueList<uint> errLines;
     QStringList errMsgs;
 #ifdef QSDEBUGGER
     Debugger *dbg;

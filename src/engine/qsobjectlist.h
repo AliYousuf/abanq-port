@@ -30,9 +30,9 @@
 #define QSOBJECTLIST_H
 
 #include "qsobject.h"
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 
-class QUICKCORE_EXPORT QSObjectList : public QValueList<QSObject>
+class QUICKCORE_EXPORT QSObjectList : public Q3ValueList<QSObject>
 {
 
 };
