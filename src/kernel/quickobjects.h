@@ -137,7 +137,7 @@ public:
 template class QUICKCORE_EXPORT Q3PtrList<QuickScriptReceiver>;
 template class QUICKCORE_EXPORT QMap<QObject*, QuickScriptReceiver*>;
 template class QUICKCORE_EXPORT QMap<QString, QSOT::QuickScriptObjectType>;
-template class QUICKCORE_EXPORT QPtrVector<QObject>;
+template class QUICKCORE_EXPORT Q3PtrVector<QObject>;
 template class QUICKCORE_EXPORT QMap<QString, QuickScriptProperty>;
 template class QUICKCORE_EXPORT Q3ValueList<QuickMetaData>;
 template class QUICKCORE_EXPORT QIntDict<char>;
@@ -179,9 +179,9 @@ public:
 			  const QString &func, QSObject qsctx = QSObject() );
     bool removeEventHandler( const QString &event, QObject *ctx,
 			     const QString &func, QSObject qsctx = QSObject() );
-    const QPtrVector<QObject> *interfaceObjects() const { return &objects; }
+    const Q3PtrVector<QObject> *interfaceObjects() const { return &objects; }
 
-    QPtrVector<QObject> objects; // interfaces
+    Q3PtrVector<QObject> objects; // interfaces
     QMap<QObject*, QuickScriptReceiver*> receivers; // event receivers
     QMap<QString, QSOT::QuickScriptObjectType> hasPropCache; // caches
     QMap<QString, QuickScriptProperty> propertyCache;
@@ -237,11 +237,11 @@ public:
     QString debugString( const QSObject *obj ) const;
     QSEqualsResult isEqual( const QSObject &a, const QSObject &b ) const;
 
-    QSObject wrap( const QPtrVector<QObject> &objs );
+    QSObject wrap( const Q3PtrVector<QObject> &objs );
     QSWrapperShared* createShared( QObject *o ) const;
 
     QSWrapperShared* shared( const QSObject *obj ) const;
-    QPtrVector<QObject>& objectVector( const QSObject *obj ) const;
+    Q3PtrVector<QObject>& objectVector( const QSObject *obj ) const;
 
     static QObject *object(const QSObject *obj);
 

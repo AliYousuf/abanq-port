@@ -47,11 +47,11 @@ public:
 
     bool constructInterface( const Q3CString &className,
 			     void *ptr,
-			     QPtrVector<QObject> &result );
+           Q3PtrVector<QObject> &result );
 
     bool constructInstance( const QString &className,
           const Q3ValueList<QVariant> &args,
-			    QPtrVector<QObject> &result );
+          Q3PtrVector<QObject> &result );
 
     QMap<QString,QObject*> staticDescriptors() const;
     QMap<QString,QString> instanceDescriptors() const;
@@ -69,13 +69,13 @@ public:
     void removeWrapperFactory( QSWrapperFactory *factory );
 
 private:
-    bool createInterface( const Q3CString &className, void *ptr, QPtrVector<QObject> *);
+    bool createInterface( const Q3CString &className, void *ptr, Q3PtrVector<QObject> *);
     bool createInstance( const QString &className,
        const Q3ValueList<QVariant> &args,
-                         QPtrVector<QObject> *);
+                         Q3PtrVector<QObject> *);
 
     void addInterface( QObject *iface, Q3PtrVector<QObject> *);
-    void addObject( QObject *obj, QPtrVector<QObject> *);
+    void addObject( QObject *obj, Q3PtrVector<QObject> *);
 
 private:
     QuickDispatchObjectFactoryPrivate *d;

@@ -47,7 +47,7 @@ struct QSCompletionObject
     // can't have objects with a constructor in an union
     QSObject qsobj;
     const QMetaObject *meta;
-    QPtrVector<QObject> qobj;
+    Q3PtrVector<QObject> qobj;
 
     enum Type { TQSObject, TQMetaObject, TQObject, TNull } type;
 
@@ -55,7 +55,7 @@ struct QSCompletionObject
 	: qsobj( o ), type( TQSObject ) {}
     QSCompletionObject( const QMetaObject *m )
 	: meta( m ), type( TQMetaObject ) {}
-    QSCompletionObject( const QPtrVector<QObject> &o )
+    QSCompletionObject( const Q3PtrVector<QObject> &o )
 	: qobj( o ), type( TQObject ) {}
     QSCompletionObject()
 	: type( TNull ) {}
@@ -70,7 +70,7 @@ struct QSCompletionObject
 	type = TQMetaObject;
 	return *this;
     }
-    QSCompletionObject &operator=( const QPtrVector<QObject> &o ) {
+    QSCompletionObject &operator=( const Q3PtrVector<QObject> &o ) {
 	qobj = o;
 	type = TQObject;
 	return *this;
@@ -104,10 +104,10 @@ private:
     QSCompletionObject queryCompletionObject( QSCompletionObject &ctx, const QString &property ) const;
     QSObject queryQSObject( QSObject &ctx, const QString &property ) const;
     QSObject queryQSObject( const QMetaObject *meta, const QString &property, bool includeSuperClass ) const;
-    QSObject queryQSObject( const QPtrVector<QObject> &objects, const QString &property ) const;
+    QSObject queryQSObject( const Q3PtrVector<QObject> &objects, const QString &property ) const;
     const QMetaObject *queryQMetaObject( const QMetaObject *meta, const QString &property, bool includeSuperClass ) const;
-    const QMetaObject *queryQMetaObject( const QPtrVector<QObject> &objects, const QString &property ) const;
-    QPtrVector<QObject> queryQObject( const QPtrVector<QObject> &objects, const QString &property ) const;
+    const QMetaObject *queryQMetaObject( const Q3PtrVector<QObject> &objects, const QString &property ) const;
+    Q3PtrVector<QObject> queryQObject( const Q3PtrVector<QObject> &objects, const QString &property ) const;
 
     void completeQSObject( QSObject &obj, Q3ValueList<CompletionEntry> &res, bool assumedStatic );
     enum QSMetaObjectCompletionFlags { IncludeSuperClass = 1, IsUnnamed = 2 };
@@ -116,7 +116,7 @@ private:
             Q3ValueList<CompletionEntry> &res,
 			      int flags,
 			      QSObject &obj );
-    void completeQObject( const QPtrVector<QObject> &objects,
+    void completeQObject( const Q3PtrVector<QObject> &objects,
 			  const QString &object,
         Q3ValueList<CompletionEntry> &res );
 
@@ -127,7 +127,7 @@ private:
     QSEnv *env() const;
     QuickInterpreter *interpreter() const;
 
-    QPtrVector<QObject>* interfaceObjects( const QSObject &o ) const;
+    Q3PtrVector<QObject>* interfaceObjects( const QSObject &o ) const;
     QSObject vTypeToQSType( const QString &type ) const;
     QSObject uTypeToQSType( QUType *t, const char *extra ) const;
 

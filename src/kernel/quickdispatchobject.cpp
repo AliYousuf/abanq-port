@@ -35,7 +35,7 @@
 
 #include <qmetaobject.h>
 #include <qobject.h>
-#include <qptrlist.h>
+#include <q3ptrlist.h>
 #include <qwidget.h>
 
 class QuickDispatchObjectFactoryPrivate
@@ -77,7 +77,7 @@ QuickDispatchObjectFactory::~QuickDispatchObjectFactory()
 
 bool QuickDispatchObjectFactory::constructInterface( const Q3CString &className,
 						     void *ptr,
-						     QPtrVector<QObject> &result )
+                 Q3PtrVector<QObject> &result )
 {
     if (!ptr)
         return false;
@@ -93,7 +93,7 @@ bool QuickDispatchObjectFactory::constructInterface( const Q3CString &className,
 
 bool QuickDispatchObjectFactory::constructInstance( const QString &className,
                                                     const Q3ValueList<QVariant> &args,
-                                                    QPtrVector<QObject> &result )
+                                                    Q3PtrVector<QObject> &result )
 {
     if (recurseBlock) {
         qWarning("recursive construction of interfaces detected");
@@ -116,7 +116,7 @@ void QuickDispatchObjectFactory::throwError( const QString &message ) const
     ip->env()->throwError( message );
 }
 
-void QuickDispatchObjectFactory::addInterface( QObject *iface, QPtrVector<QObject> *result )
+void QuickDispatchObjectFactory::addInterface( QObject *iface, Q3PtrVector<QObject> *result )
 {
     Q_ASSERT( iface );
     Q_ASSERT( !iface->isWidgetType() );
@@ -127,7 +127,7 @@ void QuickDispatchObjectFactory::addInterface( QObject *iface, QPtrVector<QObjec
     result->insert( idx, iface );
 }
 
-void QuickDispatchObjectFactory::addObject( QObject *obj, QPtrVector<QObject> *result )
+void QuickDispatchObjectFactory::addObject( QObject *obj, Q3PtrVector<QObject> *result )
 {
     Q_ASSERT( obj );
     Q_ASSERT( result->isEmpty() );
@@ -228,7 +228,7 @@ void QuickDispatchObjectFactory::removeWrapperFactory( QSWrapperFactory *factory
 
 
 bool QuickDispatchObjectFactory::createInterface( const Q3CString &className, void *ptr,
-                                                  QPtrVector<QObject> *result )
+                                                  Q3PtrVector<QObject> *result )
 {
     Q3PtrList<QSWrapperFactory> factories = *(d->wrappersCache.find( className ));
     bool added = FALSE;
@@ -249,7 +249,7 @@ bool QuickDispatchObjectFactory::createInterface( const Q3CString &className, vo
 
 bool QuickDispatchObjectFactory::createInstance( const QString &className,
                                                  const Q3ValueList<QVariant> &args,
-                                                 QPtrVector<QObject> *result )
+                                                 Q3PtrVector<QObject> *result )
 {
     if( !d->objectsCache.contains( className ) )
 	return FALSE;

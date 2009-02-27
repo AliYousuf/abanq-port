@@ -139,11 +139,11 @@ public:
     QString nameOfSourceId( int id ) const;
     int sourceIdOfName( const QString &name ) const;
 
-    bool queryDispatchObjects( QObject *obj, QPtrVector<QObject> &result );
+    bool queryDispatchObjects( QObject *obj, Q3PtrVector<QObject> &result );
     bool queryDispatchObjects( const Q3CString &name, void *ptr,
-             QPtrVector<QObject> &result );
+             Q3PtrVector<QObject> &result );
     bool construct( const QString &className, const Q3ValueList<QVariant> &args,
-		    QPtrVector<QObject> &result );
+        Q3PtrVector<QObject> &result );
 
     // use with caution
     static QuickInterpreter *fromEnv( QSEnv *e );

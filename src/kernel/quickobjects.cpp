@@ -682,7 +682,7 @@ QSWrapperShared *QSWrapperClass::shared( const QSObject *obj ) const
     return (QSWrapperShared*)obj->shVal();
 }
 
-QPtrVector<QObject>& QSWrapperClass::objectVector( const QSObject *obj ) const
+Q3PtrVector<QObject>& QSWrapperClass::objectVector( const QSObject *obj ) const
 {
     return shared( obj )->objects;
 }
@@ -729,7 +729,7 @@ bool QSWrapperClass::member( const QSObject *objPtr, const QString &p,
     QSWrapperShared *sh = shared( objPtr );
     if( !sh )
         return FALSE;
-    const QPtrVector<QObject> &objects = sh->objects;
+    const Q3PtrVector<QObject> &objects = sh->objects;
 
     if ( objects.isEmpty() )
         return QSWritableClass::member( objPtr, p, mem );
@@ -939,7 +939,7 @@ QSObject QSWrapperClass::fetchValue( const QSObject *o,
         return QSWritableClass::fetchValue( o, mem );
 
     QSWrapperShared *sh = shared( o );
-    const QPtrVector<QObject> &objects = sh->objects;
+    const Q3PtrVector<QObject> &objects = sh->objects;
     QString p = mem.name();
 
     QMap<QString, QSOT::QuickScriptObjectType>::ConstIterator it2
@@ -994,7 +994,7 @@ QSObject QSWrapperClass::invoke( QSObject *objPtr, const QSMember &mem ) const
 
     Q_ASSERT( mem.owner() == this );
     QSWrapperShared *sh = shared( objPtr );
-    const QPtrVector<QObject> &objects = sh->objects;
+    const Q3PtrVector<QObject> &objects = sh->objects;
     const char *asc = mem.name().ascii();
 
     for ( int i = int(objects.count())-1; i >= 0; i-- ) {
@@ -1020,7 +1020,7 @@ void QSWrapperClass::write( QSObject *objPtr, const QSMember &mem,
     }
 
     QSWrapperShared *sh = shared( objPtr );
-    const QPtrVector<QObject> &objects = sh->objects;
+    const Q3PtrVector<QObject> &objects = sh->objects;
     const char *n = mem.name().ascii();
 
     for ( int i = objects.size()-1; i >= 0; --i ) {
@@ -1062,7 +1062,7 @@ bool QSWrapperClass::toBoolean( const QSObject *obj ) const
 
 QString QSWrapperClass::toString( const QSObject *obj ) const
 {
-    QPtrVector<QObject> &objects = objectVector( obj );
+    Q3PtrVector<QObject> &objects = objectVector( obj );
     if ( objects.isEmpty() )
         return QString::fromLatin1("[object QObject]");
     return QString::fromLatin1("[object ") + QString::fromLatin1( objects[0]->className() ) + QString::fromLatin1("]");
@@ -1070,7 +1070,7 @@ QString QSWrapperClass::toString( const QSObject *obj ) const
 
 QVariant QSWrapperClass::toVariant( const QSObject *obj, QVariant::Type ) const
 {
-    const QPtrVector<QObject>& objects = objectVector( obj );
+    const Q3PtrVector<QObject>& objects = objectVector( obj );
     QString s = QString::fromLatin1("Pointer:%1:QObject"); // ### ugly
     s = s.arg( QString::number( (ulong)(objects[0] ) ) );
     return QVariant( s );
@@ -1078,7 +1078,7 @@ QVariant QSWrapperClass::toVariant( const QSObject *obj, QVariant::Type ) const
 
 QString QSWrapperClass::debugString( const QSObject *obj ) const
 {
-    QPtrVector<QObject> &objects = objectVector( obj );
+    Q3PtrVector<QObject> &objects = objectVector( obj );
     QString s = QString::fromLatin1("{");
     bool first = TRUE;
     uint i;
@@ -1156,14 +1156,14 @@ QSEqualsResult QSWrapperClass::isEqual( const QSObject &a, const QSObject &b ) c
     // check whether the references point to the same QObject
     QSWrapperClass *aclass = (QSWrapperClass*)a.objectType();
     QSWrapperClass *bclass = (QSWrapperClass*)b.objectType();
-    QPtrVector<QObject>& ova = aclass->objectVector( &a );
-    QPtrVector<QObject>& ovb = bclass->objectVector( &b );
+    Q3PtrVector<QObject>& ova = aclass->objectVector( &a );
+    Q3PtrVector<QObject>& ovb = bclass->objectVector( &b );
     if ( ova.isEmpty() && ovb.isEmpty() ) // both null pointers ?
         return EqualsIsEqual;
     return ( QSEqualsResult ) ( !ova.isEmpty() && !ovb.isEmpty() && ova[0] == ovb[0] );
 }
 
-QSObject QSWrapperClass::wrap( const QPtrVector<QObject> &objs )
+QSObject QSWrapperClass::wrap( const Q3PtrVector<QObject> &objs )
 {
     QSWrapperShared *sh = new QSWrapperShared( this );
     sh->objects = objs;
@@ -1261,7 +1261,7 @@ QSObjectConstructor::QSObjectConstructor( QSClass *b,
 QSObject QSObjectConstructor::construct( const QSList &args ) const
 {
     if ( type == Class ) {
-        QPtrVector<QObject> result;
+        Q3PtrVector<QObject> result;
         Q3ValueList<QVariant> vargs;
         for ( int i = 0; i < args.size(); i++ )
             vargs.append( args[i].toVariant( QVariant::Invalid ) );
@@ -1306,7 +1306,7 @@ QSObject QSObjectConstructor::construct( const QSList &args ) const
 
         for ( QMap<QWidget*, QString>::ConstIterator it = qwf_forms->begin(); it != qwf_forms->end(); ++it ) {
             if ( cname == QString( it.key()->name() ) ) {
-                QPtrVector<QObject> result;
+                Q3PtrVector<QObject> result;
                 qwf_language = new QString( "Qt Script" );
                 QWidget *w = QWidgetFactory::create( *it, 0, parentWidget, name );
                 delete qwf_language;
@@ -1391,7 +1391,7 @@ QSObject QSPointerClass::wrapPointer( const char *n, void *p )
 
 QString QSPointerClass::toString( const QSObject *obj ) const
 {
-    const QPtrVector<QObject> &objects = objectVector( obj );
+    const Q3PtrVector<QObject> &objects = objectVector( obj );
     if ( objects.isEmpty() )
         return QString::fromLatin1("[object Pointer]");
     return QSWrapperClass::toString( obj );
@@ -1416,7 +1416,7 @@ QVariant QSPointerClass::toVariant( const QSObject *obj, QVariant::Type ) const
 
 QString QSPointerClass::debugString( const QSObject *obj ) const
 {
-    const QPtrVector<QObject> &objects = objectVector( obj );
+    const Q3PtrVector<QObject> &objects = objectVector( obj );
     if ( objects.isEmpty() )
         return QString::fromLatin1("{}:Pointer");
     else
@@ -1425,7 +1425,7 @@ QString QSPointerClass::debugString( const QSObject *obj ) const
 
 void* QSPointerClass::pointer( const QSObject *obj ) const
 {
-    const QPtrVector<QObject> &objects = objectVector( obj );
+    const Q3PtrVector<QObject> &objects = objectVector( obj );
     if ( objects.isEmpty() )
         return 0;
     return ((QuickPtrDispatchObject*)objects[ 0 ])->pointer();
@@ -1433,7 +1433,7 @@ void* QSPointerClass::pointer( const QSObject *obj ) const
 
 const char* QSPointerClass::pointerType( const QSObject *obj ) const
 {
-    const QPtrVector<QObject> &objects = objectVector( obj );
+    const Q3PtrVector<QObject> &objects = objectVector( obj );
     if ( objects.isEmpty() )
         return "void";
     return objects[ 0 ]->name();
