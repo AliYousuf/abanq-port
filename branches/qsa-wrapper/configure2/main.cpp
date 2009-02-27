@@ -29,7 +29,7 @@
 #include "configutils.h"
 
 #include <qfile.h>
-#include <qprocess.h>
+#include <q3process.h>
 #include <qdir.h>
 #include <qstringlist.h>
 #include <qregexp.h>

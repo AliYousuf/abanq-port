@@ -27,20 +27,24 @@
 #include "editor.h"
 #include "parenmatcher.h"
 #include <qfile.h>
+//Added by qt3to4:
+#include <Q3CString>
+#include <QKeyEvent>
+#include <QEvent>
 #include <private/qrichtext_p.h>
 #include "conf.h"
 #include <qapplication.h>
-#include <qpopupmenu.h>
-#include <qaccel.h>
+#include <q3popupmenu.h>
+#include <q3accel.h>
 
 Editor::Editor( const QString &fn, QWidget *parent, const char *name )
-    : QTextEdit( parent, name ), hasError( FALSE )
+    : Q3TextEdit( parent, name ), hasError( FALSE )
 {
     document()->setFormatter( new QTextFormatterBreakInWords );
     if ( !fn.isEmpty() )
 	load( fn );
-    setHScrollBarMode( QScrollView::AlwaysOff );
-    setVScrollBarMode( QScrollView::AlwaysOn );
+    setHScrollBarMode( Q3ScrollView::AlwaysOff );
+    setVScrollBarMode( Q3ScrollView::AlwaysOn );
     document()->setUseFormatCollection( FALSE );
     parenMatcher = new ParenMatcher;
     connect( this, SIGNAL( cursorPositionChanged( QTextCursor * ) ),
@@ -48,8 +52,8 @@ Editor::Editor( const QString &fn, QWidget *parent, const char *name )
     cfg = new Config;
     document()->addSelection( Error );
     document()->addSelection( Step );
-    document()->setSelectionColor( Error, red );
-    document()->setSelectionColor( Step, yellow );
+    document()->setSelectionColor( Error, Qt::red );
+    document()->setSelectionColor( Step, Qt::yellow );
     document()->setInvertSelectionText( Error, FALSE );
     document()->setInvertSelectionText( Step, FALSE );
     document()->addSelection( ParenMatcher::Match );
@@ -59,11 +63,11 @@ Editor::Editor( const QString &fn, QWidget *parent, const char *name )
     document()->setInvertSelectionText( ParenMatcher::Match, FALSE );
     document()->setInvertSelectionText( ParenMatcher::Mismatch, FALSE );
 
-    accelComment = new QAccel( this );
-    accelComment->connectItem( accelComment->insertItem( ALT + Key_C ),
+    accelComment = new Q3Accel( this );
+    accelComment->connectItem( accelComment->insertItem( Qt::ALT + Qt::Key_C ),
 			       this, SLOT( commentSelection() ) );
-    accelUncomment = new QAccel( this );
-    accelUncomment->connectItem( accelUncomment->insertItem( ALT + Key_U ),
+    accelUncomment = new Q3Accel( this );
+    accelUncomment->connectItem( accelUncomment->insertItem( Qt::ALT + Qt::Key_U ),
 				 this, SLOT( uncommentSelection() ) );
     editable = TRUE;
 }
@@ -88,9 +92,9 @@ void Editor::load( const QString &fn )
 {
     filename = fn;
     QFile f( filename );
-    if ( !f.open( IO_ReadOnly ) )
+    if ( !f.open( QIODevice::ReadOnly ) )
 	return;
-    QCString txt;
+    Q3CString txt;
     txt.resize( f.size() );
     f.readBlock( txt.data(), f.size() );
     QString s( QString::fromLatin1( txt ) );
@@ -149,7 +153,7 @@ void Editor::clearStepSelection()
 void Editor::doChangeInterval()
 {
     emit intervalChanged();
-    QTextEdit::doChangeInterval();
+    Q3TextEdit::doChangeInterval();
 }
 
 void Editor::commentSelection()
@@ -210,9 +214,9 @@ void Editor::uncommentSelection()
     }
 }
 
-QPopupMenu *Editor::createPopupMenu( const QPoint &p )
+Q3PopupMenu *Editor::createPopupMenu( const QPoint &p )
 {
-    QPopupMenu *menu = QTextEdit::createPopupMenu( p );
+    Q3PopupMenu *menu = Q3TextEdit::createPopupMenu( p );
     menu->insertSeparator();
     menu->insertItem( tr( "C&omment Code\tAlt+C" ), this, SLOT( commentSelection() ) );
     menu->insertItem( tr( "Unco&mment Code\tAlt+U" ), this, SLOT( uncommentSelection() ) );
@@ -226,35 +230,35 @@ bool Editor::eventFilter( QObject *o, QEvent *e )
 	accelUncomment->setEnabled( e->type() == QEvent::FocusIn );
 	accelComment->setEnabled( e->type() == QEvent::FocusIn );
     }
-    return QTextEdit::eventFilter( o, e );
+    return Q3TextEdit::eventFilter( o, e );
 }
 
 void Editor::doKeyboardAction( KeyboardAction action )
 {
     if ( !editable )
 	return;
-    QTextEdit::doKeyboardAction( action );
+    Q3TextEdit::doKeyboardAction( action );
 }
 
 void Editor::keyPressEvent( QKeyEvent *e )
 {
     if ( editable ) {
-	QTextEdit::keyPressEvent( e );
+	Q3TextEdit::keyPressEvent( e );
 	return;
     }
 
     switch ( e->key() ) {
-    case Key_Left:
-    case Key_Right:
-    case Key_Up:
-    case Key_Down:
-    case Key_Home:
-    case Key_End:
-    case Key_Prior:
-    case Key_Next:
-    case Key_Direction_L:
-    case Key_Direction_R:
-	QTextEdit::keyPressEvent( e );
+    case Qt::Key_Left:
+    case Qt::Key_Right:
+    case Qt::Key_Up:
+    case Qt::Key_Down:
+    case Qt::Key_Home:
+    case Qt::Key_End:
+    case Qt::Key_PageUp:
+    case Qt::Key_PageDown:
+    case Qt::Key_Direction_L:
+    case Qt::Key_Direction_R:
+	Q3TextEdit::keyPressEvent( e );
 	break;
     default:
 	e->accept();

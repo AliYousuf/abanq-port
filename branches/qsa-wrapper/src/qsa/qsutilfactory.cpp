@@ -83,7 +83,7 @@
 #include <qdir.h>
 #include <qfile.h>
 #include <qobject.h>
-#include <qprocess.h>
+#include <q3process.h>
 #include <qvariant.h>
 
 #if defined (QT_THREAD_SUPPORT) && QT_VERSION >= 0x030300
@@ -103,12 +103,12 @@ class QSFileStatic : public QObject {
   Q_ENUMS( AccessMode )
 public:
   enum AccessMode {
-    ReadOnly  = IO_ReadOnly,
-    WriteOnly = IO_WriteOnly,
-    ReadWrite = IO_ReadWrite,
-    Append    = IO_Append,
-    Truncate  = IO_Truncate,
-    Translate = IO_Translate
+    ReadOnly  = QIODevice::ReadOnly,
+    WriteOnly = QIODevice::WriteOnly,
+    ReadWrite = QIODevice::ReadWrite,
+    Append    = QIODevice::Append,
+    Truncate  = QIODevice::Truncate,
+    Translate = QIODevice::Text
   };
   QSFileStatic( QSUtilFactory *i ) : factory( i ) { }
 
@@ -157,12 +157,12 @@ class QSFile : public QObject {
   Q_ENUMS( AccessMode )
 public:
   enum AccessMode {
-    ReadOnly  = IO_ReadOnly,
-    WriteOnly = IO_WriteOnly,
-    ReadWrite = IO_ReadWrite,
-    Append    = IO_Append,
-    Truncate  = IO_Truncate,
-    Translate = IO_Translate
+    ReadOnly  = QIODevice::ReadOnly,
+    WriteOnly = QIODevice::WriteOnly,
+    ReadWrite = QIODevice::ReadWrite,
+    Append    = QIODevice::Append,
+    Truncate  = QIODevice::Truncate,
+    Translate = QIODevice::Text
   };
 
 public slots:
@@ -406,7 +406,7 @@ private:
 };
 
 
-class QSBlockingProcess : public QProcess {
+class QSBlockingProcess : public Q3Process {
   Q_OBJECT
 
 public:
@@ -552,7 +552,7 @@ signals:
   void launchFinished();
 
 private:
-  QProcess *process;
+  Q3Process *process;
   QSUtilFactory *factory;
 };
 
@@ -658,7 +658,7 @@ QObject *QSUtilFactory::create( const QString &name,
 
 void QSFileStatic::write( const QString &fileName, const QString &content ) {
   QFile file( fileName );
-  if ( !file.open( IO_WriteOnly ) )
+  if ( !file.open( QIODevice::WriteOnly ) )
     factory->interpreter()->throwError( QString::fromLatin1( "Could open file '" ) + fileName + QString::fromLatin1( "' for writing" ) );
   else {
 //### AbanQ Hack
@@ -675,7 +675,7 @@ QString QSFileStatic::read( const QString &fileName ) {
   if ( !file.exists() ) {
     factory->interpreter()->throwError( QString::fromLatin1( "File '%1' does not exist" ).arg( fileName ) );
     return QString();
-  } else if ( !file.open( IO_ReadOnly ) ) {
+  } else if ( !file.open( QIODevice::ReadOnly ) ) {
     factory->interpreter()->throwError( QString::fromLatin1( "Could not read file '%1'" ).arg( fileName ) );
     return QString();
   }
@@ -779,7 +779,7 @@ void QSFile::writeByte( int byte ) {
 QStringList QSDirStatic::drives() const {
   const QFileInfoList *lst = QDir::drives();
   QStringList driveNames;
-  for ( QPtrListIterator<QFileInfo> it( *lst ); it.current(); ++it ) {
+  for ( Q3PtrListIterator<QFileInfo> it( *lst ); it.current(); ++it ) {
     driveNames << it.current()->absFilePath();
   }
   return driveNames;
@@ -973,7 +973,7 @@ int QSProcessStatic::executeNoSplit( const QStringList &command, const QString &
  */
 QSProcess::QSProcess( QSUtilFactory *f, const QStringList &args )
     : factory( f ) {
-  process = args.size() == 0 ? new QProcess( this ) : new QProcess( args, this );
+  process = args.size() == 0 ? new Q3Process( this ) : new Q3Process( args, this );
   connect( process, SIGNAL( readyReadStdout() ), this, SIGNAL( readyReadStdout() ) );
   connect( process, SIGNAL( readyReadStderr() ), this, SIGNAL( readyReadStderr() ) );
   connect( process, SIGNAL( processExited() ), this, SIGNAL( processExited() ) );

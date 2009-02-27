@@ -1,0 +1,12 @@
+Log for qt3to4 on Vie 27. Feb 10:51:51 2009. Number of log entries: 9
+In file C:/Qt/qsa-wrapper/configure2/main.cpp at line 32 column 18: qprocess.h -> q3process.h
+In file C:/Qt/qsa-wrapper/configure2/configutils.cpp at line 6 column 18: qprocess.h -> q3process.h
+In file C:/Qt/qsa-wrapper/configure2/configutils.cpp at line 42 column 42: IO_ReadOnly -> QIODevice::ReadOnly
+In file C:/Qt/qsa-wrapper/configure2/configutils.cpp at line 62 column 39: QProcess -> Q3Process
+In file C:/Qt/qsa-wrapper/configure2/configutils.cpp at line 393 column 32: IO_WriteOnly -> QIODevice::WriteOnly
+In file C:/Qt/qsa-wrapper/configure2/configutils.cpp at line 397 column 15: QTextStream -> Q3TextStream
+In file C:/Qt/qsa-wrapper/configure2/configutils.cpp: Added the following include directives:
+	#include <Q3TextStream> 
+No changes made to file C:/Qt/qsa-wrapper/configure2/configutils.h
+In file configure2.pro: Added entry QT +=  qt3support 
+

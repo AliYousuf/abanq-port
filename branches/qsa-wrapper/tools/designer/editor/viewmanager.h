@@ -28,12 +28,17 @@
 #define VIEWMANAGER_H
 
 #include <qwidget.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
+//Added by qt3to4:
+#include <QResizeEvent>
+#include <Q3VBoxLayout>
+#include <QLabel>
+#include <QChildEvent>
 
 class QChildEvent;
 class MarkerWidget;
-class QVBoxLayout;
-class QDockArea;
+class Q3VBoxLayout;
+class Q3DockArea;
 class QTextParagraph;
 class QLabel;
 class QTimer;
@@ -54,8 +59,8 @@ public:
     void setStackFrame( int line );
     void clearStep();
     void clearStackFrame();
-    void setBreakPoints( const QValueList<uint> &l );
-    QValueList<uint> breakPoints() const;
+    void setBreakPoints( const Q3ValueList<uint> &l );
+    Q3ValueList<uint> breakPoints() const;
 
     void emitMarkersChanged();
     MarkerWidget *marker_widget() const { return markerWidget; }
@@ -82,8 +87,8 @@ protected:
 private:
     QWidget *curView;
     MarkerWidget *markerWidget;
-    QVBoxLayout *layout;
-    QDockArea *dockArea;
+    Q3VBoxLayout *layout;
+    Q3DockArea *dockArea;
     QLabel *posLabel;
     QString extraText;
     QTimer *messageTimer;

@@ -29,7 +29,13 @@
 #include <private/qrichtext_p.h>
 #include "editor.h"
 #include <qpainter.h>
-#include <qpopupmenu.h>
+#include <q3popupmenu.h>
+//Added by qt3to4:
+#include <QContextMenuEvent>
+#include <QPaintEvent>
+#include <QResizeEvent>
+#include <QPixmap>
+#include <QMouseEvent>
 #include "paragdata.h"
 
 static const char * error_xpm[] = {
@@ -280,7 +286,7 @@ static QPixmap *stepPixmap = 0;
 static QPixmap *stackFrame = 0;
 
 MarkerWidget::MarkerWidget( ViewManager *parent, const char*name )
-    : QWidget( parent, name, WRepaintNoErase | WStaticContents | WResizeNoErase ), viewManager( parent )
+    : QWidget( parent, name, Qt::WNoAutoErase | Qt::WStaticContents | Qt::WResizeNoErase ), viewManager( parent )
 {
     if ( !errorPixmap ) {
 	errorPixmap = new QPixmap( error_xpm );
@@ -387,7 +393,7 @@ void MarkerWidget::resizeEvent( QResizeEvent *e )
 
 void MarkerWidget::mousePressEvent( QMouseEvent *e )
 {
-    if ( e->button() != LeftButton )
+    if ( e->button() != Qt::LeftButton )
 	return;
     bool supports = ( (Editor*)viewManager->currentView() )->supportsBreakPoints();
     QTextParagraph *p = ( (Editor*)viewManager->currentView() )->document()->firstParagraph();
@@ -427,7 +433,7 @@ void MarkerWidget::mousePressEvent( QMouseEvent *e )
 
 void MarkerWidget::contextMenuEvent( QContextMenuEvent *e )
 {
-    QPopupMenu m( 0, "editor_breakpointsmenu" );
+    Q3PopupMenu m( 0, "editor_breakpointsmenu" );
 
     int toggleBreakPoint = 0;
 //    int editBreakpoints = 0;

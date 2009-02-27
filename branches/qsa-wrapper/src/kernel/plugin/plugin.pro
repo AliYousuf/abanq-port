@@ -9,3 +9,5 @@ HEADERS 	+= quickcore.h
 
 unix:LIBS	+= -L$(QTDIR)/lib -lquickkernel
 win32:LIBS	+= $(QTDIR)\lib\quickkernel.lib $(QTDIR)\lib\quicksdk.lib
+#The following line was inserted by qt3to4
+QT +=  qt3support 

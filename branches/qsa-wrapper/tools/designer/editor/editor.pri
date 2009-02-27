@@ -21,7 +21,13 @@ SOURCES += \
 	$$EDITOR_BRANCH/cindent.cpp \
 	$$EDITOR_BRANCH/yyindent.cpp
 
-FORMS += \
+#The following line was changed from FORMS to FORMS3 by qt3to4
+FORMS3 += \
 	$$EDITOR_BRANCH/preferences.ui
 
 INCLUDEPATH	+= $$QT_SOURCE_TREE/tools/designer/interfaces
+#The following line was inserted by qt3to4
+QT += qt3support 
+#The following line was inserted by qt3to4
+CONFIG += uic3
+

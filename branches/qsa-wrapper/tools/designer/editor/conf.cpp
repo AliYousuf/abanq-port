@@ -82,7 +82,7 @@ QMap<QString, ConfigStyle> Config::readStyles( const QString &path )
     QString family;
     int size = 10;
     bool bold = FALSE, italic = FALSE, underline = FALSE;
-    int red = 0, green = 0, blue = 0;
+    int Qt::red = 0, Qt::green = 0, Qt::blue = 0;
 
     QString elements[] = {
 	qApp->tr( QString::fromLatin1("Comment") ),
@@ -115,13 +115,13 @@ QMap<QString, ConfigStyle> Config::readStyles( const QString &path )
 	    underline = settings.readBoolEntry( path + elements[ i ] + "/underline", FALSE, &ok );
 	    if ( !ok )
 		break;
-	    red = settings.readNumEntry( path + elements[ i ] + "/red", 0, &ok );
+	    Qt::red = settings.readNumEntry( path + elements[ i ] + "/red", 0, &ok );
 	    if ( !ok )
 		break;
-	    green = settings.readNumEntry( path + elements[ i ] + "/green", 0, &ok );
+	    Qt::green = settings.readNumEntry( path + elements[ i ] + "/green", 0, &ok );
 	    if ( !ok )
 		break;
-	    blue = settings.readNumEntry( path + elements[ i ] + "/blue", 0, &ok );
+	    Qt::blue = settings.readNumEntry( path + elements[ i ] + "/blue", 0, &ok );
 	    if ( !ok )
 		break;
 	    break;
@@ -133,7 +133,7 @@ QMap<QString, ConfigStyle> Config::readStyles( const QString &path )
 	f.setBold( bold );
 	f.setItalic( italic );
 	f.setUnderline( underline );
-	QColor c( red, green, blue );
+	QColor c( Qt::red, Qt::green, Qt::blue );
 	ConfigStyle s;
 	s.font = f;
 	s.color = c;
@@ -164,9 +164,9 @@ void Config::saveStyles( const QMap<QString, ConfigStyle> &styles, const QString
 	settings.writeEntry( path + QString::fromLatin1("/")  + elements[ i ] + QString::fromLatin1("/bold"), styles[ elements[ i ] ].font.bold() );
 	settings.writeEntry( path + QString::fromLatin1("/")  + elements[ i ] + QString::fromLatin1("/italic"), styles[ elements[ i ] ].font.italic() );
 	settings.writeEntry( path + QString::fromLatin1("/")  + elements[ i ] + QString::fromLatin1("/underline"), styles[ elements[ i ] ].font.underline() );
-	settings.writeEntry( path + QString::fromLatin1("/")  + elements[ i ] + QString::fromLatin1("/red"), styles[ elements[ i ] ].color.red() );
-	settings.writeEntry( path + QString::fromLatin1("/")  + elements[ i ] + QString::fromLatin1("/green"), styles[ elements[ i ] ].color.green() );
-	settings.writeEntry( path + QString::fromLatin1("/")  + elements[ i ] + QString::fromLatin1("/blue"), styles[ elements[ i ] ].color.blue() );
+	settings.writeEntry( path + QString::fromLatin1("/")  + elements[ i ] + QString::fromLatin1("/red"), styles[ elements[ i ] ].color.Qt::red() );
+	settings.writeEntry( path + QString::fromLatin1("/")  + elements[ i ] + QString::fromLatin1("/green"), styles[ elements[ i ] ].color.Qt::green() );
+	settings.writeEntry( path + QString::fromLatin1("/")  + elements[ i ] + QString::fromLatin1("/blue"), styles[ elements[ i ] ].color.Qt::blue() );
     }
 }
 

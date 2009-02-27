@@ -32,9 +32,9 @@
 #include "qsaglobal.h"
 
 #include <qobject.h>
-#include <qobjectlist.h>
+#include <qobject.h>
 #include <qdatetime.h>
-#include <qptrlist.h>
+#include <q3ptrlist.h>
 #include <qstringlist.h>
 
 #include <qsscript.h>
@@ -65,7 +65,7 @@ public:
 
     QSInterpreter *interpreter() const;
     QStringList scriptNames() const;
-    QPtrList<QSScript> scripts() const;
+    Q3PtrList<QSScript> scripts() const;
     QSScript *script( const QString &name ) const;
     QSScript *script( QObject *context ) const;
 
@@ -85,7 +85,7 @@ public:
 			      const char *qtscriptFunction );
 
     QSEditor *activeEditor() const;
-    QPtrList<QSEditor> editors() const;
+    Q3PtrList<QSEditor> editors() const;
     QSEditor *editor( QSScript *script ) const;
     QSEditor *createEditor( QSScript *script, QWidget *parent=0, const char *name = 0 );
 

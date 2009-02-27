@@ -27,6 +27,10 @@
 #include "browser.h"
 #include "editor.h"
 #include <private/qrichtext_p.h>
+//Added by qt3to4:
+#include <QEvent>
+#include <QMouseEvent>
+#include <QKeyEvent>
 
 
 EditorBrowser::EditorBrowser( Editor *e )

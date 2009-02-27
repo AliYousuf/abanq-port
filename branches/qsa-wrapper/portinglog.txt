@@ -1,0 +1,164 @@
+Log for qt3to4 on Vie 27. Feb 10:46:20 2009. Number of log entries: 154
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 83 column 12: QPtrList -> Q3PtrList
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 84 column 12: QPtrList -> Q3PtrList
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 86 column 14: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 142 column 30: IO_ReadOnly -> QIODevice::ReadOnly
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 156 column 48: IO_ReadOnly -> QIODevice::ReadOnly
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 166 column 32: IO_WriteOnly -> QIODevice::WriteOnly
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 181 column 42: IO_WriteOnly -> QIODevice::WriteOnly
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 214 column 20: QPtrListIterator -> Q3PtrListIterator
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 241 column 8: QPtrList -> Q3PtrList
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 248 column 8: QPtrList -> Q3PtrList
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 258 column 20: QPtrListIterator -> Q3PtrListIterator
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 270 column 20: QPtrListIterator -> Q3PtrListIterator
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 283 column 20: QPtrListIterator -> Q3PtrListIterator
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 297 column 20: QPtrListIterator -> Q3PtrListIterator
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 390 column 14: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 392 column 11: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 552 column 20: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 590 column 20: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 603 column 20: QPtrListIterator -> Q3PtrListIterator
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 615 column 20: QPtrListIterator -> Q3PtrListIterator
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 626 column 20: QPtrListIterator -> Q3PtrListIterator
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 653 column 20: QPtrListIterator -> Q3PtrListIterator
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 659 column 20: QPtrListIterator -> Q3PtrListIterator
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 714 column 20: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 790 column 27: IO_ReadOnly -> QIODevice::ReadOnly
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 791 column 13: QTextStream -> Q3TextStream
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 832 column 20: QPtrListIterator -> Q3PtrListIterator
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 840 column 28: IO_WriteOnly -> QIODevice::WriteOnly
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 841 column 13: QTextStream -> Q3TextStream
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp at line 851 column 14: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.cpp: Added the following include directives:
+	#include <Q3TextStream> 	#include <Q3ValueList> 	#include <Q3PtrList> 
+In file C:/Qt/qsa-wrapper/src/qsa/qsinterpreter.cpp at line 46 column 18: qptrlist.h -> q3ptrlist.h
+In file C:/Qt/qsa-wrapper/src/qsa/qsinterpreter.cpp at line 47 column 25: qcleanuphandler.h -> q3cleanuphandler.h
+In file C:/Qt/qsa-wrapper/src/qsa/qsinterpreter.cpp at line 81 column 12: QPtrList -> Q3PtrList
+In file C:/Qt/qsa-wrapper/src/qsa/qsinterpreter.cpp at line 82 column 12: QPtrList -> Q3PtrList
+In file C:/Qt/qsa-wrapper/src/qsa/qsinterpreter.cpp at line 232 column 28: QSingleCleanupHandler -> Q3SingleCleanupHandler
+In file C:/Qt/qsa-wrapper/src/qsa/qsinterpreter.cpp at line 745 column 14: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/src/qsa/qsinterpreter.cpp at line 746 column 19: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/src/qsa/qsinterpreter.cpp at line 920 column 20: QMessageBox -> Qt
+In file C:/Qt/qsa-wrapper/src/qsa/qsinterpreter.cpp: Added the following include directives:
+	#include <Q3ValueList> 
+In file C:/Qt/qsa-wrapper/src/qsa/qsobjectfactory.cpp at line 63 column 14: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/src/qsa/qsobjectfactory.cpp: Added the following include directives:
+	#include <Q3ValueList> 
+No changes made to file C:/Qt/qsa-wrapper/src/qsa/qswrapperfactory.cpp
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 40 column 15: qhbox.h -> q3hbox.h
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 42 column 21: qfiledialog.h -> q3filedialog.h
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 52 column 19: qtextedit.h -> q3textedit.h
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 54 column 22: qbuttongroup.h -> q3buttongroup.h
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 55 column 23: qdatetimeedit.h -> q3datetimeedit.h
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 57 column 20: qwhatsthis.h -> q3whatsthis.h
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 78 column 23: QCString -> Q3CString
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 164 column 24: QCString -> Q3CString
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 191 column 29: QFileDialog -> Q3FileDialog
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 200 column 29: QFileDialog -> Q3FileDialog
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 209 column 30: QFileDialog -> Q3FileDialog
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 219 column 22: QFileDialog -> Q3FileDialog
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 227 column 24: QCString -> Q3CString
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 238 column 36: NoButton -> Qt::NoButton
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 239 column 36: NoButton -> Qt::NoButton
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 247 column 32: NoButton -> Qt::NoButton
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 253 column 33: NoButton -> Qt::NoButton
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 254 column 33: NoButton -> Qt::NoButton
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 299 column 23: QCString -> Q3CString
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 312 column 21: QWhatsThis -> Q3WhatsThis
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 316 column 14: QWhatsThis -> Q3WhatsThis
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 420 column 24: QCString -> Q3CString
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 437 column 56: QDateEdit -> Q3DateEdit
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 442 column 30: QDateEdit -> Q3DateEdit
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 467 column 56: QTimeEdit -> Q3TimeEdit
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 470 column 39: QTimeEdit -> Q3TimeEdit
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 474 column 37: QTimeEdit -> Q3TimeEdit
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 474 column 64: QTimeEdit -> Q3TimeEdit
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 477 column 39: QTimeEdit -> Q3TimeEdit
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 481 column 37: QTimeEdit -> Q3TimeEdit
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 481 column 61: QTimeEdit -> Q3TimeEdit
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 500 column 22: TextFormat -> Qt::TextFormat
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 511 column 41: QTextEdit -> Q3TextEdit
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 512 column 34: QTextEdit -> Q3TextEdit
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 518 column 24: TextFormat -> Qt::TextFormat
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 642 column 16: QButtonGroup -> Q3ButtonGroup
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 643 column 15: QHBoxLayout -> Q3HBoxLayout
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 644 column 15: QGridLayout -> Q3GridLayout
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 648 column 29: QGroupBox -> Q3GroupBox
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 651 column 26: QHBoxLayout -> Q3HBoxLayout
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 652 column 26: QGridLayout -> Q3GridLayout
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 675 column 45: QButtonGroup -> Q3ButtonGroup
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 691 column 23: QGridLayout -> Q3GridLayout
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 739 column 15: QHBoxLayout -> Q3HBoxLayout
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 740 column 15: QGridLayout -> Q3GridLayout
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 742 column 16: QButtonGroup -> Q3ButtonGroup
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 744 column 13: QGroupBox -> Q3GroupBox
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 746 column 15: QHBoxLayout -> Q3HBoxLayout
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 763 column 35: QVBoxLayout -> Q3VBoxLayout
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 764 column 26: QHBoxLayout -> Q3HBoxLayout
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 765 column 26: QGridLayout -> Q3GridLayout
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 772 column 31: QHBoxLayout -> Q3HBoxLayout
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 818 column 45: QButtonGroup -> Q3ButtonGroup
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 857 column 29: QHBoxLayout -> Q3HBoxLayout
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 858 column 29: QGridLayout -> Q3GridLayout
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp at line 866 column 26: QGridLayout -> Q3GridLayout
+In file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.cpp: Added the following include directives:
+	#include <Q3HBoxLayout> 	#include <Q3GridLayout> 	#include <Q3CString> 	#include <Q3VBoxLayout> 
+In file C:/Qt/qsa-wrapper/src/qsa/qseditor.cpp at line 42 column 21: qobjectlist.h -> qobject.h
+In file C:/Qt/qsa-wrapper/src/qsa/qseditor.cpp at line 45 column 19: qtextedit.h -> q3textedit.h
+In file C:/Qt/qsa-wrapper/src/qsa/qseditor.cpp at line 336 column 9: QTextEdit -> Q3TextEdit
+In file C:/Qt/qsa-wrapper/src/qsa/qseditor.cpp: Added the following include directives:
+	#include <QResizeEvent> 	#include <QEvent> 
+No changes made to file C:/Qt/qsa-wrapper/src/qsa/qsargument.cpp
+No changes made to file C:/Qt/qsa-wrapper/src/qsa/qsscript.cpp
+In file C:/Qt/qsa-wrapper/src/qsa/qsutilfactory.cpp at line 42 column 18: qprocess.h -> q3process.h
+In file C:/Qt/qsa-wrapper/src/qsa/qsutilfactory.cpp at line 62 column 27: IO_ReadOnly -> QIODevice::ReadOnly
+In file C:/Qt/qsa-wrapper/src/qsa/qsutilfactory.cpp at line 63 column 28: IO_WriteOnly -> QIODevice::WriteOnly
+In file C:/Qt/qsa-wrapper/src/qsa/qsutilfactory.cpp at line 64 column 28: IO_ReadWrite -> QIODevice::ReadWrite
+In file C:/Qt/qsa-wrapper/src/qsa/qsutilfactory.cpp at line 65 column 25: IO_Append -> QIODevice::Append
+In file C:/Qt/qsa-wrapper/src/qsa/qsutilfactory.cpp at line 66 column 27: IO_Truncate -> QIODevice::Truncate
+In file C:/Qt/qsa-wrapper/src/qsa/qsutilfactory.cpp at line 67 column 28: IO_Translate -> QIODevice::Text
+In file C:/Qt/qsa-wrapper/src/qsa/qsutilfactory.cpp at line 116 column 27: IO_ReadOnly -> QIODevice::ReadOnly
+In file C:/Qt/qsa-wrapper/src/qsa/qsutilfactory.cpp at line 117 column 28: IO_WriteOnly -> QIODevice::WriteOnly
+In file C:/Qt/qsa-wrapper/src/qsa/qsutilfactory.cpp at line 118 column 28: IO_ReadWrite -> QIODevice::ReadWrite
+In file C:/Qt/qsa-wrapper/src/qsa/qsutilfactory.cpp at line 119 column 25: IO_Append -> QIODevice::Append
+In file C:/Qt/qsa-wrapper/src/qsa/qsutilfactory.cpp at line 120 column 27: IO_Truncate -> QIODevice::Truncate
+In file C:/Qt/qsa-wrapper/src/qsa/qsutilfactory.cpp at line 121 column 28: IO_Translate -> QIODevice::Text
+In file C:/Qt/qsa-wrapper/src/qsa/qsutilfactory.cpp at line 365 column 41: QProcess -> Q3Process
+In file C:/Qt/qsa-wrapper/src/qsa/qsutilfactory.cpp at line 511 column 10: QProcess -> Q3Process
+In file C:/Qt/qsa-wrapper/src/qsa/qsutilfactory.cpp at line 605 column 31: IO_WriteOnly -> QIODevice::WriteOnly
+In file C:/Qt/qsa-wrapper/src/qsa/qsutilfactory.cpp at line 622 column 37: IO_ReadOnly -> QIODevice::ReadOnly
+In file C:/Qt/qsa-wrapper/src/qsa/qsutilfactory.cpp at line 722 column 24: QPtrListIterator -> Q3PtrListIterator
+In file C:/Qt/qsa-wrapper/src/qsa/qsutilfactory.cpp at line 910 column 43: QProcess -> Q3Process
+In file C:/Qt/qsa-wrapper/src/qsa/qsutilfactory.cpp at line 910 column 66: QProcess -> Q3Process
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.h at line 35 column 21: qobjectlist.h -> qobject.h
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.h at line 37 column 18: qptrlist.h -> q3ptrlist.h
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.h at line 68 column 12: QPtrList -> Q3PtrList
+In file C:/Qt/qsa-wrapper/src/qsa/qsproject.h at line 88 column 12: QPtrList -> Q3PtrList
+In file C:/Qt/qsa-wrapper/src/qsa/qsinterpreter.h at line 40 column 21: qobjectlist.h -> qobject.h
+In file C:/Qt/qsa-wrapper/src/qsa/qsinterpreter.h at line 71 column 49: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/src/qsa/qsinterpreter.h: Added the following include directives:
+	#include <Q3ValueList> 
+No changes made to file C:/Qt/qsa-wrapper/src/qsa/qsobjectfactory.h
+No changes made to file C:/Qt/qsa-wrapper/src/qsa/qswrapperfactory.h
+In file C:/Qt/qsa-wrapper/src/qsa/qseditor.h at line 39 column 15: QTextEdit -> Q3TextEdit
+In file C:/Qt/qsa-wrapper/src/qsa/qseditor.h at line 89 column 13: QTextEdit -> Q3TextEdit
+In file C:/Qt/qsa-wrapper/src/qsa/qseditor.h: Added the following include directives:
+	#include <QResizeEvent> 	#include <QEvent> 
+No changes made to file C:/Qt/qsa-wrapper/src/qsa/qsinputdialogfactory.h
+In file C:/Qt/qsa-wrapper/src/qsa/qsargument.h at line 34 column 20: qvaluelist.h -> q3valuelist.h
+In file C:/Qt/qsa-wrapper/src/qsa/qsargument.h at line 66 column 17: MOC_SKIP_BEGIN -> #ifndef Q_MOC_RUN
+In file C:/Qt/qsa-wrapper/src/qsa/qsargument.h at line 68 column 15: MOC_SKIP_END -> #endif
+In file C:/Qt/qsa-wrapper/src/qsa/qsargument.h at line 67 column 56: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/src/qsa/qsargument.h at line 71 column 51: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/src/qsa/qsargument.h at line 75 column 36: QValueList -> Q3ValueList
+In file C:/Qt/qsa-wrapper/src/qsa/qsargument.h at line 76 column 17: QValueList -> Q3ValueList
+No changes made to file C:/Qt/qsa-wrapper/src/qsa/qsscript.h
+No changes made to file C:/Qt/qsa-wrapper/src/qsa/qsutilfactory.h
+In file qsa.pro: Added entry QT +=  qt3support 
+In file C:/Qt/qsa-wrapper/src/plugin/qseditorplugin.cpp at line 68 column 12: QIconSet -> QIcon
+In file C:/Qt/qsa-wrapper/src/plugin/qseditorplugin.cpp at line 72 column 20: QIconSet -> QIcon
+In file C:/Qt/qsa-wrapper/src/plugin/qseditorplugin.cpp at line 73 column 16: QIconSet -> QIcon
+In file C:/Qt/qsa-wrapper/src/plugin/qseditorplugin.cpp: Added the following include directives:
+	#include <QPixmap> 
+In file plugin.pro: Added entry QT +=  qt3support 
+

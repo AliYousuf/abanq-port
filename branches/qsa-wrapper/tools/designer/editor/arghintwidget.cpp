@@ -30,6 +30,9 @@
 #include <qlayout.h>
 #include <qpainter.h>
 #include <qpixmap.h>
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <Q3Frame>
 
 static const char * left_xpm[] = {
 "16 16 3 1",
@@ -161,12 +164,12 @@ void ArrowButton::drawButton( QPainter *p )
 
 
 ArgHintWidget::ArgHintWidget( QWidget *parent, const char*name )
-    : QFrame( parent, name, WType_Popup ), curFunc( 0 ), numFuncs( 0 )
+    : Q3Frame( parent, name, Qt::WType_Popup ), curFunc( 0 ), numFuncs( 0 )
 {
-    setFrameStyle( QFrame::Box | QFrame::Plain );
+    setFrameStyle( Q3Frame::Box | Q3Frame::Plain );
     setLineWidth( 1 );
     setBackgroundColor( white );
-    QHBoxLayout *hbox = new QHBoxLayout( this );
+    Q3HBoxLayout *hbox = new Q3HBoxLayout( this );
     hbox->setMargin( 1 );
     hbox->addWidget( ( prev = new ArrowButton( this, "editor_left_btn", ArrowButton::Left ) ) );
     hbox->addWidget( ( funcLabel = new QLabel( this, "editor_func_lbl" ) ) );

@@ -31,11 +31,14 @@
 #include <qstringlist.h>
 #include <qobject.h>
 #include <qmap.h>
+//Added by qt3to4:
+#include <QEvent>
+#include <Q3ValueList>
 
 class QTextDocument;
 class Editor;
-class QVBox;
-class QListBox;
+class Q3VBox;
+class Q3ListBox;
 class ArgHintWidget;
 
 struct CompletionEntry
@@ -64,7 +67,7 @@ public:
     ~EditorCompletion();
 
     virtual void addCompletionEntry( const QString &s, QTextDocument *doc, bool strict );
-    virtual QValueList<CompletionEntry> completionList( const QString &s, QTextDocument *doc ) const;
+    virtual Q3ValueList<CompletionEntry> completionList( const QString &s, QTextDocument *doc ) const;
     virtual void updateCompletionMap( QTextDocument *doc );
 
     bool eventFilter( QObject *o, QEvent *e );
@@ -75,7 +78,7 @@ public:
     virtual bool doArgumentHint( bool useIndex );
 
     virtual void addEditor( Editor *e );
-    virtual QValueList<QStringList> functionParameters( const QString &func, QChar &, QString &prefix, QString &postfix );
+    virtual Q3ValueList<QStringList> functionParameters( const QString &func, QChar &, QString &prefix, QString &postfix );
 
     virtual void setContext( QObject *this_ );
 
@@ -83,17 +86,17 @@ public:
 
 protected:
     virtual bool continueComplete();
-    virtual void showCompletion( const QValueList<CompletionEntry> &lst );
+    virtual void showCompletion( const Q3ValueList<CompletionEntry> &lst );
     virtual void completeCompletion();
 
 protected:
-    QVBox *completionPopup;
-    QListBox *completionListBox;
+    Q3VBox *completionPopup;
+    Q3ListBox *completionListBox;
     ArgHintWidget *functionLabel;
     int completionOffset;
     Editor *curEditor;
     QString searchString;
-    QValueList<CompletionEntry> cList;
+    Q3ValueList<CompletionEntry> cList;
     QMap<QChar, QStringList> completionMap;
     bool enabled;
     QTextDocument *lastDoc;

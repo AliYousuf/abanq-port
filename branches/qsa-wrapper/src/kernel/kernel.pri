@@ -35,3 +35,5 @@ DEPENDPATH	+= ../engine
 
 DEFINES += HAVE_CONFIG_H
 
+#The following line was inserted by qt3to4
+QT += qt3support 

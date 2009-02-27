@@ -29,6 +29,10 @@
 #include "qseditor.h"
 #include "qsinterpreter.h"
 #include "qsproject.h"
+//Added by qt3to4:
+#include <Q3TextStream>
+#include <Q3ValueList>
+#include <Q3PtrList>
 
 #include "../engine/qsfuncref.h"
 #ifdef QSDEBUGGER
@@ -76,10 +80,10 @@ public:
     }
 
     QSInterpreter *interpreter;
-    QPtrList<QSScript> scripts;
-    QPtrList<QSEditor> editors;
+    Q3PtrList<QSScript> scripts;
+    Q3PtrList<QSEditor> editors;
     QObjectList objects;
-    QValueList<QSSignalHandler> signalHandlers;
+    Q3ValueList<QSSignalHandler> signalHandlers;
     QString loadName;
     uint needsRerun : 1;
     uint scriptsModified : 1;
@@ -241,7 +245,7 @@ bool QSProject::load( const QString &projectFile )
 {
     QFile file( projectFile );
     d->loadName = projectFile;
-    if( file.open( IO_ReadOnly ) ) {
+    if( file.open( QIODevice::ReadOnly ) ) {
 	QDataStream input( &file );
 	return loadInternal( &input );
     }
@@ -270,7 +274,7 @@ bool QSProject::load( const QString &projectFile )
 */
 bool QSProject::loadFromData( QByteArray projectData )
 {
-    QDataStream stream( projectData, IO_ReadOnly );
+    QDataStream stream( projectData, QIODevice::ReadOnly );
     return loadInternal( &stream );
 }
 
@@ -287,7 +291,7 @@ bool QSProject::save( const QString &projectFile )
 {
     QString fileName = projectFile.isNull() ? d->loadName : projectFile;
     QFile file( fileName );
-    if( !file.open( IO_WriteOnly ) ) {
+    if( !file.open( QIODevice::WriteOnly ) ) {
 #if defined(QT_CHECK_RANGE)
 	qWarning( "QSProject::save(), could not open file for writing" );
 #endif
@@ -312,7 +316,7 @@ bool QSProject::save( const QString &projectFile )
 */
 bool QSProject::saveToData( QByteArray data )
 {
-    QDataStream stream( data, IO_WriteOnly );
+    QDataStream stream( data, QIODevice::WriteOnly );
     bool old = d->bundleStorage;
     d->bundleStorage = TRUE;
     bool result = saveInternal( &stream );
@@ -354,7 +358,7 @@ QSEditor *QSProject::editor( QSScript *script ) const
     if( d->scripts.find( script ) < 0 )
 	return 0;
 
-    QPtrListIterator<QSEditor> it( d->editors );
+    Q3PtrListIterator<QSEditor> it( d->editors );
     QSEditor *editor = 0;
     QSEditor *current;
     while( ( current = it() ) )
@@ -392,7 +396,7 @@ QSEditor *QSProject::createEditor( QSScript *script, QWidget *parent, const char
   Returns a list of all the editors for the scripts in this
   project.
 */
-QPtrList<QSEditor> QSProject::editors() const
+Q3PtrList<QSEditor> QSProject::editors() const
 {
     return d->editors;
 }
@@ -401,7 +405,7 @@ QPtrList<QSEditor> QSProject::editors() const
 /*!
   Returns a list of all the scripts in this project.
 */
-QPtrList<QSScript> QSProject::scripts() const
+Q3PtrList<QSScript> QSProject::scripts() const
 {
     return d->scripts;
 }
@@ -413,7 +417,7 @@ QPtrList<QSScript> QSProject::scripts() const
 QStringList QSProject::scriptNames() const
 {
     QStringList lst;
-    QPtrListIterator<QSScript> it( d->scripts );
+    Q3PtrListIterator<QSScript> it( d->scripts );
     QSScript *s;
     while( ( s = it() ) ) {
         lst << s->name();
@@ -428,7 +432,7 @@ QStringList QSProject::scriptNames() const
 */
 QSScript *QSProject::script( const QString &name ) const
 {
-    QPtrListIterator<QSScript> it( d->scripts );
+    Q3PtrListIterator<QSScript> it( d->scripts );
     QSScript *s;
     while( ( s = it() ) ) {
 	if( s->name() == name )
@@ -444,7 +448,7 @@ QSScript *QSProject::script( const QString &name ) const
 */
 QSScript *QSProject::script( QObject *context ) const
 {
-    QPtrListIterator<QSScript> it( d->scripts );
+    Q3PtrListIterator<QSScript> it( d->scripts );
     QSScript *s;
     while( ( s = it() ) ) {
 	if( s->context() == context )
@@ -460,7 +464,7 @@ QSScript *QSProject::script( QObject *context ) const
 QObject *QSProject::object( const QString &name ) const
 {
     QObject *object = 0;
-    QPtrListIterator<QObject> it( d->objects );
+    Q3PtrListIterator<QObject> it( d->objects );
     while( ( object = it() ) ) {
 	if( QString::fromLatin1(object->name()) == name )
 	    break;
@@ -618,9 +622,9 @@ void QSProject::removeObject( const QObject *object )
 #endif
 	return;
     }
-    QValueList<QSSignalHandler>::Iterator it = d->signalHandlers.begin();
+    Q3ValueList<QSSignalHandler>::Iterator it = d->signalHandlers.begin();
     while ( it != d->signalHandlers.end() ) {
-	QValueList<QSSignalHandler>::Iterator it2 = it;
+	Q3ValueList<QSSignalHandler>::Iterator it2 = it;
 	QSSignalHandler sigh = *it2;
 	++it;
 	if ( sigh.sender == object || sigh.receiver == object )
@@ -816,7 +820,7 @@ void QSProject::removeSignalHandler( QObject *sender, const char *signal,
     sigh.receiver = receiver;
     sigh.signal = signal + 1;
     sigh.function = func.left( func.find( '(' ) );
-    for ( QValueList<QSSignalHandler>::Iterator it = d->signalHandlers.begin();
+    for ( Q3ValueList<QSSignalHandler>::Iterator it = d->signalHandlers.begin();
 	  it != d->signalHandlers.end(); ++it ) {
 	if ( sigh == *it ) {
 	    d->signalHandlers.remove(it);
@@ -860,7 +864,7 @@ void QSProject::removeSignalHandler( QObject *sender, const char *signal,
     sigh.receiver = 0;
     sigh.signal = signal + 1;
     sigh.function = func;
-    for ( QValueList<QSSignalHandler>::Iterator it = d->signalHandlers.begin();
+    for ( Q3ValueList<QSSignalHandler>::Iterator it = d->signalHandlers.begin();
 	  it != d->signalHandlers.end(); ++it ) {
 	if ( sigh == *it ) {
 	    d->signalHandlers.remove( it );
@@ -883,7 +887,7 @@ void QSProject::removeSignalHandler( QObject *sender, const char *signal,
 */
 bool QSProject::editorsModified() const
 {
-    QPtrListIterator<QSEditor> it( d->editors );
+    Q3PtrListIterator<QSEditor> it( d->editors );
     QSEditor *current;
     while( ( current = it() ) )
 	if( current->isModified() )
@@ -905,7 +909,7 @@ bool QSProject::editorsModified() const
  */
 void QSProject::commitEditorContents()
 {
-    QPtrListIterator<QSEditor> it( d->editors );
+    Q3PtrListIterator<QSEditor> it( d->editors );
     QSEditor *current;
     while( ( current = it() ) )
 	if( current->isModified() )
@@ -923,7 +927,7 @@ void QSProject::commitEditorContents()
  */
 void QSProject::revertEditorContents()
 {
-    QPtrListIterator<QSEditor> it( d->editors );
+    Q3PtrListIterator<QSEditor> it( d->editors );
     QSEditor *current;
     while( ( current = it() ) )
 	if( current->isModified() )
@@ -963,13 +967,13 @@ void QSProject::evaluate()
     ip->clear();
     initObjects();
 
-    QPtrListIterator<QSEditor> eds( d->editors );
+    Q3PtrListIterator<QSEditor> eds( d->editors );
     QSEditor *editor;
     while( ( editor = eds() ) ) {
 	editor->removeErrorMark();
     }
 
-    QPtrListIterator<QSScript> it( d->scripts );
+    Q3PtrListIterator<QSScript> it( d->scripts );
     QSScript *script;
     while( ( script = it() ) ) {
 	ip->execute( script->context(), script->code(), script->name() );
@@ -1037,7 +1041,7 @@ void QSProject::initObjects()
 void QSProject::initEventHandlers()
 {
     QuickInterpreter *ip = getQuickInterpreter();
-    for ( QValueList<QSSignalHandler>::Iterator it = d->signalHandlers.begin();
+    for ( Q3ValueList<QSSignalHandler>::Iterator it = d->signalHandlers.begin();
 	  it != d->signalHandlers.end(); ++it ) {
 	QSSignalHandler sigh = *it;
 	QSObject senderObj = ip->wrap( sigh.sender );
@@ -1115,8 +1119,8 @@ bool QSProject::loadInternal( QDataStream *stream )
 	    (*stream) >> code;
 	} else {
 	    QFile f(name);
-	    if (f.open(IO_ReadOnly)) {
-		QTextStream str(&f);
+	    if (f.open(QIODevice::ReadOnly)) {
+		Q3TextStream str(&f);
 		code = str.read();
 	    } else {
 		qWarning("QSProject::loadInternal(), failed to read file '%s'", name.latin1());
@@ -1159,7 +1163,7 @@ bool QSProject::saveInternal( QDataStream *stream )
     (*stream) << (int)d->bundleStorage;
 
     (*stream) << d->scripts.count();
-    QPtrListIterator<QSScript> it( d->scripts );
+    Q3PtrListIterator<QSScript> it( d->scripts );
     QSScript *script;
     while( ( script = it() ) ) {
 	(*stream) << script->name();
@@ -1167,8 +1171,8 @@ bool QSProject::saveInternal( QDataStream *stream )
 	    (*stream) << script->code();
 	} else {
 	    QFile f(script->name());
-	    if (f.open(IO_WriteOnly)) {
-		QTextStream str(&f);
+	    if (f.open(QIODevice::WriteOnly)) {
+		Q3TextStream str(&f);
 		str << script->code();
 	    } else {
 		qWarning("QSProject::saveInternal(), failed to write file '%s'",
@@ -1178,7 +1182,7 @@ bool QSProject::saveInternal( QDataStream *stream )
     }
 
     (*stream) << d->signalHandlers.size();
-    QValueList<QSSignalHandler>::ConstIterator handlers = d->signalHandlers.begin();
+    Q3ValueList<QSSignalHandler>::ConstIterator handlers = d->signalHandlers.begin();
     while( handlers != d->signalHandlers.end() ) {
 	(*stream) << (*handlers).sender->name()
 		  << ( (*handlers).receiver ? (*handlers).receiver->name() : 0 )

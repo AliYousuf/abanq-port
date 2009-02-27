@@ -1,0 +1,18 @@
+Log for qt3to4 on Vie 27. Feb 10:51:02 2009. Number of log entries: 13
+In file C:/Qt/qsa-wrapper/src/custom/quickcustom.cpp at line 307 column 8: QIconSet -> QIcon
+In file C:/Qt/qsa-wrapper/src/custom/quickcustom.cpp at line 310 column 16: QIconSet -> QIcon
+In file C:/Qt/qsa-wrapper/src/custom/quickcustom.cpp at line 312 column 16: QIconSet -> QIcon
+In file C:/Qt/qsa-wrapper/src/custom/quickcustom.cpp at line 313 column 19: QIconSet -> QIcon
+In file C:/Qt/qsa-wrapper/src/custom/quickcustom.cpp: Added the following include directives:
+	#include <QPixmap> 
+In file C:/Qt/qsa-wrapper/src/custom/quickpaintwidget.cpp at line 40 column 44: WRepaintNoErase -> Qt::WNoAutoErase
+In file C:/Qt/qsa-wrapper/src/custom/quickpaintwidget.cpp at line 40 column 61: WResizeNoErase -> Qt::WResizeNoErase
+In file C:/Qt/qsa-wrapper/src/custom/quickpaintwidget.cpp: Added the following include directives:
+	#include <QPaintEvent> 	#include <QResizeEvent> 	#include <QPixmap> 
+No changes made to file C:/Qt/qsa-wrapper/src/custom/quickcolorbutton.cpp
+In file C:/Qt/qsa-wrapper/src/custom/quickcustom.h at line 42 column 12: QIconSet -> QIcon
+In file C:/Qt/qsa-wrapper/src/custom/quickpaintwidget.h: Added the following include directives:
+	#include <QResizeEvent> 	#include <QPaintEvent> 
+No changes made to file C:/Qt/qsa-wrapper/src/custom/quickcolorbutton.h
+In file custom.pro: Added entry QT +=  qt3support 
+

@@ -27,12 +27,14 @@
 #ifndef ARGHINTWIDGET_H
 #define ARGHINTWIDGET_H
 
-#include <qframe.h>
+#include <q3frame.h>
+//Added by qt3to4:
+#include <QLabel>
 
 class QLabel;
 class ArrowButton;
 
-class ArgHintWidget : public QFrame
+class ArgHintWidget : public Q3Frame
 {
     Q_OBJECT
 

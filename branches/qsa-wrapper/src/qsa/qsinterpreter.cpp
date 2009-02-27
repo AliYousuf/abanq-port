@@ -30,6 +30,8 @@
 #include "qsscript.h"
 #include "qsobjectfactory.h"
 #include "qswrapperfactory.h"
+//Added by qt3to4:
+#include <Q3ValueList>
 #ifdef QSDEBUGGER
 #include "../kernel/quickdebugger.h"
 #endif
@@ -41,8 +43,8 @@
 
 #include <qapplication.h>
 #include <qmessagebox.h>
-#include <qptrlist.h>
-#include <qcleanuphandler.h>
+#include <q3ptrlist.h>
+#include <q3cleanuphandler.h>
 
 #if defined (QT_THREAD_SUPPORT)
 #  include <private/qmutexpool_p.h>
@@ -76,8 +78,8 @@ public:
     QuickInterpreter *interpreter;
     QSStackTrace stackTrace;
     QSInterpreter::ErrorMode errorMode;
-    QPtrList<QSObjectFactory> objectFactories;
-    QPtrList<QSWrapperFactory> wrapperFactories;
+    Q3PtrList<QSObjectFactory> objectFactories;
+    Q3PtrList<QSWrapperFactory> wrapperFactories;
     int timeoutInterval;
 };
 
@@ -429,7 +431,7 @@ QSInterpreter::~QSInterpreter()
 }
 
 static QSInterpreter *def_inter = 0;
-static QSingleCleanupHandler<QSInterpreter> def_cleanup;
+static Q3SingleCleanupHandler<QSInterpreter> def_cleanup;
 
 /*!
   Returns the default interpreter.
@@ -1178,8 +1180,8 @@ QSStackTrace QSInterpreter::stackTrace() const
     if( !hadError() )
 	return st;
 
-    QValueList<QuickDebuggerStackFrame> qtrace = d->interpreter->debuggerEngine()->backtrace();
-    for( QValueList<QuickDebuggerStackFrame>::ConstIterator it = qtrace.begin();
+    Q3ValueList<QuickDebuggerStackFrame> qtrace = d->interpreter->debuggerEngine()->backtrace();
+    for( Q3ValueList<QuickDebuggerStackFrame>::ConstIterator it = qtrace.begin();
 	 it != qtrace.end(); ++it ) {
 	QSStackFrame frame( (*it).function,
 			    d->interpreter->nameOfSourceId( (*it).sourceId ),
@@ -1395,7 +1397,7 @@ void qsa_eval_check()
 					 "for updates\n"
 					 "or contact sales@trolltech.com for further information"),
 			      QMessageBox::Ok,
-			      QMessageBox::NoButton);
+			      Qt::NoButton);
     }
 }
 #endif

@@ -27,15 +27,19 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
-#include <qtextedit.h>
+#include <q3textedit.h>
+//Added by qt3to4:
+#include <QEvent>
+#include <QKeyEvent>
+#include <Q3PopupMenu>
 
 struct Config;
 class ParenMatcher;
 class EditorCompletion;
 class EditorBrowser;
-class QAccel;
+class Q3Accel;
 
-class Editor : public QTextEdit
+class Editor : public Q3TextEdit
 {
     Q_OBJECT
 
@@ -49,11 +53,11 @@ public:
     ~Editor();
     virtual void load( const QString &fn );
     virtual void save( const QString &fn );
-    QTextDocument *document() const { return QTextEdit::document(); }
-    void placeCursor( const QPoint &p, QTextCursor *c ) { QTextEdit::placeCursor( p, c ); }
-    void setDocument( QTextDocument *doc ) { QTextEdit::setDocument( doc ); }
-    QTextCursor *textCursor() const { return QTextEdit::textCursor(); }
-    void repaintChanged() { QTextEdit::repaintChanged(); }
+    QTextDocument *document() const { return Q3TextEdit::document(); }
+    void placeCursor( const QPoint &p, QTextCursor *c ) { Q3TextEdit::placeCursor( p, c ); }
+    void setDocument( QTextDocument *doc ) { Q3TextEdit::setDocument( doc ); }
+    QTextCursor *textCursor() const { return Q3TextEdit::textCursor(); }
+    void repaintChanged() { Q3TextEdit::repaintChanged(); }
 
     virtual EditorCompletion *completionManager() { return 0; }
     virtual EditorBrowser *browserManager() { return 0; }
@@ -70,9 +74,9 @@ public:
     virtual bool supportsBreakPoints() const { return TRUE; }
     virtual void makeFunctionVisible( QTextParagraph * ) {}
 
-    void drawCursor( bool b ) { QTextEdit::drawCursor( b ); }
+    void drawCursor( bool b ) { Q3TextEdit::drawCursor( b ); }
 
-    QPopupMenu *createPopupMenu( const QPoint &p );
+    Q3PopupMenu *createPopupMenu( const QPoint &p );
     bool eventFilter( QObject *o, QEvent *e );
 
     void setEditable( bool b ) { editable = b; }
@@ -96,7 +100,7 @@ protected:
     QString filename;
     Config *cfg;
     bool hasError;
-    QAccel *accelComment, *accelUncomment;
+    Q3Accel *accelComment, *accelUncomment;
     bool editable;
 
 };
