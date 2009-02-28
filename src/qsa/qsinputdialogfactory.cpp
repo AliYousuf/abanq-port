@@ -480,7 +480,7 @@ class QSDateEdit : public QSLabeled
     Q_PROPERTY(QDate date READ date WRITE setDate)
     Q_PROPERTY(QDate minimum READ minimum WRITE setMinimum)
     Q_PROPERTY(QDate maximum READ maximum WRITE setMaximum)
-    QS_WIDGET( DateEdit )
+    QS_WIDGET( 3DateEdit )
 public:
     enum Order { DMY, MDY, YMD, YDM };
     QSDateEdit() : QSLabeled( tr("Date:"), new Q3DateEdit(0))
@@ -511,7 +511,7 @@ class QSTimeEdit : public QSLabeled
     Q_PROPERTY(QTime time READ time WRITE setTime)
     Q_PROPERTY(QTime minimum READ minimum WRITE setMinimum)
     Q_PROPERTY(QTime maximum READ maximum WRITE setMaximum)
-    QS_WIDGET( TimeEdit )
+    QS_WIDGET( 3TimeEdit )
 public:
     QSTimeEdit() : QSLabeled( tr("Time:"), new Q3TimeEdit(0))
     { d()->setAutoAdvance(TRUE); }
@@ -676,7 +676,7 @@ class QSGroupBox : public QSWidget
 {
     Q_OBJECT
     Q_PROPERTY(QString title READ title WRITE setTitle)
-    QS_WIDGET(GroupBox)
+    QS_WIDGET(3GroupBox)
 public:
     QSGroupBox();
     QString title() const
@@ -699,7 +699,7 @@ QSGroupBox::QSGroupBox()
     d()->setColumnLayout(0, Qt::Horizontal);
     hbox = new Q3HBoxLayout(d()->layout() );
     grid = new Q3GridLayout(hbox, 0, 0, 5);
-    grid->setAlignment( AlignTop );
+    grid->setAlignment( Qt::AlignTop );
 }
 
 void QSGroupBox::add(QSWidget *widget)
@@ -722,7 +722,7 @@ void QSGroupBox::add(QSWidget *widget)
     if ( w && w->isA("QRadioButton") ) {
 	if (!invisibleButtonGroup )
 	    (invisibleButtonGroup = new Q3ButtonGroup(d()))->hide();
-	invisibleButtonGroup->insert((QButton*)w);
+  invisibleButtonGroup->insert((Q3Button*)w);
     }
 
 }
@@ -738,7 +738,7 @@ void QSGroupBox::newColumn() {
     if (grid->numRows()) {
 	hbox->addSpacing(17);
 	grid = new Q3GridLayout(hbox, 0, 0, 5);
-	grid->setAlignment( AlignTop );
+  grid->setAlignment( Qt::AlignTop );
     }
 }
 
@@ -812,7 +812,7 @@ QSDialogPrivate::QSDialogPrivate(QWidget *parent)
     QLayout *vbox = new Q3VBoxLayout(this, 11, 7);
     hbox = new Q3HBoxLayout(vbox);
     grid = new Q3GridLayout(hbox, 0, 0);
-    grid->setAlignment( AlignTop );
+    grid->setAlignment( Qt::AlignTop );
     okButton = new QPushButton(QMessageBox::tr("OK"), this);
     okButton->setDefault(TRUE);
     QObject::connect(okButton, SIGNAL(clicked()), this, SLOT(accept()));
@@ -865,7 +865,7 @@ void QSDialogPrivate::add(QSWidget *widget)
     if ( w && w->isA("QRadioButton") ) {
 	if (!invisibleButtonGroup )
 	    (invisibleButtonGroup = new Q3ButtonGroup(this))->hide();
-	invisibleButtonGroup->insert((QButton*)w);
+  invisibleButtonGroup->insert((Q3Button*)w);
     }
 
     lastWidget = w;
@@ -905,7 +905,7 @@ void QSDialog::newTab(const QString &label)
     d->parent = w;
     d->hbox = new Q3HBoxLayout(w, 11, 7);
     d->grid = new Q3GridLayout(d->hbox, 0, 0);
-    d->grid->setAlignment(AlignTop);
+    d->grid->setAlignment(Qt::AlignTop);
 }
 
 void QSDialog::newColumn()
@@ -913,7 +913,7 @@ void QSDialog::newColumn()
     if (d->grid->numRows()) {
 	d->hbox->addSpacing(17);
 	d->grid = new Q3GridLayout(d->hbox, 0, 0);
-	d->grid->setAlignment(AlignTop);
+  d->grid->setAlignment(Qt::AlignTop);
     }
 }
 

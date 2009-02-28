@@ -29,7 +29,7 @@
 #include "qsacompletion.h"
 #include "qsaeditor.h"
 #include "qsaeditorinterface.h"
-#include <private/qrichtext_p.h>
+#include <private/q3richtext_p.h>
 
 #include <qaction.h>
 #include <qapplication.h>

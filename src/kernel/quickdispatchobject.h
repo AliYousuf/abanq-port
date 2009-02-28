@@ -32,6 +32,7 @@
 #include <qobject.h>
 #include <q3ptrvector.h>
 #include <q3valuelist.h>
+#include <q3cstring.h>
 
 class QuickInterpreter;
 class QuickDispatchObjectFactoryPrivate;

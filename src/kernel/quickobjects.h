@@ -140,7 +140,7 @@ template class QUICKCORE_EXPORT QMap<QString, QSOT::QuickScriptObjectType>;
 template class QUICKCORE_EXPORT Q3PtrVector<QObject>;
 template class QUICKCORE_EXPORT QMap<QString, QuickScriptProperty>;
 template class QUICKCORE_EXPORT Q3ValueList<QuickMetaData>;
-template class QUICKCORE_EXPORT QIntDict<char>;
+template class QUICKCORE_EXPORT Q3IntDict<char>;
 template class QUICKCORE_EXPORT Q3PtrList<QMetaProperty>;
 //template class QUICKCORE_EXPORT Q3ValueList<QVariant>;
 // MOC_SKIP_END

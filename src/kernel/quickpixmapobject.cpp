@@ -234,7 +234,7 @@ void QSPixmapClass::save( QSEnv *env )
     }
 
     QString format = QFileInfo( env->arg( 0 ).toString() ).extension().upper();
-    QStrList l = QImageIO::outputFormats();
+    Q3StrList l = QImageIO::outputFormats();
     if ( l.find( format.latin1() ) == -1 )
 	format = QString::fromLatin1("PNG");
 

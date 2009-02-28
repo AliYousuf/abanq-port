@@ -294,7 +294,7 @@ void QSACompletion::completeQMetaObject( const QMetaObject *meta,
     }
 
     // enum values
-    QStrList enums = meta->enumeratorNames( includeSuperClass );
+    Q3StrList enums = meta->enumeratorNames( includeSuperClass );
     for ( int k = QObject::staticMetaObject()->numEnumerators(TRUE); k < (int)enums.count(); ++k ) {
 	const QMetaEnum *me = meta->enumerator( enums.at( k ), includeSuperClass );
 	for ( int l = 0; l < (int)me->count; ++l ) {

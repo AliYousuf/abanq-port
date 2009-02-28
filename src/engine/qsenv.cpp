@@ -113,7 +113,7 @@ void QSEnv::clear()
     exVal.invalidate();
     retVal.invalidate();
 
-    QPtrListIterator<QSClass> it( classList );
+    Q3PtrListIterator<QSClass> it( classList );
     QSClass *cur;
     while( (cur=it())!=0 )
  	cur->finalize();
@@ -210,7 +210,7 @@ QSClass* QSEnv::classByName( const QString &n )
 
 QSClass* QSEnv::classByIdentifier( const QString &n )
 {
-    QPtrListIterator<QSClass> it(classList);
+    Q3PtrListIterator<QSClass> it(classList);
     QSClass *cl;
     while ((cl = it()))
 	if (cl->identifier() == n)
