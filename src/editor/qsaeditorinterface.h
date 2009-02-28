@@ -31,9 +31,10 @@
 
 #include <qobject.h>
 #include <qguardedptr.h>
+#include "viewmanager.h"
 
 class QTimer;
-class ViewManager;
+//class ViewManager;
 class QAction;
 class Q3TextEdit;
 

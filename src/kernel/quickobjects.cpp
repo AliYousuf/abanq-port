@@ -48,7 +48,7 @@
 #include "../engine/qsfuncref.h"
 #include <qapplication.h>
 #include <qmetaobject.h>
-#include <qobjectlist.h>
+#include <qobject.h>
 #include <q3ptrdict.h>
 #include <private/qcom_p.h>
 #include <private/qpluginmanager_p.h>

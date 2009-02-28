@@ -698,7 +698,7 @@ void EditorCompletion::setContext( QObject * )
 void EditorCompletion::showCompletion( const Q3ValueList<CompletionEntry> &lst )
 {
     Q3TextCursor *cursor = curEditor->textCursor();
-    QTextStringChar *chr = cursor->paragraph()->at( cursor->index() );
+    Q3TextStringChar *chr = cursor->paragraph()->at( cursor->index() );
     int h = cursor->paragraph()->lineHeightOfChar( cursor->index() );
     int x = cursor->paragraph()->rect().x() + chr->x;
     int y, dummy;

@@ -40,7 +40,7 @@
 #include "quickobjects.h"
 #include "quickpixmapobject.h"
 
-#include <qobjectlist.h>
+#include <qobject.h>
 #include <qmetaobject.h>
 #include <qregexp.h>
 
