@@ -37,7 +37,7 @@
 #include <qtimer.h>
 
 #include <markerwidget.h>
-#include <viewmanager.h>
+#include "viewmanager.h"
 
 // #include "qsabreakpointsettingsimpl.h"
 // #include "qsdebugger.h"
