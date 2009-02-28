@@ -33,6 +33,8 @@
 #include <qpainter.h>
 #include <q3paintdevicemetrics.h>
 #include <q3simplerichtext.h>
+#include <QToolTip>
+#include <Qt3support>
 
 static Q3TextEdit *debugoutput = 0;
 static void (*qt_default_message_handler)(QtMsgType, const char *msg);
@@ -75,12 +77,12 @@ static QIconSet createIconSet( const QString &name, bool disabled = TRUE )
     return ic;
 }
 
-class ScriptListItem : public QListViewItem
+class ScriptListItem : public Q3ListViewItem
 {
     friend class IdeWindow;
 public:
     ScriptListItem( QListView *parent, QSScript *script )
-	: QListViewItem( parent, script->name() ), qss( script )
+  : Q3ListViewItem( parent, script->name() ), qss( script )
     {
 	QString fname = ( qss && qss->context() ? QString::fromLatin1("scriptobject.png") : QString::fromLatin1("script.png") );
 	setPixmap( 0, QPixmap::fromMimeSource( fname ) );
@@ -148,7 +150,7 @@ void IdeWindow::scriptExport()
             return;
         script = item->qss;
     }
-    QString name = QFileDialog::getSaveFileName( script->name(), QString::null, this, 0,
+    QString name = Q3FileDialog::getSaveFileName( script->name(), QString::null, this, 0,
                                                  QString::fromLatin1("Export Script") );
     QFile file( name );
     if ( !name.isEmpty() ) {
@@ -162,7 +164,7 @@ void IdeWindow::scriptExport()
 	}
 	QSEditor *editor = project->editor( script );
 	if ( editor ) editor->commit();
-	QTextStream stream( &file );
+  Q3TextStream stream( &file );
 	stream << script->code();
     }
 }
@@ -540,8 +542,8 @@ void IdeWindow::init()
     outputContainer->show();
 
     QObject::connect( projectContainer->scriptsListView,
-		      SIGNAL( doubleClicked( QListViewItem *) ),
-		      this, SLOT( scriptItemDoubleClicked( QListViewItem *) ) );
+          SIGNAL( doubleClicked( Q3ListViewItem *) ),
+          this, SLOT( scriptItemDoubleClicked( Q3ListViewItem *) ) );
 
     findText = new QSFindText( this, 0, FALSE );
     QObject::connect( editFindAction, SIGNAL( activated() ), findText, SLOT( show() ) );
@@ -692,7 +694,7 @@ void IdeWindow::projectError( const QString &msg, const QString &file, int line 
 }
 
 
-void IdeWindow::scriptItemDoubleClicked( QListViewItem *i )
+void IdeWindow::scriptItemDoubleClicked( Q3ListViewItem *i )
 {
     ScriptListItem *item = (ScriptListItem *)i;
     showPage( item->qss );

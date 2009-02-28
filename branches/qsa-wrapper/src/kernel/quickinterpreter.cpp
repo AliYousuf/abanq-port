@@ -41,7 +41,7 @@
 #include "qserrors.h"
 #include "qsfunction.h"
 #include "qsfuncref.h"
-#include <qobjectlist.h>
+#include <qobject.h>
 #include <qmetaobject.h>
 #include <qapplication.h>
 #include <qdom.h>

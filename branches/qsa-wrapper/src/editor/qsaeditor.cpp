@@ -55,7 +55,7 @@ private:
 };
 
 QSAEditorToolTip::QSAEditorToolTip( QWidget *parent, QSAEditor *e )
-    : QToolTip( parent ), editor( e )
+    : QToolTip( *parent ), editor( e )
 {
 }
 
