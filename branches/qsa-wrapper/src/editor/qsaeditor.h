@@ -52,7 +52,7 @@ public:
     void configChanged();
     void setDebugging( bool b ) { debugging = b; }
     bool isDebugging() const { return debugging; }
-    void makeFunctionVisible( QTextParagraph *p );
+    void makeFunctionVisible( Q3TextParagraph *p );
     void saveLineStates();
     void loadLineStates();
     void paste();
@@ -64,14 +64,14 @@ public:
     bool supportsBreakPoints() const { return FALSE; } // ### For now
 
 public slots:
-    void expandFunction( QTextParagraph *p ) { expandFunction( p, TRUE ); }
-    void collapseFunction( QTextParagraph *p ) { collapseFunction( p, TRUE ); }
+    void expandFunction( Q3TextParagraph *p ) { expandFunction( p, TRUE ); }
+    void collapseFunction( Q3TextParagraph *p ) { collapseFunction( p, TRUE ); }
     void collapse( bool all /*else only functions*/ );
     void expand( bool all /*else only functions*/ );
 
 private:
-    QTextParagraph *expandFunction( QTextParagraph *p, bool recalc );
-    QTextParagraph *collapseFunction( QTextParagraph *p, bool recalc );
+    Q3TextParagraph *expandFunction( Q3TextParagraph *p, bool recalc );
+    Q3TextParagraph *collapseFunction( Q3TextParagraph *p, bool recalc );
     void doRecalc();
 
 private:

@@ -505,11 +505,11 @@ void IdeWindow::init()
     QObject::connect( tabWidget, SIGNAL( currentChanged( QWidget * ) ),
 		      this, SLOT( currentTabChanged( QWidget * ) ) );
 
-    projectContainerDock = new QDockWindow( QDockWindow::InDock, this );
+    projectContainerDock = new Q3DockWindow( Q3DockWindow::InDock, this );
     projectContainer = new QSProjectContainer( projectContainerDock, 0, FALSE );
     projectContainerDock->setResizeEnabled( TRUE );
-    projectContainerDock->setCloseMode( QDockWindow::Always );
-    addDockWindow( projectContainerDock, DockLeft );
+    projectContainerDock->setCloseMode( Q3DockWindow::Always );
+    addDockWindow( projectContainerDock, Qt::DockLeft );
     projectContainerDock->setWidget( projectContainer );
     projectContainerDock->setCaption( QString::fromLatin1("Project Scripts") );
     projectContainerDock->setFixedExtentWidth( 150 );
@@ -520,8 +520,8 @@ void IdeWindow::init()
     variablesContainerDock = new QDockWindow( QDockWindow::InDock, this );
     variablesContainer = new QSVariablesContainer( variablesContainerDock, 0, FALSE );
     variablesContainerDock->setResizeEnabled( TRUE );
-    variablesContainerDock->setCloseMode( QDockWindow::Always );
-    addDockWindow( variablesContainerDock, DockRight );
+    variablesContainerDock->setCloseMode( Q3DockWindow::Always );
+    addDockWindow( variablesContainerDock, Qt::DockRight );
     variablesContainerDock->setWidget( variablesContainer );
     variablesContainerDock->setCaption( "Variables" );
     variablesContainerDock->setFixedExtentWidth( 150 );
@@ -529,11 +529,11 @@ void IdeWindow::init()
     variablesContainer->show();
 #endif
 
-    outputContainerDock = new QDockWindow( QDockWindow::InDock, this );
+    outputContainerDock = new Q3DockWindow( Q3DockWindow::InDock, this );
     outputContainer = new QSOutputContainer( outputContainerDock , 0, FALSE );
     outputContainerDock->setResizeEnabled( TRUE );
-    outputContainerDock->setCloseMode( QDockWindow::Always );
-    addDockWindow( outputContainerDock, DockBottom );
+    outputContainerDock->setCloseMode( Q3DockWindow::Always );
+    addDockWindow( outputContainerDock, Qt::DockBottom );
     outputContainerDock->setWidget( outputContainer );
     outputContainerDock->setCaption( QString::fromLatin1("Output") );
     outputContainerDock->setFixedExtentHeight( 100 );

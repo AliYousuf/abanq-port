@@ -29,12 +29,12 @@
 
 #include <private/q3richtext_p.h>
 
-class CIndent : public QTextIndent
+class CIndent : public Q3TextIndent
 {
 public:
     CIndent();
     virtual ~CIndent() {}
-    void indent( QTextDocument *doc, QTextParagraph *parag, int *oldIndent, int *newIndent );
+    void indent( Q3TextDocument *doc, Q3TextParagraph *parag, int *oldIndent, int *newIndent );
 
     void setTabSize( int ts );
     void setIndentSize( int is );
@@ -43,13 +43,13 @@ public:
 
 private:
     void reindent();
-    void indentLine( QTextParagraph *p, int &oldIndent, int &newIndent );
+    void indentLine( Q3TextParagraph *p, int &oldIndent, int &newIndent );
     void tabify( QString &s );
 
 public:
     int tabSize, indentSize;
     bool autoIndent, keepTabs;
-    QTextDocument *lastDoc;
+    Q3TextDocument *lastDoc;
 
 };
 

@@ -29,10 +29,11 @@
 #ifndef QSASYNTAXHIGHLIGHTER_H
 #define QSASYNTAXHIGHLIGHTER_H
 
+#include <Qt3Support>
 #include <conf.h>
 #include <private/q3richtext_p.h>
 
-class QSASyntaxHighlighter : public QTextPreProcessor
+class QSASyntaxHighlighter : public Q3TextPreProcessor
 {
 public:
     enum CppIds {
@@ -47,21 +48,21 @@ public:
 
     QSASyntaxHighlighter();
     virtual ~QSASyntaxHighlighter() {}
-    void process( QTextDocument *doc, QTextParagraph *string, int start, bool invalidate = TRUE );
+    void process( Q3TextDocument *doc, Q3TextParagraph *string, int start, bool invalidate = TRUE );
     void updateStyles( const QMap<QString, ConfigStyle> &styles );
 
     static const char *const keywords[];
-    QTextFormat *format( int id );
+    Q3TextFormat *format( int id );
 
 private:
-    void addFormat( int id, QTextFormat *f );
+    void addFormat( int id, Q3TextFormat *f );
     void removeFormat( int id );
 
     void createFormats();
 
-    QTextFormat *lastFormat;
+    Q3TextFormat *lastFormat;
     int lastFormatId;
-    Q3IntDict<QTextFormat> formats;
+    Q3IntDict<Q3TextFormat> formats;
 
 };
 

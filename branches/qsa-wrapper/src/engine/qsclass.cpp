@@ -1117,7 +1117,7 @@ void QSClassClass::executeBlock( QSEnv *env )
     env->pushScope( env->globalObject().get(cname) );
 
    // Call initializers
-    QPtrListIterator<QSNode> it( *staticInit );
+    Q3PtrListIterator<QSNode> it( *staticInit );
     for ( uint j = 0; j<staticInit->count(); j++ ) {
 	QSNode *init = it();
 	if ( init ) {
@@ -1149,7 +1149,7 @@ int QSClassClass::initVariables( QSInstanceData * data ) const
 	offset = cl->initVariables( data );
 
     // Call initializers
-    QPtrListIterator<QSNode> it( *memberInit );
+    Q3PtrListIterator<QSNode> it( *memberInit );
     for ( uint j = 0; j<memberInit->count(); j++ ) {
 	QSNode *init = it();
 	if ( init ) {
@@ -1692,7 +1692,7 @@ void QSAbstractBaseClass::replace(QSClassClass *newBase)
 	}
     }
 
-    userIt = QPtrListIterator<QSClassClass>(directChildren);
+    userIt = Q3PtrListIterator<QSClassClass>(directChildren);
     while ((userClass = userIt()))
 	userClass->setBase(newBase);
 

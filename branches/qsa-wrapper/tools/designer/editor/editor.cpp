@@ -47,8 +47,8 @@ Editor::Editor( const QString &fn, QWidget *parent, const char *name )
     setVScrollBarMode( Q3ScrollView::AlwaysOn );
     document()->setUseFormatCollection( FALSE );
     parenMatcher = new ParenMatcher;
-    connect( this, SIGNAL( cursorPositionChanged( QTextCursor * ) ),
-	     this, SLOT( cursorPosChanged( QTextCursor * ) ) );
+    connect( this, SIGNAL( cursorPositionChanged( Q3TextCursor * ) ),
+       this, SLOT( cursorPosChanged( Q3TextCursor * ) ) );
     cfg = new Config;
     document()->addSelection( Error );
     document()->addSelection( Step );
@@ -78,7 +78,7 @@ Editor::~Editor()
     delete parenMatcher;
 }
 
-void Editor::cursorPosChanged( QTextCursor *c )
+void Editor::cursorPosChanged( Q3TextCursor *c )
 {
     if ( parenMatcher->match( c ) )
 	repaintChanged();
@@ -115,10 +115,10 @@ void Editor::configChanged()
 
 void Editor::setErrorSelection( int line )
 {
-    QTextParagraph *p = document()->paragAt( line );
+    Q3TextParagraph *p = document()->paragAt( line );
     if ( !p )
 	return;
-    QTextCursor c( document() );
+    Q3TextCursor c( document() );
     c.setParagraph( p );
     c.setIndex( 0 );
     document()->removeSelection( Error );
@@ -131,10 +131,10 @@ void Editor::setErrorSelection( int line )
 
 void Editor::setStepSelection( int line )
 {
-    QTextParagraph *p = document()->paragAt( line );
+    Q3TextParagraph *p = document()->paragAt( line );
     if ( !p )
 	return;
-    QTextCursor c( document() );
+    Q3TextCursor c( document() );
     c.setParagraph( p );
     c.setIndex( 0 );
     document()->removeSelection( Step );

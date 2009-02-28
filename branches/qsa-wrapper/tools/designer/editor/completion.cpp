@@ -35,7 +35,7 @@
 #include <Q3ValueList>
 #include <Q3Frame>
 #include <QEvent>
-#include <private/qrichtext_p.h>
+#include <private/q3richtext_p.h>
 #include <qapplication.h>
 #include <qregexp.h>
 #include "arghintwidget.h"
@@ -91,30 +91,30 @@ public:
 private:
     void setupParagraph();
     QString type, postfix, prefix, postfix2;
-    QTextParagraph *parag;
+    Q3TextParagraph *parag;
     bool lastState;
 
 };
 
 void CompletionItem::setupParagraph() {
     if ( !parag ) {
-	QTextFormatter *formatter;
+  Q3TextFormatter *formatter;
 	formatter = new QTextFormatterBreakWords;
 	formatter->setWrapEnabled( FALSE );
-	parag = new QTextParagraph( 0 );
+  parag = new Q3TextParagraph( 0 );
 	parag->setTabStops( listBox()->fontMetrics().width( QString::fromLatin1("propertyXXXX") ) );
 	parag->pseudoDocument()->pFormatter = formatter;
 	parag->insert( 0, " " + type + ( type.isEmpty() ? " " : "\t" ) + prefix +
 		       Q3ListBoxItem::text() + postfix + postfix2 );
 	bool selCol = isSelected() && listBox()->colorGroup().highlightedText() != listBox()->colorGroup().text();
 	QColor sc = selCol ? listBox()->colorGroup().highlightedText() : getColor( type );
-	QTextFormat *f1 = parag->formatCollection()->format( listBox()->font(), sc );
-	QTextFormat *f3 = parag->formatCollection()->format( listBox()->font(), isSelected() ?
+  Q3TextFormat *f1 = parag->formatCollection()->format( listBox()->font(), sc );
+  Q3TextFormat *f3 = parag->formatCollection()->format( listBox()->font(), isSelected() ?
 							     listBox()->colorGroup().highlightedText() :
 							     listBox()->colorGroup().text() );
 	QFont f( listBox()->font() );
 	f.setBold( TRUE );
-	QTextFormat *f2 =
+  Q3TextFormat *f2 =
 	    parag->formatCollection()->format( f, isSelected() ? listBox()->colorGroup().highlightedText() :
 					       listBox()->colorGroup().text() );
 	parag->setFormat( 1, type.length() + 1, f1 );
@@ -161,7 +161,7 @@ EditorCompletion::~EditorCompletion()
     delete functionLabel;
 }
 
-void EditorCompletion::addCompletionEntry( const QString &s, QTextDocument *, bool strict )
+void EditorCompletion::addCompletionEntry( const QString &s, Q3TextDocument *, bool strict )
 {
     QChar key( s[ 0 ] );
     QMap<QChar, QStringList>::Iterator it = completionMap.find( key );
@@ -186,7 +186,7 @@ void EditorCompletion::addCompletionEntry( const QString &s, QTextDocument *, bo
     }
 }
 
-Q3ValueList<CompletionEntry> EditorCompletion::completionList( const QString &s, QTextDocument *doc ) const
+Q3ValueList<CompletionEntry> EditorCompletion::completionList( const QString &s, Q3TextDocument *doc ) const
 {
     if ( doc )
 	( (EditorCompletion*)this )->updateCompletionMap( doc );
@@ -212,13 +212,13 @@ Q3ValueList<CompletionEntry> EditorCompletion::completionList( const QString &s,
     return lst;
 }
 
-void EditorCompletion::updateCompletionMap( QTextDocument *doc )
+void EditorCompletion::updateCompletionMap( Q3TextDocument *doc )
 {
     bool strict = TRUE;
     if ( doc != lastDoc )
 	strict = FALSE;
     lastDoc = doc;
-    QTextParagraph *s = doc->firstParagraph();
+    Q3TextParagraph *s = doc->firstParagraph();
     if ( !s->extraData() )
 	s->setExtraData( new ParagData );
     while ( s ) {
@@ -252,8 +252,8 @@ bool EditorCompletion::doCompletion()
     if ( !curEditor )
 	return FALSE;
 
-    QTextCursor *cursor = curEditor->textCursor();
-    QTextDocument *doc = curEditor->document();
+    Q3TextCursor *cursor = curEditor->textCursor();
+    Q3TextDocument *doc = curEditor->document();
 
     if ( cursor->index() > 0 && cursor->paragraph()->at( cursor->index() - 1 )->c == '.' &&
 	 ( cursor->index() == 1 || cursor->paragraph()->at( cursor->index() - 2 )->c != '.' ) )
@@ -286,7 +286,7 @@ bool EditorCompletion::doCompletion()
 
     Q3ValueList<CompletionEntry> lst( completionList( s, doc ) );
     if ( lst.count() > 1 ) {
-	QTextStringChar *chr = cursor->paragraph()->at( cursor->index() );
+  Q3TextStringChar *chr = cursor->paragraph()->at( cursor->index() );
 	int h = cursor->paragraph()->lineHeightOfChar( cursor->index() );
 	int x = cursor->paragraph()->rect().x() + chr->x;
 	int y, dummy;
@@ -337,7 +337,7 @@ bool EditorCompletion::eventFilter( QObject *o, QEvent *e )
 	if ( ke->key() == Qt::Key_Tab ) {
 	    QString s = curEditor->textCursor()->paragraph()->string()->toString().
 			left( curEditor->textCursor()->index() );
-	    if ( curEditor->document()->hasSelection( QTextDocument::Standard ) ||
+      if ( curEditor->document()->hasSelection( Q3TextDocument::Standard ) ||
 		 s.simplifyWhiteSpace().isEmpty() ) {
 		if ( curEditor->document()->indent() ) {
 		    curEditor->indent();
@@ -484,7 +484,7 @@ bool EditorCompletion::doObjectCompletion()
     QString object;
     int i = curEditor->textCursor()->index();
     i--;
-    QTextParagraph *p = curEditor->textCursor()->paragraph();
+    Q3TextParagraph *p = curEditor->textCursor()->paragraph();
     for (;;) {
 	if ( i < 0 )
 	    break;
@@ -557,7 +557,7 @@ bool EditorCompletion::continueComplete()
 
 bool EditorCompletion::doArgumentHint( bool useIndex )
 {
-    QTextCursor *cursor = curEditor->textCursor();
+    Q3TextCursor *cursor = curEditor->textCursor();
     int i = cursor->index() ;
     if ( !useIndex ) {
 	bool foundParen = FALSE;
@@ -667,7 +667,7 @@ bool EditorCompletion::doArgumentHint( bool useIndex )
     if ( functionLabel->isVisible() ) {
 	functionLabel->resize( w + 50, QMAX( functionLabel->fontMetrics().height(), 16 ) );
     } else {
-	QTextStringChar *chr = cursor->paragraph()->at( cursor->index() );
+  Q3TextStringChar *chr = cursor->paragraph()->at( cursor->index() );
 	int h = cursor->paragraph()->lineHeightOfChar( cursor->index() );
 	int x = cursor->paragraph()->rect().x() + chr->x;
 	int y, dummy;
@@ -697,7 +697,7 @@ void EditorCompletion::setContext( QObject * )
 
 void EditorCompletion::showCompletion( const Q3ValueList<CompletionEntry> &lst )
 {
-    QTextCursor *cursor = curEditor->textCursor();
+    Q3TextCursor *cursor = curEditor->textCursor();
     QTextStringChar *chr = cursor->paragraph()->at( cursor->index() );
     int h = cursor->paragraph()->lineHeightOfChar( cursor->index() );
     int x = cursor->paragraph()->rect().x() + chr->x;

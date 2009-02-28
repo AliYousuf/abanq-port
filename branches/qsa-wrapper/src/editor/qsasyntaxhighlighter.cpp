@@ -35,7 +35,7 @@
 #include <qstringlist.h>
 
 #include "paragdata.h"
-#include <private/qrichtext_p.h>
+#include <private/q3richtext_p.h>
 
 const char * const QSASyntaxHighlighter::keywords[] = {
     // ECMA keywords
@@ -104,28 +104,28 @@ const char * const QSASyntaxHighlighter::keywords[] = {
 static QMap<int, QMap<QString, int > > *wordMap = 0;
 
 QSASyntaxHighlighter::QSASyntaxHighlighter()
-    : QTextPreProcessor(), lastFormat( 0 ), lastFormatId( -1 )
+    : Q3TextPreProcessor(), lastFormat( 0 ), lastFormatId( -1 )
 {
     int normalSize = QApplication::font().pointSize();
     QString normalFamily = QApplication::font().family();
     QString commentFamily = QString::fromLatin1("Monospace");
     int normalWeight = QFont::Normal;
     addFormat( Standard,
-	       new QTextFormat( QFont( normalFamily, normalSize, normalWeight ), Qt::black ) );
+         new Q3TextFormat( QFont( normalFamily, normalSize, normalWeight ), Qt::black ) );
     addFormat( Comment,
-	       new QTextFormat( QFont( commentFamily, normalSize, normalWeight, true ), Qt::darkGray ) );
+         new Q3TextFormat( QFont( commentFamily, normalSize, normalWeight, true ), Qt::darkGray ) );
     addFormat( Number,
-	       new QTextFormat( QFont( normalFamily, normalSize, normalWeight ), Qt::blue ) );
+         new Q3TextFormat( QFont( normalFamily, normalSize, normalWeight ), Qt::blue ) );
     addFormat( String,
-	       new QTextFormat( QFont( normalFamily, normalSize, normalWeight ), Qt::red ) );
+         new Q3TextFormat( QFont( normalFamily, normalSize, normalWeight ), Qt::red ) );
     addFormat( Type,
-	       new QTextFormat( QFont( normalFamily, normalSize, normalWeight ), Qt::darkMagenta ) );
+         new Q3TextFormat( QFont( normalFamily, normalSize, normalWeight ), Qt::darkMagenta ) );
     addFormat( Keyword,
-	       new QTextFormat( QFont( normalFamily, normalSize, QFont::Bold ), Qt::black ) );
+         new Q3TextFormat( QFont( normalFamily, normalSize, QFont::Bold ), Qt::black ) );
     addFormat( PreProcessor,
-         new QTextFormat( QFont( normalFamily, normalSize, normalWeight ), Qt::darkBlue ) );
+         new Q3TextFormat( QFont( normalFamily, normalSize, normalWeight ), Qt::darkBlue ) );
     addFormat( Label,
-	       new QTextFormat( QFont( normalFamily, normalSize, normalWeight ), Qt::black ) );
+         new Q3TextFormat( QFont( normalFamily, normalSize, normalWeight ), Qt::black ) );
 
     if ( wordMap )
 	return;
@@ -168,7 +168,7 @@ void QSASyntaxHighlighter::updateStyles( const QMap<QString, ConfigStyle> &style
 {
     for ( QMap<QString, ConfigStyle>::ConstIterator it = styles.begin(); it != styles.end(); ++it ) {
 	int id = string2Id( it.key() );
-	QTextFormat *f = format( id );
+  Q3TextFormat *f = format( id );
 	if ( !f )
 	    continue;
 	f->setFont( (*it).font );
@@ -176,12 +176,12 @@ void QSASyntaxHighlighter::updateStyles( const QMap<QString, ConfigStyle> &style
     }
 }
 
-static bool checkFunctionEnd( QTextParagraph *p, int index )
+static bool checkFunctionEnd( Q3TextParagraph *p, int index )
 {
     ParenList parenList = ( (ParagData*)p->extraData() )->parenList;
 
     int closed = 0;
-    QTextCursor cursor( p->document() );
+    Q3TextCursor cursor( p->document() );
     cursor.setParagraph( p );
     cursor.setIndex( index );
     do {
@@ -218,16 +218,16 @@ static bool checkFunctionEnd( QTextParagraph *p, int index )
     return FALSE;
 }
 
-void QSASyntaxHighlighter::process( QTextDocument *doc, QTextParagraph *string, int, bool invalidate )
+void QSASyntaxHighlighter::process( Q3TextDocument *doc, Q3TextParagraph *string, int, bool invalidate )
 {
 
-    QTextFormat *formatStandard = format( Standard );
-    QTextFormat *formatComment = format( Comment );
-    QTextFormat *formatNumber = format( Number );
-    QTextFormat *formatString = format( String );
-    QTextFormat *formatType = format( Type );
-    QTextFormat *formatPreProcessor = format( PreProcessor );
-    QTextFormat *formatLabel = format( Label );
+    Q3TextFormat *formatStandard = format( Standard );
+    Q3TextFormat *formatComment = format( Comment );
+    Q3TextFormat *formatNumber = format( Number );
+    Q3TextFormat *formatString = format( String );
+    Q3TextFormat *formatType = format( Type );
+    Q3TextFormat *formatPreProcessor = format( PreProcessor );
+    Q3TextFormat *formatLabel = format( Label );
 
     // states
     const int StateStandard = 0;
@@ -560,7 +560,7 @@ void QSASyntaxHighlighter::process( QTextDocument *doc, QTextParagraph *string, 
 
     string->setFirstPreProcess( FALSE );
 
-    QTextParagraph *p = string->next();
+    Q3TextParagraph *p = string->next();
     if ( (!!oldEndState || !!string->endState()) && oldEndState != string->endState() &&
 	 invalidate && p && !p->firstPreProcess() && p->endState() != -1 ) {
 	while ( p ) {
@@ -572,18 +572,18 @@ void QSASyntaxHighlighter::process( QTextDocument *doc, QTextParagraph *string, 
     }
 }
 
-QTextFormat *QSASyntaxHighlighter::format( int id )
+Q3TextFormat *QSASyntaxHighlighter::format( int id )
 {
     if ( lastFormatId == id  && lastFormat )
 	return lastFormat;
 
-    QTextFormat *f = formats[ id ];
+    Q3TextFormat *f = formats[ id ];
     lastFormat = f ? f : formats[ 0 ];
     lastFormatId = id;
     return lastFormat;
 }
 
-void QSASyntaxHighlighter::addFormat( int id, QTextFormat *f )
+void QSASyntaxHighlighter::addFormat( int id, Q3TextFormat *f )
 {
     formats.insert( id, f );
 }

@@ -72,10 +72,10 @@ QWidget *QSAEditorInterface::editor( bool readonly, QWidget *parent )
 	viewManager = new ViewManager( parent, 0 );
 	QSAEditor *e = new QSAEditor( QString::null, viewManager, "editor" );
 	e->setEditable( !readonly );
-	QObject::connect( viewManager, SIGNAL( collapseFunction( QTextParagraph * ) ),
-			  e, SLOT( collapseFunction( QTextParagraph * ) ) );
-	QObject::connect( viewManager, SIGNAL( expandFunction( QTextParagraph * ) ),
-			  e, SLOT( expandFunction( QTextParagraph * ) ) );
+  QObject::connect( viewManager, SIGNAL( collapseFunction( Q3TextParagraph * ) ),
+        e, SLOT( collapseFunction( Q3TextParagraph * ) ) );
+  QObject::connect( viewManager, SIGNAL( expandFunction( Q3TextParagraph * ) ),
+        e, SLOT( expandFunction( Q3TextParagraph * ) ) );
 	QObject::connect( viewManager, SIGNAL( collapse( bool ) ),
 			  e, SLOT( collapse( bool ) ) );
 	QObject::connect( viewManager, SIGNAL( expand( bool ) ),
@@ -235,7 +235,7 @@ void QSAEditorInterface::indent()
 {
     if ( !viewManager || !viewManager->currentView() )
 	return;
-    ( (QSAEditor*)viewManager->currentView() )->QTextEdit::indent();
+    ( (QSAEditor*)viewManager->currentView() )->Q3TextEdit::indent();
 }
 
 void QSAEditorInterface::splitView()
@@ -244,7 +244,7 @@ void QSAEditorInterface::splitView()
 #if 0
     if ( !viewManager || !viewManager->currentView() )
 	return;
-    QTextDocument *doc = ( (QSAEditor*)viewManager->currentView() )->document();
+    Q3TextDocument *doc = ( (QSAEditor*)viewManager->currentView() )->document();
     QSAEditor *editor = new QSAEditor( QString::null, viewManager, "editor" );
     editor->setDocument( doc );
 #endif
@@ -256,8 +256,8 @@ void QSAEditorInterface::scrollTo( const QString &txt, const QString &first )
 	return;
     QString expr = first;
     ( (QSAEditor*)viewManager->currentView() )->sync();
-    QTextDocument *doc = ( (QSAEditor*)viewManager->currentView() )->document();
-    QTextParagraph *p = doc->firstParagraph();
+    Q3TextDocument *doc = ( (QSAEditor*)viewManager->currentView() )->document();
+    Q3TextParagraph *p = doc->firstParagraph();
     while ( p ) {
 	if ( p->string()->toString().find( expr ) != -1 ) {
 	    ( (QSAEditor*)viewManager->currentView() )->setCursorPosition( p->paragId() + 2, 0 );
@@ -417,7 +417,7 @@ void QSAEditorInterface::intervalChanged()
 void QSAEditorInterface::update()
 {
     if ( !viewManager || !viewManager->currentView() ||
-	 !( (QTextEdit*)viewManager->currentView() )->isModified() )
+   !( (Q3TextEdit*)viewManager->currentView() )->isModified() )
 	return;
 }
 
@@ -438,7 +438,7 @@ void QSAEditorInterface::update()
 // void QSAEditorInterface::toggleBreakpoint()
 // {
 //     QSAEditorInterface *iface;
-//     QTextEdit *e = activeEditor( &iface );
+//     Q3TextEdit *e = activeEditor( &iface );
 //     if ( !e )
 // 	return;
 //     int para, index;
@@ -470,7 +470,7 @@ void QSAEditorInterface::update()
 //     }
 
 //     QSAEditorInterface *iface;
-//     QTextEdit *e = activeEditor( &iface );
+//     Q3TextEdit *e = activeEditor( &iface );
 //     if ( e ) {
 // 	int para, index;
 // 	e->getCursorPosition( &para, &index );
@@ -487,17 +487,17 @@ void QSAEditorInterface::update()
 //     dlg.exec();
 // }
 
-QTextEdit *QSAEditorInterface::activeEditor( QSAEditorInterface ** ) const
+Q3TextEdit *QSAEditorInterface::activeEditor( QSAEditorInterface ** ) const
 {
 //     if ( !editorInterfaces )
 // 	return 0;
 //     for ( QSAEditorInterface *iface = editorInterfaces->first(); iface; iface = editorInterfaces->next() ) {
 // 	if ( iface->view_manager() && iface->view_manager()->currentView() &&
 // 	     ( iface->view_manager()->currentView()->hasFocus() ||
-// 	       ( (QTextEdit*)iface->view_manager()->currentView() )->viewport()->hasFocus() ) ) {
+// 	       ( (Q3TextEdit*)iface->view_manager()->currentView() )->viewport()->hasFocus() ) ) {
 // 	    *eiface = iface;
 // 	    (*eiface)->addRef();
-// 	    return (QTextEdit*)iface->view_manager()->currentView();
+// 	    return (Q3TextEdit*)iface->view_manager()->currentView();
 // 	}
 //     }
     qFatal( "QSAEditorInterface::activeEditor()" );

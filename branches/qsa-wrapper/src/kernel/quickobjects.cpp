@@ -76,7 +76,7 @@ static Q3ValueList<QuickMetaData> getSlots( QObject* o, const char *s, bool supe
 {
     Q3ValueList<QuickMetaData> mds;
     const QMetaObject* meta = o->metaObject();
-    QStrList slotList = meta->slotNames( super );
+    Q3StrList slotList = meta->slotNames( super );
     int slen = qstrlen( s );
     int index = -1;
     const char *sl = slotList.first();
@@ -819,7 +819,7 @@ bool QSWrapperClass::member( const QSObject *objPtr, const QString &p,
                     }
                 case QSOT::Enum:
                     for ( i = int(objects.count())-1; i >= 0; i-- ) {
-                        QStrList enums = objects[ i ]->metaObject()->enumeratorNames(TRUE);
+                        Q3StrList enums = objects[ i ]->metaObject()->enumeratorNames(TRUE);
                         for ( int k = 0; k < (int)enums.count(); ++k ) {
                             const QMetaEnum *me =
                                 objects[ i ]->metaObject()->enumerator( enums.at( k ),TRUE);
@@ -913,7 +913,7 @@ bool QSWrapperClass::member( const QSObject *objPtr, const QString &p,
             return TRUE;
         }
 
-        QStrList enums = meta->enumeratorNames( TRUE );
+        Q3StrList enums = meta->enumeratorNames( TRUE );
         for ( int k = 0; k < (int)enums.count(); ++k ) {
             const QMetaEnum *me = meta->enumerator( enums.at( k ), TRUE );
             for ( int l = 0; l < (int)me->count; ++l ) {

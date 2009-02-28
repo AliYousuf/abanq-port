@@ -503,7 +503,7 @@ bool QSEditor::eventFilter( QObject *o, QEvent *e )
 
 /*!
   Returns the pointer to the real editor widget which is a
-  QTextEdit. This might be 0 if an error occurred while initializing
+  Q3TextEdit. This might be 0 if an error occurred while initializing
   the editor.
 */
 Q3TextEdit *QSEditor::textEdit() const

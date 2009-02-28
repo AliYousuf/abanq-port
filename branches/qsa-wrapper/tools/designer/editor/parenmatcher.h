@@ -30,7 +30,7 @@
 #include <qstring.h>
 #include <q3valuelist.h>
 
-class QTextCursor;
+class Q3TextCursor;
 
 struct Paren
 {
@@ -56,13 +56,13 @@ public:
 
     ParenMatcher();
 
-    virtual bool match( QTextCursor *c );
+    virtual bool match( Q3TextCursor *c );
 
     void setEnabled( bool b ) { enabled = b; }
 
 private:
-    bool checkOpenParen( QTextCursor *c );
-    bool checkClosedParen( QTextCursor *c );
+    bool checkOpenParen( Q3TextCursor *c );
+    bool checkClosedParen( Q3TextCursor *c );
 
     bool enabled;
 

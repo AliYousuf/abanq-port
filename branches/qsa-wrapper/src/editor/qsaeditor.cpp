@@ -65,7 +65,7 @@ void QSAEditorToolTip::maybeTip( const QPoint &pos )
 	return;
 
     QPoint ps = editor->viewportToContents( pos );
-    QTextParagraph *p = editor->document()->firstParagraph();
+    Q3TextParagraph *p = editor->document()->firstParagraph();
     while ( p ) {
 	if ( ps.y() >= p->rect().y() && ps.y() <= p->rect().y() + p->rect().height() )
 	    break;
@@ -73,9 +73,9 @@ void QSAEditorToolTip::maybeTip( const QPoint &pos )
     }
     if ( !p )
 	return;
-    QTextCursor c( editor->document() );
+    Q3TextCursor c( editor->document() );
     c.place( ps, p );
-    QTextCursor c2 = c;
+    Q3TextCursor c2 = c;
     c2.gotoWordLeft();
     c.gotoWordRight();
     if ( c.paragraph() != c2.paragraph() )
@@ -121,8 +121,8 @@ QSAEditor::QSAEditor( const QString &fn, QWidget *parent, const char *name )
 	load( fn );
     document()->setPreProcessor( new QSASyntaxHighlighter );
     document()->setIndent( (indent = new CIndent) );
-    setHScrollBarMode( QScrollView::AlwaysOff );
-    setVScrollBarMode( QScrollView::AlwaysOn );
+    setHScrollBarMode( Q3ScrollView::AlwaysOff );
+    setVScrollBarMode( Q3ScrollView::AlwaysOn );
     completion = new QSACompletion( this );
     browser = new QSAEditorBrowser( this );
     configChanged();
@@ -176,18 +176,18 @@ void QSAEditor::configChanged()
 	document()->setIndent( indent );
 
     document()->setTabStops( ( (QSASyntaxHighlighter*)document()->preProcessor() )->
-			     format( QTextPreProcessor::Standard )->width( 'x' ) * Config::indentTabSize( path ) );
+           format( Q3TextPreProcessor::Standard )->width( 'x' ) * Config::indentTabSize( path ) );
 
     Editor::configChanged();
 }
 
-QTextParagraph *QSAEditor::expandFunction( QTextParagraph *p, bool recalc )
+Q3TextParagraph *QSAEditor::expandFunction( Q3TextParagraph *p, bool recalc )
 {
     if ( recalc )
 	setCursorPosition( p->paragId(), 0 );
     ( (ParagData*)p->extraData() )->functionOpen = TRUE;
     p = p->next();
-    QValueStack<int> stack;
+    Q3ValueStack<int> stack;
     while ( p ) {
 	if ( ( (ParagData*)p->extraData() )->lineState == ParagData::FunctionStart ) {
 	    stack.push( TRUE );
@@ -211,13 +211,13 @@ QTextParagraph *QSAEditor::expandFunction( QTextParagraph *p, bool recalc )
     return p;
 }
 
-QTextParagraph *QSAEditor::collapseFunction( QTextParagraph *p, bool recalc )
+Q3TextParagraph *QSAEditor::collapseFunction( Q3TextParagraph *p, bool recalc )
 {
     if ( recalc )
 	setCursorPosition( p->paragId(), 0 );
     ( (ParagData*)p->extraData() )->functionOpen = FALSE;
     p = p->next();
-    QValueStack<int> stack;
+    Q3ValueStack<int> stack;
     while ( p ) {
 	if ( ( (ParagData*)p->extraData() )->lineState == ParagData::FunctionStart )
 	    stack.push( TRUE );
@@ -242,7 +242,7 @@ QTextParagraph *QSAEditor::collapseFunction( QTextParagraph *p, bool recalc )
 void QSAEditor::doRecalc()
 {
     document()->invalidate();
-    QTextParagraph *p = document()->firstParagraph();
+    Q3TextParagraph *p = document()->firstParagraph();
     while ( p ) {
 	p->format();
 	p = p->next();
@@ -251,7 +251,7 @@ void QSAEditor::doRecalc()
     repaintContents( FALSE );
 }
 
-void QSAEditor::makeFunctionVisible( QTextParagraph *p )
+void QSAEditor::makeFunctionVisible( Q3TextParagraph *p )
 {
     if ( p->isVisible() )
 	return;
@@ -264,7 +264,7 @@ void QSAEditor::makeFunctionVisible( QTextParagraph *p )
 
 void QSAEditor::collapse( bool all /*else only functions*/ )
 {
-    QTextParagraph *p = document()->firstParagraph();
+    Q3TextParagraph *p = document()->firstParagraph();
     while ( p ) {
 	if ( ( (ParagData*)p->extraData() )->lineState == ParagData::FunctionStart ) {
 	    if ( all
@@ -282,7 +282,7 @@ void QSAEditor::collapse( bool all /*else only functions*/ )
 
 void QSAEditor::expand( bool all /*else only functions*/ )
 {
-    QTextParagraph *p = document()->firstParagraph();
+    Q3TextParagraph *p = document()->firstParagraph();
     while ( p ) {
 	if ( ( (ParagData*)p->extraData() )->lineState == ParagData::FunctionStart ) {
 	    if ( all ||
@@ -301,7 +301,7 @@ void QSAEditor::expand( bool all /*else only functions*/ )
 void QSAEditor::saveLineStates()
 {
     Q3ValueList<Q_UINT32> states;
-    QTextParagraph *p = document()->firstParagraph();
+    Q3TextParagraph *p = document()->firstParagraph();
     while ( p ) {
 	if ( ( (ParagData*)p->extraData() )->lineState == ParagData::FunctionStart )
 	    states << (Q_UINT32)( (ParagData*)p->extraData() )->functionOpen;
@@ -363,7 +363,7 @@ void QSAEditor::loadLineStates()
     ts >> states;
     f.close();
 
-    QTextParagraph *p = document()->firstParagraph();
+    Q3TextParagraph *p = document()->firstParagraph();
     Q3ValueList<Q_UINT32>::Iterator it = states.begin();
     while ( p ) {
 	if ( p->extraData() &&

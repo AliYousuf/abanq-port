@@ -57,7 +57,7 @@ struct QUICKCORE_EXPORT QuickDebuggerStackFrame
 #if defined(Q_TEMPLATEDLL)
 // MOC_SKIP_BEGIN
 template class QUICKCORE_EXPORT Q3ValueList<QuickDebuggerStackFrame>;
-template class QUICKCORE_EXPORT QValueStack<bool>;
+template class QUICKCORE_EXPORT Q3ValueStack<bool>;
 // MOC_SKIP_END
 #endif
 
@@ -96,7 +96,7 @@ private:
     Q3ValueList<QuickDebuggerStackFrame> cStack;
     Q3ValueList<QuickDebuggerStackFrame> exceptionStack;
     Q3ValueList<QSObject> *exceptionScope;
-    QValueStack<bool> tmpCStack;
+    Q3ValueStack<bool> tmpCStack;
 
     uint hadError:1;
 };

@@ -45,7 +45,7 @@
 #include <qregexp.h>
 
 #include <private/qcom_p.h>
-#include <private/qrichtext_p.h>
+#include <private/q3richtext_p.h>
 #include <private/qucom_p.h>
 #include <private/qucomextra_p.h>
 
@@ -646,7 +646,7 @@ Q3ValueList<QPair<QString, QString> > QSACompletion::parseAssignments( const QSt
 
 QString QSACompletion::functionCode() const
 {
-    QTextParagraph *p = curEditor->textCursor()->paragraph();
+    Q3TextParagraph *p = curEditor->textCursor()->paragraph();
     QString funcName;
     int pos;
     int braceCount = -1;
@@ -896,7 +896,7 @@ Q3ValueList<QStringList> QSACompletion::functionParameters( const QString &f,
 
     if ( funcs.isEmpty() ) {
 	if ( f[ 0 ] == '\"' ) {
-	    QTextCursor *cursor = curEditor->textCursor();
+      Q3TextCursor *cursor = curEditor->textCursor();
 	    QString line = cursor->paragraph()->string()->toString();
 	    if ( line.findRev( QString::fromLatin1("connect("), cursor->index() ) != -1 ) {
 		int i = line.findRev( ',' );
