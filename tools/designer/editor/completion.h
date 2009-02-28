@@ -35,7 +35,7 @@
 #include <QEvent>
 #include <Q3ValueList>
 
-class QTextDocument;
+class Q3TextDocument;
 class Editor;
 class Q3VBox;
 class Q3ListBox;
@@ -66,9 +66,9 @@ public:
     EditorCompletion( Editor *e );
     ~EditorCompletion();
 
-    virtual void addCompletionEntry( const QString &s, QTextDocument *doc, bool strict );
-    virtual Q3ValueList<CompletionEntry> completionList( const QString &s, QTextDocument *doc ) const;
-    virtual void updateCompletionMap( QTextDocument *doc );
+    virtual void addCompletionEntry( const QString &s, Q3TextDocument *doc, bool strict );
+    virtual Q3ValueList<CompletionEntry> completionList( const QString &s, Q3TextDocument *doc ) const;
+    virtual void updateCompletionMap( Q3TextDocument *doc );
 
     bool eventFilter( QObject *o, QEvent *e );
     virtual void setCurrentEdior( Editor *e );
@@ -99,7 +99,7 @@ protected:
     Q3ValueList<CompletionEntry> cList;
     QMap<QChar, QStringList> completionMap;
     bool enabled;
-    QTextDocument *lastDoc;
+    Q3TextDocument *lastDoc;
 
 };
 

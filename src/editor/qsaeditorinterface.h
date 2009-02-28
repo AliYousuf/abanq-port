@@ -35,7 +35,7 @@
 class QTimer;
 class ViewManager;
 class QAction;
-class QTextEdit;
+class Q3TextEdit;
 
 class QSAEditorInterface : public QObject
 {
@@ -101,7 +101,7 @@ private slots:
 //     void isBreakpointPossible( bool &possible, const QString &code, int line );
 
 private:
-    QTextEdit *activeEditor( QSAEditorInterface **iface ) const;
+    Q3TextEdit *activeEditor( QSAEditorInterface **iface ) const;
 
 private:
     QGuardedPtr<ViewManager> viewManager;

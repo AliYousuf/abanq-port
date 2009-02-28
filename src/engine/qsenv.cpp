@@ -139,7 +139,7 @@ void QSEnv::clear()
     qs_finalDeletion = FALSE;
 #endif
 
-    it = QPtrListIterator<QSClass>(classList);
+    it = Q3PtrListIterator<QSClass>(classList);
     while( (cur=it())!=0 ) {
 	cur->clear();
     }
