@@ -25,7 +25,7 @@
 **********************************************************************/
 
 #include "arghintwidget.h"
-#include <qbutton.h>
+#include <q3button.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpainter.h>
@@ -122,7 +122,7 @@ static const char * right_disabled_xpm[] = {
 "                ",
 "                "};
 
-class ArrowButton : public QButton
+class ArrowButton : public Q3Button
 {
     Q_OBJECT
 
@@ -138,7 +138,7 @@ private:
 };
 
 ArrowButton::ArrowButton( QWidget *parent, const char *name, Dir d )
-    : QButton( parent, name )
+    : Q3Button( parent, name )
 {
     setFixedSize( 16, 16 );
     if ( d == Left ) {
@@ -153,9 +153,9 @@ ArrowButton::ArrowButton( QWidget *parent, const char *name, Dir d )
 void ArrowButton::drawButton( QPainter *p )
 {
     if ( isDown() )
-	p->fillRect( 0, 0, width(), height(), darkGray );
+  p->fillRect( 0, 0, width(), height(), Qt::darkGray );
     else
-	p->fillRect( 0, 0, width(), height(), lightGray );
+  p->fillRect( 0, 0, width(), height(), Qt::lightGray );
     if ( isEnabled() )
 	p->drawPixmap( 0, 0, pix );
     else
@@ -168,21 +168,21 @@ ArgHintWidget::ArgHintWidget( QWidget *parent, const char*name )
 {
     setFrameStyle( Q3Frame::Box | Q3Frame::Plain );
     setLineWidth( 1 );
-    setBackgroundColor( white );
+    setBackgroundColor( Qt::white );
     Q3HBoxLayout *hbox = new Q3HBoxLayout( this );
     hbox->setMargin( 1 );
     hbox->addWidget( ( prev = new ArrowButton( this, "editor_left_btn", ArrowButton::Left ) ) );
     hbox->addWidget( ( funcLabel = new QLabel( this, "editor_func_lbl" ) ) );
     hbox->addWidget( ( next = new ArrowButton( this, "editor_right_btn", ArrowButton::Right ) ) );
-    funcLabel->setBackgroundColor( white );
-    funcLabel->setAlignment( AlignCenter );
+    funcLabel->setBackgroundColor( Qt::white );
+    funcLabel->setAlignment( Qt::AlignCenter );
     connect( prev, SIGNAL( clicked() ), this, SLOT( gotoPrev() ) );
     connect( next, SIGNAL( clicked() ), this, SLOT( gotoNext() ) );
     updateState();
-    setFocusPolicy( NoFocus );
-    prev->setFocusPolicy( NoFocus );
-    next->setFocusPolicy( NoFocus );
-    funcLabel->setFocusPolicy( NoFocus );
+    setFocusPolicy( Qt::NoFocus );
+    prev->setFocusPolicy( Qt::NoFocus );
+    next->setFocusPolicy( Qt::NoFocus );
+    funcLabel->setFocusPolicy( Qt::NoFocus );
 }
 
 void ArgHintWidget::setFunctionText( int func, const QString &text )

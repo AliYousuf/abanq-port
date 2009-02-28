@@ -36,7 +36,7 @@
 #include <Q3ValueList>
 #include <Q3Frame>
 #include <QChildEvent>
-#include <private/qrichtext_p.h>
+#include <private/q3richtext_p.h>
 #include "paragdata.h"
 #include <qobject.h>
 #include <qlabel.h>
@@ -102,7 +102,7 @@ void ViewManager::childEvent( QChildEvent *e )
 #if (QT_VERSION) < 0x030200
 	 e->child()->inherits("Editor")
 #else
-	 ::qt_cast<Editor*>(e->child())
+   static_cast<Editor*>(e->child())
 #endif
 	 )
 	addView( (QWidget*)e->child() );

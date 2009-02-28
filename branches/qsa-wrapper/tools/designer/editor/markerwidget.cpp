@@ -26,7 +26,7 @@
 
 #include "markerwidget.h"
 #include "viewmanager.h"
-#include <private/qrichtext_p.h>
+#include <private/q3richtext_p.h>
 #include "editor.h"
 #include <qpainter.h>
 #include <q3popupmenu.h>

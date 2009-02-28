@@ -329,7 +329,7 @@ bool EditorCompletion::eventFilter( QObject *o, QEvent *e )
 #if (QT_VERSION) < 0x030200
 	 o->inherits("Editor")
 #else
-	 ::qt_cast<Editor*>(o)
+   static_cast<Editor*>(o)
 #endif
 	 ) {
 	curEditor = (Editor*)o;
@@ -431,7 +431,7 @@ bool EditorCompletion::eventFilter( QObject *o, QEvent *e )
 #if (QT_VERSION) < 0x030200
 	   o->inherits("Editor")
 #else
-	   ::qt_cast<Editor*>(o)
+     static_cast<Editor*>(o)
 #endif
 	   ) && functionLabel->isVisible() ) {
 	if ( e->type() == QEvent::KeyPress ) {

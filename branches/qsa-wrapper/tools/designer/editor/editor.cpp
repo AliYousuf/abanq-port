@@ -31,7 +31,7 @@
 #include <Q3CString>
 #include <QKeyEvent>
 #include <QEvent>
-#include <private/qrichtext_p.h>
+#include <private/q3richtext_p.h>
 #include "conf.h"
 #include <qapplication.h>
 #include <q3popupmenu.h>
