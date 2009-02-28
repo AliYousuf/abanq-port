@@ -30,7 +30,7 @@
 #define QSASYNTAXHIGHLIGHTER_H
 
 #include <conf.h>
-#include <private/qrichtext_p.h>
+#include <private/q3richtext_p.h>
 
 class QSASyntaxHighlighter : public QTextPreProcessor
 {
@@ -61,7 +61,7 @@ private:
 
     QTextFormat *lastFormat;
     int lastFormatId;
-    QIntDict<QTextFormat> formats;
+    Q3IntDict<QTextFormat> formats;
 
 };
 

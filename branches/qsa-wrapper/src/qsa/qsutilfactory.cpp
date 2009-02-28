@@ -777,7 +777,7 @@ void QSFile::writeByte( int byte ) {
  * class QSDirStatic
  */
 QStringList QSDirStatic::drives() const {
-  const QFileInfoList *lst = QDir::drives();
+  const QFileInfoList *lst = &QDir::drives();
   QStringList driveNames;
   for ( Q3PtrListIterator<QFileInfo> it( *lst ); it.current(); ++it ) {
     driveNames << it.current()->absFilePath();

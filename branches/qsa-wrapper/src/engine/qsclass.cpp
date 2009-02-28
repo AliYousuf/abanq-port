@@ -35,7 +35,7 @@
 
 
 #include <stdlib.h>
-#if defined(Q_OS_WIN32)
+#if defined(Q_OS_WIN32) && !defined(__MINGW32__)
 #include <qt_windows.h>
 #endif
 

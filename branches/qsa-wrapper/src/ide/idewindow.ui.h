@@ -31,10 +31,10 @@
 #include <qstyle.h>
 #include <qprinter.h>
 #include <qpainter.h>
-#include <qpaintdevicemetrics.h>
-#include <qsimplerichtext.h>
+#include <q3paintdevicemetrics.h>
+#include <q3simplerichtext.h>
 
-static QTextEdit *debugoutput = 0;
+static Q3TextEdit *debugoutput = 0;
 static void (*qt_default_message_handler)(QtMsgType, const char *msg);
 
 QString fix_string(const QString &s)
@@ -114,7 +114,7 @@ void IdeWindow::scriptNew()
 
 void IdeWindow::scriptImport()
 {
-    QStringList names = QFileDialog::getOpenFileNames( QString::null, QString::null,
+    QStringList names = Q3FileDialog::getOpenFileNames( QString::null, QString::null,
 						       this, 0,
                                                        QString::fromLatin1("Import Script") );
     for ( QStringList::Iterator it = names.begin(); it != names.end(); ++it ) {
@@ -177,7 +177,7 @@ void IdeWindow::scriptPrint()
 
     QString scriptName = activeEditor->script()->name();
 
-    QTextEdit *te = activeEditor->textEdit();
+    Q3TextEdit *te = activeEditor->textEdit();
 
     QString printString = te->text();
 
@@ -194,17 +194,17 @@ void IdeWindow::scriptPrint()
     QPrinter printer( QPrinter::HighResolution );
     printer.setFullPage(TRUE);
     if ( printer.setup( this ) ) {
-	QPainter p( &printer );
+  Q3Painter p( &printer );
 	// Check that there is a valid device to print to.
 	if ( !p.device() ) return;
-	QPaintDeviceMetrics metrics( p.device() );
+  Q3PaintDeviceMetrics metrics( p.device() );
 	int dpiy = metrics.logicalDpiY();
 	int margin = (int) ( (2/2.54)*dpiy ); // 2 cm margins
 	QRect body( margin, margin, metrics.width() - 2*margin, metrics.height() - 2*margin );
 	QFont font( te->QWidget::font() );
  	font.setPointSize( 10 ); // we define 10pt to be a nice base size for printing
 
-	QSimpleRichText richText( printString, font,
+  Q3SimpleRichText richText( printString, font,
 				  te->context(),
 				  te->styleSheet(),
 				  te->mimeSourceFactory(),

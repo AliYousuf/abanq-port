@@ -851,7 +851,7 @@ bool QSWrapperClass::member( const QSObject *objPtr, const QString &p,
         return FALSE;
     }
 
-    QStrList enums = objects[ 0 ]->metaObject()->enumeratorNames( TRUE );
+    Q3StrList enums = objects[ 0 ]->metaObject()->enumeratorNames( TRUE );
     for ( int k = 0; k < (int)enums.count(); ++k ) {
         const QMetaEnum *me = objects[ 0 ]->metaObject()->enumerator( enums.at( k ), TRUE );
         for ( int l = 0; l < (int)me->count; ++l ) {
@@ -1335,7 +1335,7 @@ bool QSObjectConstructor::member( const QSObject *,
         return FALSE;
 
     const char *matchName = n.latin1();
-    QStrList names = metaObj->enumeratorNames( FALSE );
+    Q3StrList names = metaObj->enumeratorNames( FALSE );
     uint enumCount = metaObj->numEnumerators();
     const QMetaEnum *metaEnum;
     for( uint i=0; i<enumCount; ++i ) {

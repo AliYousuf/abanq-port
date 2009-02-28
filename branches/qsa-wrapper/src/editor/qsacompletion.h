@@ -36,6 +36,7 @@
 #include <private/qucomextra_p.h>
 
 #include <completion.h>
+#include <QPair>
 
 class QSInterpreter;
 class QuickInterpreter;

@@ -49,7 +49,7 @@
 #include <qdir.h>
 #include <qsclass.h>
 #include <qsnodes.h>
-#include <qvaluevector.h>
+#include <q3valuevector.h>
 
 #if defined (QT_THREAD_SUPPORT) && QT_VERSION >= 0x030300
 #include <qthread.h>
@@ -948,7 +948,7 @@ QStringList QuickInterpreter::functionsOf( QSObject &obj, bool includeSignature,
 		    if ( args > 0 ) {
 			func += QString::fromLatin1(" ");
 			QSMemberMap *members = fsc->definedMembers();
-			QValueVector<QString> vec( args );
+      Q3ValueVector<QString> vec( args );
 			for ( QSMemberMap::ConstIterator ait = members->begin();
 			      ait != members->end(); ++ait ) {
 			    if ( (*ait).index() < args )
