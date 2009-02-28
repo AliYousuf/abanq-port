@@ -27,7 +27,7 @@
 #ifndef CINDENT_H
 #define CINDENT_H
 
-#include <private/qrichtext_p.h>
+#include <private/q3richtext_p.h>
 
 class CIndent : public QTextIndent
 {

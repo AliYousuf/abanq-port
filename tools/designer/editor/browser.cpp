@@ -26,7 +26,7 @@
 
 #include "browser.h"
 #include "editor.h"
-#include <private/qrichtext_p.h>
+#include <private/q3richtext_p.h>
 //Added by qt3to4:
 #include <QEvent>
 #include <QMouseEvent>
@@ -58,7 +58,7 @@ bool EditorBrowser::eventFilter( QObject *o, QEvent *e )
 #if (QT_VERSION) < 0x030200
 	o->parent()->inherits("Editor") || o->inherits("Editor")
 #else
-	::qt_cast<Editor*>(o->parent()) || ::qt_cast<Editor*>(o)
+  static_cast<Editor*>(o->parent()) || static_cast<Editor*>(o)
 #endif
 	) {
 	QMouseEvent *me;
@@ -108,7 +108,7 @@ bool EditorBrowser::eventFilter( QObject *o, QEvent *e )
 	case QEvent::KeyRelease:
 	    lastWord = "";
 	    ke = (QKeyEvent*)e;
-	    if ( ke->key() == Key_Control ) {
+      if ( ke->key() == Qt::Key_Control ) {
 		curEditor->viewport()->setCursor( ibeamCursor );
 		if ( oldHighlightedParag ) {
 		    oldHighlightedParag->setEndState( -1 );

@@ -28,7 +28,7 @@
 #define PARAGDATA_H
 
 #include "parenmatcher.h"
-#include <private/qrichtext_p.h>
+#include <private/q3richtext_p.h>
 
 struct ParagData : public QTextParagraphData
 {

@@ -164,9 +164,9 @@ void Config::saveStyles( const QMap<QString, ConfigStyle> &styles, const QString
 	settings.writeEntry( path + QString::fromLatin1("/")  + elements[ i ] + QString::fromLatin1("/bold"), styles[ elements[ i ] ].font.bold() );
 	settings.writeEntry( path + QString::fromLatin1("/")  + elements[ i ] + QString::fromLatin1("/italic"), styles[ elements[ i ] ].font.italic() );
 	settings.writeEntry( path + QString::fromLatin1("/")  + elements[ i ] + QString::fromLatin1("/underline"), styles[ elements[ i ] ].font.underline() );
-	settings.writeEntry( path + QString::fromLatin1("/")  + elements[ i ] + QString::fromLatin1("/red"), styles[ elements[ i ] ].color.Qt::red() );
-	settings.writeEntry( path + QString::fromLatin1("/")  + elements[ i ] + QString::fromLatin1("/green"), styles[ elements[ i ] ].color.Qt::green() );
-	settings.writeEntry( path + QString::fromLatin1("/")  + elements[ i ] + QString::fromLatin1("/blue"), styles[ elements[ i ] ].color.Qt::blue() );
+  settings.writeEntry( path + QString::fromLatin1("/")  + elements[ i ] + QString::fromLatin1("/red"), styles[ elements[ i ] ].color.red() );
+  settings.writeEntry( path + QString::fromLatin1("/")  + elements[ i ] + QString::fromLatin1("/green"), styles[ elements[ i ] ].color.green() );
+  settings.writeEntry( path + QString::fromLatin1("/")  + elements[ i ] + QString::fromLatin1("/blue"), styles[ elements[ i ] ].color.blue() );
     }
 }
 
