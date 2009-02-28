@@ -153,12 +153,12 @@ void QSAEditor::configChanged()
     parenMatcher->setEnabled( Config::parenMatching( path ) );
     if ( Config::wordWrap( path ) ) {
 	if ( hScrollBarMode() != AlwaysOff ) {
-	    document()->setFormatter( new QTextFormatterBreakInWords );
+      document()->setFormatter( new Q3TextFormatterBreakInWords );
 	    setHScrollBarMode( AlwaysOff );
 	}
     } else {
 	if ( hScrollBarMode() != AlwaysOn ) {
-	    QTextFormatterBreakWords *f = new QTextFormatterBreakWords;
+      Q3TextFormatterBreakWords *f = new Q3TextFormatterBreakWords;
 	    f->setWrapEnabled( FALSE );
 	    document()->setFormatter( f );
 	    setHScrollBarMode( AlwaysOn );

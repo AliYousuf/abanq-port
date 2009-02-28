@@ -40,7 +40,7 @@
 Editor::Editor( const QString &fn, QWidget *parent, const char *name )
     : Q3TextEdit( parent, name ), hasError( FALSE )
 {
-    document()->setFormatter( new QTextFormatterBreakInWords );
+    document()->setFormatter( new Q3TextFormatterBreakInWords );
     if ( !fn.isEmpty() )
 	load( fn );
     setHScrollBarMode( Q3ScrollView::AlwaysOff );

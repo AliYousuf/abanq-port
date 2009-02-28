@@ -99,7 +99,7 @@ private:
 void CompletionItem::setupParagraph() {
     if ( !parag ) {
   Q3TextFormatter *formatter;
-	formatter = new QTextFormatterBreakWords;
+  formatter = new Q3TextFormatterBreakWords;
 	formatter->setWrapEnabled( FALSE );
   parag = new Q3TextParagraph( 0 );
 	parag->setTabStops( listBox()->fontMetrics().width( QString::fromLatin1("propertyXXXX") ) );
