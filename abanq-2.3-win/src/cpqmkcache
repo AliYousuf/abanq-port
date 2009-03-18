@@ -1,0 +1,17 @@
+cp qt/.qmake.cache .qmake.cache
+cp qt/.qmake.cache barcode/
+cp qt/.qmake.cache flbase/
+cp qt/.qmake.cache fllite/
+cp qt/.qmake.cache flbase/
+cp qt/.qmake.cache kugar/
+cp qt/.qmake.cache sqlite/
+cp qt/.qmake.cache libpq/
+cp qt/.qmake.cache libmysql/
+cp qt/.qmake.cache advance/
+cp qt/.qmake.cache flmail/
+cp qt/.qmake.cache plugins/designer/flfielddb/
+cp qt/.qmake.cache plugins/designer/fltabledb/
+cp qt/.qmake.cache plugins/sqldrivers/sqlite/
+cp qt/.qmake.cache plugins/sqldrivers/psql/
+cp qt/.qmake.cache plugins/sqldrivers/mysql/
+cp qt/.qmake.cache plugins/styles/bluecurve/
