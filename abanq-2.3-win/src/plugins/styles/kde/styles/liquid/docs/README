@@ -1,0 +1,18 @@
+This is Liquid, the theme by Daniel M. Duley a.k.a Mosfet, released with a few modifications:
+
+A rewritten kwin engine that works on KDE 3.2.x (Tried porting it but the kwin engine badly needed an update)
+The kcm module is depreciated in favor of the KStyle Config
+Transparency shifted to the kstyle server. (Yes, XRender works now)
+Misc : Fix of a few quirks in the widget engine
+
+Credits :
+Mosfet for the underlying code
+Thomas Lübking for a lot of help
+David Johnson for the example window decoration
+
+Note: Due to some issues with the gentoo kde versions. Iam rereleasing this package.
+To compile type:
+make -f Makefile.cvs
+./configure 
+make 
+su -c "make install"
