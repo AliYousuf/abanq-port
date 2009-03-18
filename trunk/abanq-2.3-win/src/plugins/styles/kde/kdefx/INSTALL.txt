@@ -1,0 +1,18 @@
+***PRE-REQUISITES
+
+Make sure you have setup the following variables correctly:
+
+QTDIR, QMAKESPEC, LIB, INCLUDE and PATH
+
+Only do the following if you intend to build KDEFX as a DLL.
+
+***BUILDING THE STYLE
+
+Open a command prompt and do:
+
+qmake 
+nmake (MSVC) or make (MinGW)
+
+KDEFX DLLs are installed in $(QTDIR)\bin and in the
+"lib" folder
+

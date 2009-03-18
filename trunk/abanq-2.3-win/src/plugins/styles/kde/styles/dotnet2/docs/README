@@ -1,0 +1,40 @@
+This is the Reinhardt style.                                         Version 0.7
+
+ It is based very heavily on clee's dotNET style. It will eventually be an
+interpretation of Fop's mockups as seen on kde-look.org and the Slicker
+homepage. It is a proposal for the default Slicker widget style.
+
+ To install the style, do as follows:
+
+ $ ./configure
+ $ make
+ # sudo make install
+
+ It should now be available in the KDE Control Centre Style panel.
+ NB! You might very easily need to stick a --prefix=/usr or --prefix=/opt/kde3
+at the end of the ./configure command. Which depends on the result of running
+kde-config --prefix
+
+ Should you wish to turn off the drop-shadow effect on text items, this is done
+by adding the line "UseTextShadows=false" to the file "~/.qt/kstylerc". This can
+for example be because your laptop screen makes it look fuzzy and unreadable, or
+simply because you don't like it. We of course hope that the KDE team makes it
+possible to to per-style setup so you won't have to edit a text file to do this.
+ If you wish to turn the drop shadows off, do as above, but the option to add is
+"UseDropShadows=false". This is not so much a usability issue, more that some
+people seem to dislike it, so here ya go! :) Also, more drop shadows will be
+appearing soon due to consistency, so there may be more reason to do so later...
+
+On the name:
+  Ad Reinhardt, 1913-1967
+  Reinhardt was an American minimalist painter, who became known for his extreme
+style, which also became more and more reductive from the mid 1950s, towards his
+death in 1967. After 1955 he worked almost exclusively in near-black. This said,
+there is in fact colour in the paintings, for example his "Abstract Painting no.
+5", 1962, which can be found at the Tate Modern ( www.tate.co.uk ), is, though
+seemingly black-blue, in fact squared with blue and red.
+
+  Enjoy!
+
+On behalf of the Slicker Development Team @ http://slicker.sf.net
+~Dan // Leinir
