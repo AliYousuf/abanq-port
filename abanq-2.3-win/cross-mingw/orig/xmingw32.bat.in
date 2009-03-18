@@ -1,0 +1,59 @@
+@echo off
+rem xmingw32.bat
+rem
+rem A batch file that defines several variables to use with a MinGW 
+rem cross compiler under the cygwin enviroment.
+rem
+rem Copyright (C) 2002  José Fonseca
+rem
+rem This program is free software; you can redistribute it and/or
+rem modify it under the terms of the GNU General Public License
+rem as published by the Free Software Foundation; either version 2
+rem of the License, or (at your option) any later version.
+rem
+rem This program is distributed in the hope that it will be useful,
+rem but WITHOUT ANY WARRANTY; without even the implied warranty of
+rem MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+rem GNU General Public License, http://www.gnu.org/copyleft/gpl.html
+rem for more details.
+rem
+rem José Fonseca <j_r_fonseca@yahoo.co.uk>
+rem
+rem Copy to the cygwin installation dir (usually C:\cygwin) and run:
+rem   xmingw32.bat
+rem
+
+C:
+chdir \cygwin\bin
+
+set PATH=@prefix@/bin;$PATH
+
+set C_INCLUDE_PATH=@prefix@/usr/include:@prefix@/usr/local/include
+set CPLUS_INCLUDE_PATH=@prefix@/usr/include:@prefix@/usr/local/include
+set LIBRARY_PATH=@prefix@/usr/lib:@prefix@/usr/local/lib
+
+set AS=@target@-as
+set AR=@target@-ar
+set CC=@target@-gcc
+set CFLAGS=-O2
+set CPP=%CC% -E
+set CXX=@target@-g++
+set CXXFLAGS=%CFLAGS%
+set DLLTOOL=@target@-dlltool
+set LD=@target@-ld
+set NM=@target@-nm
+set RANLIB=@target@-ranlib
+
+set AS_FOR_BUILD=as
+set AR_FOR_BUILD=ar
+set CC_FOR_BUILD=gcc
+set CFLAGS_FOR_BUILD=-O2
+set CPP_FOR_BUILD=%CC_FOR_BUILD% -E
+set CXX_FOR_BUILD=g++
+set CXXFLAGS_FOR_BUILD=%CFLAGS_FOR_BUILD%
+set DLLTOOL_FOR_BUILD=dlltool
+set LD_FOR_BUILD=ld
+set NM_FOR_BUILD=nm
+set RANLIB_FOR_BUILD=ranlib
+
+bash --login -i
