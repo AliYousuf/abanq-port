@@ -120,8 +120,8 @@ kernel {
 		  $$KERNEL_CPP/qfontengine_win.cpp
 
 	win32:!unix:SOURCES += $$KERNEL_CPP/qprocess_win.cpp \
-			$$KERNEL_CPP/qthread_unix.cpp
-			#$$KERNEL_CPP/qthread_win.cpp
+			#$$KERNEL_CPP/qthread_unix.cpp
+			$$KERNEL_CPP/qthread_win.cpp
 
 
 	unix:x11 {

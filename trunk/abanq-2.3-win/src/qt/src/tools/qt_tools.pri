@@ -74,12 +74,12 @@ tools {
 		  $$TOOLS_CPP/qfileinfo_win.cpp \
 		  $$TOOLS_CPP/qlibrary_win.cpp \
 		  $$TOOLS_CPP/qsettings_win.cpp \
-		  #$$TOOLS_CPP/qmutex_win.cpp \
-		  $$TOOLS_CPP/qmutex_unix.cpp \
-		  #$$TOOLS_CPP/qwaitcondition_win.cpp \
-		  $$TOOLS_CPP/qwaitcondition_unix.cpp \
-		  #$$TOOLS_CPP/qthreadstorage_win.cpp \
-		  $$TOOLS_CPP/qthreadstorage_unix.cpp \
+		  $$TOOLS_CPP/qmutex_win.cpp \
+#		  $$TOOLS_CPP/qmutex_unix.cpp \
+			$$TOOLS_CPP/qwaitcondition_win.cpp \
+#		  $$TOOLS_CPP/qwaitcondition_unix.cpp \
+			$$TOOLS_CPP/qthreadstorage_win.cpp \
+#		  $$TOOLS_CPP/qthreadstorage_unix.cpp \
 		  $$TOOLS_CPP/qcriticalsection_p.cpp
 
 	win32-borland:SOURCES += $$TOOLS_CPP/qwinexport.cpp

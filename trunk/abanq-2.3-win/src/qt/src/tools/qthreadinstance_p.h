@@ -75,7 +75,7 @@ public:
     bool finished : 1;
     bool running  : 1;
     bool orphan   : 1;
-
+/*
 //#ifdef Q_OS_UNIX
     pthread_cond_t thread_done;
     pthread_t thread_id;
@@ -86,13 +86,14 @@ public:
 
 #if 0
 //#ifdef Q_OS_WIN32
+*/
     Qt::HANDLE handle;
     unsigned int thread_id;
     int waiters;
 
     static unsigned int __stdcall start( void * );
     static void finish( QThreadInstance * );
-#endif // Q_OS_WIN32
+//#endif // Q_OS_WIN32
 };
 
 #endif // QT_THREAD_SUPPORT

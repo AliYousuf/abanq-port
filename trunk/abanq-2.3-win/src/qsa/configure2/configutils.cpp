@@ -91,7 +91,7 @@ public slots:
 
     void exited()
     {
-	qApp->exit_loop();
+	qApp->eventLoop(); 
     }
 
 public:
@@ -108,7 +108,7 @@ static bool execute( const QStringList &args )
     bp.setArguments(args);
     if (!bp.start())
 	return FALSE;
-    qApp->enter_loop();
+    qApp->eventLoop(); 
     return !bp.exitStatus() && bp.normalExit();
 }
 
