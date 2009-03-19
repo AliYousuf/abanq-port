@@ -34,6 +34,7 @@ copy %QTDIR%\.qmake.cache plugins\styles\bluecurve\.qmake.cache
 
 echo.
 echo copying sys module
+copy /Y %CD%\sys.* %PREFI%\share\facturalux\
 copy /Y %CD%\forms\*.* %PREFI%\share\facturalux\forms\
 copy /Y %CD%\scripts\*.* %PREFI%\share\facturalux\scripts\
 copy /Y %CD%\tables\*.* %PREFI%\share\facturalux\tables\
