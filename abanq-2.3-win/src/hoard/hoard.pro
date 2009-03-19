@@ -9,7 +9,7 @@ TEMPLATE = lib
 CONFIG += warn_off exceptions
 CONFIG -= x11 qt
 DEFINES +=  NDEBUG _REENTRANT=1 __GNUC__ unix
-DESTDIR = $$PREFIX/lib
+DESTDIR = $$QTDIR/lib
 TARGET = hoard
 INCLUDEPATH += /usr/include/nptl . $$ROOT/src/hoard/src $$ROOT/src/hoard/src/heaplayers $$ROOT/src/hoard/src/heaplayers/util
 unix:LIBS = -ldl -lpthread
