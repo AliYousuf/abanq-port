@@ -2,8 +2,9 @@
 #define FLFISCALBIXOLON_H
 
 #include <config.h>
+#include <qobject.h>
 
-class FL_EXPORT FLFiscalBixolon :public QObject
+class FL_EXPORT FLFiscalBixolon : public QObject
 {
   Q_OBJECT
 

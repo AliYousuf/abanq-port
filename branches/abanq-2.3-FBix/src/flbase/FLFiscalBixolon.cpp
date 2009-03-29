@@ -1,3 +1,5 @@
+#include "FLFiscalBixolon.h"
+
 FLFiscalBixolon::FLFiscalBixolon()
 {
 
