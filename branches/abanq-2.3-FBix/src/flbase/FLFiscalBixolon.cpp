@@ -8,42 +8,42 @@ FLFiscalBixolon::~FLFiscalBixolon()
 
 }
 
-bool FLFiscalBixolon::OpenPort( QString port )
+bool FLFiscalBixolon::openPort( QString port )
 {
   return true;
 }
 
-bool FLFiscalBixolon::ClosedPort()
+bool FLFiscalBixolon::closedPort()
 {
   return true;
 }
 
-bool CheckPrinter()
+bool checkPrinter()
 {
   return true;
 }
 
-bool FLFiscalBixolon::ReadStatus( int * status, int * error )
+bool FLFiscalBixolon::readStatus( int * status, int * error )
 {
   return true;
 }
 
-bool FLFiscalBixolon::SendCmd( int * status, int * error, QString cmd )
+bool FLFiscalBixolon::sendCmd( int * status, int * error, QString cmd )
 {
   return true;
 }
 
-int FLFiscalBixolon::SendNcmd( int * status, int * error, QString cmd )
+int FLFiscalBixolon::sendNcmd( int * status, int * error, QString cmd )
 {
   return 0;
 }
 
-int FLFiscalBixolon::SendFile( int * status, int * error, QString file )
+int FLFiscalBixolon::sendFile( int * status, int * error, QString file )
 {
   return 0;
 }
 
-bool FLFiscalBixolon::UploadStatus( int * status, int * error, char *cmd, QString file )
+bool FLFiscalBixolon::uploadStatus( int * status, int * error, char *cmd, QString file )
 {
   return true;
 }
