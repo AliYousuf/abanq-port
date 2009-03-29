@@ -1,0 +1,53 @@
+# xmingw32.sh
+#
+# A shell script that defines several variables to use with a MinGW 
+# cross compiler.
+#
+# Copyright (C) 2002  José Fonseca
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License, http://www.gnu.org/copyleft/gpl.html
+# for more details.
+#
+# José Fonseca <j_r_fonseca@yahoo.co.uk>
+#
+# Example,
+#   source xmingw32.sh
+#
+
+export PATH=@prefix@/bin:$PATH
+
+#export C_INCLUDE_PATH=@prefix@/usr/include:@prefix@/usr/local/include
+#export CPLUS_INCLUDE_PATH=@prefix@/usr/include:@prefix@/usr/local/include
+#export LIBRARY_PATH=@prefix@/usr/lib:@prefix@/usr/local/lib
+
+export AS=@target@-as
+export AR=@target@-ar
+export CC=@target@-gcc
+export CFLAGS=-O2
+export "CPP=$CC -E"
+export CXX=@target@-g++
+export CXXFLAGS=$CFLAGS
+export DLLTOOL=@target@-dlltool
+export LD=@target@-ld
+export NM=@target@-nm
+export RANLIB=@target@-ranlib
+
+export AS_FOR_BUILD=as
+export AR_FOR_BUILD=ar
+export CC_FOR_BUILD=gcc
+export CFLAGS_FOR_BUILD=-O2
+export "CPP_FOR_BUILD=$CC_FOR_BUILD -E"
+export CXX_FOR_BUILD=g++
+export CXXFLAGS_FOR_BUILD=$CFLAGS
+export DLLTOOL_FOR_BUILD=dlltool
+export LD_FOR_BUILD=ld
+export NM_FOR_BUILD=nm
+export RANLIB_FOR_BUILD=ranlib
