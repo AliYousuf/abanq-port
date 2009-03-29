@@ -79,7 +79,8 @@ SOURCES += FLAbout.cpp \
 	   FLImageViewer.cpp \
 	   FLPicture.cpp \
 	   FLNetwork.cpp \
-	   FLStylePainter.cpp
+           FLStylePainter.cpp \
+           FLFiscalBixolon.cpp
 
 HEADERS += FLAbout.h \
            FLAction.h \
@@ -127,7 +128,8 @@ HEADERS += FLAbout.h \
 	   FLImageViewer.h \
 	   FLPicture.h \
 	   FLNetwork.h \
-	   FLStylePainter.h
+           FLStylePainter.h \
+           FLFiscalBixolon.h
 
 FORMS += FLWidgetAbout.ui \
          FLWidgetConnectDB.ui \
