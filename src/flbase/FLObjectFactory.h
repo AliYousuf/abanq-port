@@ -6806,19 +6806,19 @@ public slots:
 	return obj_->readStatus(status, error);	
   }
 
-  bool sendCmd( int * status, int * error, QString cmd ){
+  bool sendCmd( int status, int error, QString cmd ){
 	  return obj_->sendCmd(status, error, cmd);
   }
 
-  int sendNcmd( int * status, int * error, QString cmd ){
+  int sendNcmd( int status, int error, QString cmd ){
   	return obj_->sendNcmd(status, error, cmd);
   }
 
-  int sendFile( int * status, int * error, QString file ){
+  int sendFile( int status, int error, QString file ){
   	return obj_->sendFile(status, error, file);
   }
 
-  bool uploadStatus( int * status, int * error, QString cmd, QString file ){
+  bool uploadStatus( int status, int error, QString cmd, QString file ){
   	return obj_->uploadStatus(status, error, cmd, file);
   }
 
