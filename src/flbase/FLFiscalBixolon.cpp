@@ -22,7 +22,7 @@ bool FLFiscalBixolon::closedPort()
   return true;
 }
 
-bool checkPrinter()
+bool FLFiscalBixolon::checkPrinter()
 {
   qDebug("FLFiscalBixolon checkPrinter");
   return true;
@@ -52,7 +52,7 @@ int FLFiscalBixolon::sendFile( int * status, int * error, QString file )
   return 0;
 }
 
-bool FLFiscalBixolon::uploadStatus( int * status, int * error, char *cmd, QString file )
+bool FLFiscalBixolon::uploadStatus( int * status, int * error, QString cmd, QString file )
 {
   qDebug("FLFiscalBixolon uploadStatus");
   return true;
