@@ -96,9 +96,14 @@ bool FLFiscalBixolon::checkPrinter( ){
 }
 
 
-bool FLFiscalBixolon::readStatus( int * status, int * error ){
+bool FLFiscalBixolon::readStatus( int status, int error ){
+	
+	int *st = &status;
+        int *err = &error;
 
-	typedef bool (* FNPTR)( int *, int * );
+	
+
+	typedef bool (* FNPTR)( int *, int *  );
 	
 	FNPTR pFn;
 
@@ -118,10 +123,10 @@ bool FLFiscalBixolon::readStatus( int * status, int * error ){
 
 	if(pFn){
 	
-		result = pFn( status, error );
+		result = pFn( st, err );
 		 if( result ) {
       			qDebug("FLFiscalBixolon readStatus, Lectura de Status");
-     			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("readStatus %1").arg(*status).ascii() );
+     			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("readStatus %1").arg(*st).ascii() );
     		} else {
       			qDebug("FLFiscalBixolon readStatus, No hubo Retorno");
       			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "Sin Retorno de Status" );
