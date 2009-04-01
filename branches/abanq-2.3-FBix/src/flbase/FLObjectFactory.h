@@ -51,6 +51,7 @@
 #include "FLNetwork.h"
 #include "mimecodec.h"
 #include "qextserialport.h"
+#include "FLFiscalBixolon.h"
 
 #include <config.h>
 #include <qsobjectfactory.h>
@@ -6752,5 +6753,77 @@ private:
   QextSerialPort * obj_;
 };
 
+
+
+//! Interface Impresora Bixolon
+/**
+Llama los procesos de la Librería DLL para enviar a imprimir por el puerto Serial
+
+@author Luisa María Santander
+*/
+class FL_EXPORT FLFiscalBixolonInterface : public QObject {
+
+  Q_OBJECT
+
+public:
+
+  /**
+  Constructor
+  */
+ FLFiscalBixolonInterface() : QObject( 0 ) {
+    obj_ = new FLFiscalBixolon();
+  }
+
+  /**
+  destructor
+  */
+ ~FLFiscalBixolonInterface() {
+    if ( obj_ )
+      delete obj_;
+  }
+
+public slots:
+
+  /**
+ Abre el Puerto
+
+  @return
+  */
+  bool openPort( QString port ){
+  	return obj_->openPort( port );
+  }
+	
+  bool closedPort(){
+	return obj_->closedPort();
+  }
+
+  bool checkPrinter(){
+	return obj_->checkPrinter();	
+  }
+
+  bool readStatus( int * status, int * error ){
+	return obj_->readStatus(status, error);	
+  }
+
+  bool sendCmd( int * status, int * error, QString cmd ){
+	  return obj_->sendCmd(status, error, cmd);
+  }
+
+  int sendNcmd( int * status, int * error, QString cmd ){
+  	return obj_->sendNcmd(status, error, cmd);
+  }
+
+  int sendFile( int * status, int * error, QString file ){
+  	return obj_->sendFile(status, error, file);
+  }
+
+  bool uploadStatus( int * status, int * error, QString cmd, QString file ){
+  	return obj_->uploadStatus(status, error, cmd, file);
+  }
+
+private:
+
+  FLFiscalBixolon * obj_;
+};
 
 #endif
