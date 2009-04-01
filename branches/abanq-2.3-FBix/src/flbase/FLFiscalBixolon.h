@@ -28,7 +28,7 @@ public:
 
   int sendFile( int * status, int * error, QString file );
 
-  bool uploadStatus( int * status, int * error, char *cmd, QString file );
+  bool uploadStatus( int * status, int * error, QString cmd, QString file );
 
 };
 
