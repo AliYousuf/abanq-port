@@ -1,82 +1,151 @@
-#include <qmessagebox.h>
-#include <qapplication.h>
+/***************************************************************************
+                            FLFiscalBixolon.cpp
+                          -------------------
+ begin                : mie mar 18 2009
+ 
+***************************************************************************/
 
 #include "FLFiscalBixolon.h"
+#include <string.h>
+#include <stdlib.h>
 
-FLFiscalBixolon::FLFiscalBixolon()
-{
-  qDebug("FLFiscalBixolon Constructor");
-  QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon",
-    "Constructor" );
+
+FLFiscalBixolon::FLFiscalBixolon() {
+
+	lib = new QLibrary("tfhkaif");	
+}
+bool FLFiscalBixolon::openPort( QString port ) {
+
+	typedef bool (* FNPTR)(char *);
+	
+	const char * cport = port.ascii();
+
+	//const char * prt = port.data();
+
+	char * cmdport = const_cast<char *>(cport);
+
+	FNPTR pFn;
+
+	pFn=(FNPTR)lib->resolve("OpenFpctrl");
+
+	return pFn(cmdport);	
+	
 }
 
-FLFiscalBixolon::~FLFiscalBixolon()
-{
-  qDebug("FLFiscalBixolon Destructor");
-  QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon",
-    "Destructor" );
+
+bool FLFiscalBixolon::closedPort(){
+	
+	typedef bool (* FNPTR)( void );
+
+	FNPTR pFn;
+
+	pFn=(FNPTR)lib->resolve("CloseFpctrl");
+
+	return pFn();	
 }
 
-bool FLFiscalBixolon::openPort( QString port )
-{
-  qDebug(QString("openPort(%1)").arg(port).ascii());
-  QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon",
-    QString("openPort(%1)").arg(port) );
-  return true;
+
+bool FLFiscalBixolon::checkPrinter( ){
+	
+	typedef bool (* FNPTR)( void );
+
+	FNPTR pFn;
+
+	pFn=(FNPTR)lib->resolve("CheckFprinter");
+
+	return pFn();		
 }
 
-bool FLFiscalBixolon::closedPort()
-{
-  qDebug("FLFiscalBixolon closedPort");
-  QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon",
-    "closedPort" );
-  return true;
+
+bool FLFiscalBixolon::readStatus( int * status, int * error ){
+
+	typedef bool (* FNPTR)( int *, int * );
+
+	FNPTR pFn;
+
+	pFn=(FNPTR)lib->resolve("ReadFpStatus");
+
+	return pFn( status, error );
+
 }
 
-bool FLFiscalBixolon::checkPrinter()
-{
-  qDebug("FLFiscalBixolon checkPrinter");
-  QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon",
-    "checkPrinter" );
-  return true;
+bool FLFiscalBixolon::sendCmd( int * status, int * error, QString cmd ){
+	
+	typedef bool (* FNPTR)( int *, int *, char *);
+
+	const char * ccmd = cmd.ascii();
+
+	//const char * cm = ccmd.data();
+	
+	char * cmdcmd = const_cast<char *>(ccmd);
+
+	FNPTR pFn;
+
+	pFn=(FNPTR)lib->resolve("SendCmd");
+
+	return pFn( status, error, cmdcmd );
 }
 
-bool FLFiscalBixolon::readStatus( int * status, int * error )
-{
-  qDebug("FLFiscalBixolon readStatus");
-  QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon",
-    QString("readStatus %1").arg(*status).ascii() );
-  return true;
+
+int FLFiscalBixolon::sendNcmd( int * status, int * error,  QString cmd ){
+	
+	typedef int (* FNPTR)( int *, int *, char * );
+	
+	const char * ccmd = cmd.ascii();
+
+	//const char * cm = ccmd.data();
+
+	char * cmdcmd = const_cast<char *>(ccmd);
+	
+	FNPTR pFn;
+
+	pFn=(FNPTR)lib->resolve("SendCmd");
+
+	
+	return pFn( status, error, cmdcmd );
 }
 
-bool FLFiscalBixolon::sendCmd( int * status, int * error, QString cmd )
-{
-  qDebug("FLFiscalBixolon sendCmd");
-  QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon",
-    QString("sendCmd( status=%1, cmd=%2").arg(*status).arg(cmd).ascii() );
-  return true;
+
+int FLFiscalBixolon::sendFile( int * status, int * error,  QString file ){
+
+	typedef int (* FNPTR)( int *, int *,  char * );
+
+	const char * cfile = file.ascii();
+
+//	const char * f = cfile.data();
+
+	char * cmdfile = const_cast<char *>(cfile);
+
+	FNPTR pFn;
+
+	pFn=(FNPTR)lib->resolve("SendFileCmd");
+
+	return pFn( status, error, cmdfile );
 }
 
-int FLFiscalBixolon::sendNcmd( int * status, int * error, QString cmd )
-{
-  qDebug("FLFiscalBixolon sendNcmd");
-  QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon",
-    QString("sendNCmd( status=%1, cmd=%2").arg(*status).arg(cmd).ascii() );
-  return 0;
-}
 
-int FLFiscalBixolon::sendFile( int * status, int * error, QString file )
-{
-  qDebug("FLFiscalBixolon SendFile");
-  QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon",
-    QString("sendFile( status=%1, file=%2").arg(*status).arg(file).ascii() );
-  return 0;
-}
+bool FLFiscalBixolon::uploadStatus( int * status, int * error,  QString cmd,  QString file ){
 
-bool FLFiscalBixolon::uploadStatus( int * status, int * error, QString cmd, QString file )
-{
-  qDebug("FLFiscalBixolon uploadStatus");
-  QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon",
-    QString("UploadStatus( status=%1, cmd=%2 file=%3").arg(*status).arg(cmd).arg(file).ascii() );
-  return true;
+	typedef bool (* FNPTR)( int *, int *,  char *,  char * );	
+
+	const char * cfile = file.ascii();
+
+	//const char * f = cfile.data();
+
+	char * cmdfile = const_cast<char *>(cfile);
+
+	const char * ccmd = cmd.ascii();
+
+	//const char * cm = ccmd.data();
+
+	char * cmdcmd = const_cast<char *>(ccmd);
+
+	FNPTR pFn;
+
+	pFn=(FNPTR)lib->resolve("SendFileCmd");
+	
+	return pFn( status, error, cmdcmd, cmdfile );
 }
+FLFiscalBixolon::~FLFiscalBixolon(){
+	lib->unload();	
+};
