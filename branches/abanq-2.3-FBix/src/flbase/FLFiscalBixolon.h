@@ -36,7 +36,7 @@ public:
 	
 	bool checkPrinter( );
 	
-	bool readStatus( int * status, int * error );
+	bool readStatus( int status, int error );
 	
 	bool sendCmd( int * status, int * error, QString cmd );
 	

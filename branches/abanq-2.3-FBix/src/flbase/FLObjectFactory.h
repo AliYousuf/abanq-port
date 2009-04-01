@@ -6802,7 +6802,7 @@ public slots:
 	return obj_->checkPrinter();	
   }
 
-  bool readStatus( int * status, int * error ){
+  bool readStatus( int status, int error ){
 	return obj_->readStatus(status, error);	
   }
 
