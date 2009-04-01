@@ -74,15 +74,14 @@ bool FLFiscalBixolon::checkPrinter( ){
 
   bool result = false; // esto me asegura que siempre tengo un resultado
 
-  pFn=(FNPTR)lib->resolve("CheckFprinter");
+  pFn = (FNPTR) lib->resolve("CheckFprinter");
 
 	if(pFn){
-    result pFn();
+    result = pFn();
     if( result ) {
       qDebug("FLFiscalBixolon checkPrinter, impresora lista");
       QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "impresora lista" );
-    }
-    else {
+    } else {
       qDebug("FLFiscalBixolon checkPrinter, impresora con error");
       QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "impresora con error" );
     }
