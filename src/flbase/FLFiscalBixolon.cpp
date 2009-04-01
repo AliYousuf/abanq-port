@@ -22,7 +22,7 @@ FLFiscalBixolon::FLFiscalBixolon() {
 	//verificado y OK!	
 }
 bool FLFiscalBixolon::openPort( QString port ) {
-
+/*
 	typedef bool (* FNPTR)(char *);
 	
 	const char * cport = port.ascii();
@@ -44,14 +44,33 @@ bool FLFiscalBixolon::openPort( QString port ) {
 	//pero envía la información al puerto
 	qDebug(QString("openPort(%1)").arg(port).ascii());
 	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("openPort(%1)").arg(port) );
- 	return true;
+  return true;
+*/
+  typedef bool (* FNPTR)(char *);
+  FNPTR pFn;
 
-	
+  bool result = false; // esto me asegura que siempre tengo un resultado
+
+  pFn = (FNPTR) lib->resolve("OpenFpctrl");
+
+  // esta verificacion es iportante para asegurar que este definido el apuntador
+  if(pFn) {
+   result = pFn(cmdport);
+   QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("openPort(%1), abierto correcto").arg(port) );
+  } else {
+    QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("openPort(%1, Error)").arg(port) );
+  }
+  // los QMessage... me dicen si funciono o fallo abriendo el puerto
+
+
+  // regreso el resultado, verdadero si se pudo abrir el puerto
+  // o falso si fallo por alguna razon
+  return result;
 }
 
 
 bool FLFiscalBixolon::closedPort(){
-	
+/*
 	typedef bool (* FNPTR)( void );
 
 	FNPTR pFn;
@@ -59,7 +78,7 @@ bool FLFiscalBixolon::closedPort(){
 	pFn=(FNPTR)lib->resolve("CloseFpctrl");
 	if(pFn){
 		return pFn();	
-	}
+  }*/
 	qDebug("FLFiscalBixolon closedPort");
   	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "closedPort" );
   	return true;
@@ -68,7 +87,7 @@ bool FLFiscalBixolon::closedPort(){
 
 bool FLFiscalBixolon::checkPrinter( ){
 	
-	typedef bool (* FNPTR)( void );
+/*	typedef bool (* FNPTR)( void );
 
 	FNPTR pFn;
 
@@ -76,7 +95,7 @@ bool FLFiscalBixolon::checkPrinter( ){
 
 	if(pFn){
 		return pFn();	
-	}
+  }*/
 	qDebug("FLFiscalBixolon checkPrinter");
   	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "checkPrinter" );
   	return true;	
@@ -85,7 +104,7 @@ bool FLFiscalBixolon::checkPrinter( ){
 
 bool FLFiscalBixolon::readStatus( int * status, int * error ){
 
-	typedef bool (* FNPTR)( int *, int * );
+/*	typedef bool (* FNPTR)( int *, int * );
 
 	FNPTR pFn;
 
@@ -93,7 +112,7 @@ bool FLFiscalBixolon::readStatus( int * status, int * error ){
 
 	if(pFn){
 	return pFn( status, error );
-	}
+  }*/
 	qDebug("FLFiscalBixolon readStatus");
   	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("readStatus %1").arg(*status).ascii() );
   	return true;
@@ -102,7 +121,7 @@ bool FLFiscalBixolon::readStatus( int * status, int * error ){
 
 bool FLFiscalBixolon::sendCmd( int * status, int * error, QString cmd ){
 	
-	typedef bool (* FNPTR)( int *, int *, char *);
+/*	typedef bool (* FNPTR)( int *, int *, char *);
 
 	const char * ccmd = cmd.ascii();
 
@@ -116,7 +135,7 @@ bool FLFiscalBixolon::sendCmd( int * status, int * error, QString cmd ){
 	
 	if(pFn){
 	return pFn( status, error, cmdcmd );
-	}
+  }*/
 	qDebug("FLFiscalBixolon sendCmd");
 
   	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("sendCmd( status=%1, cmd=%2").arg(*status).arg(cmd).ascii() );
@@ -127,7 +146,7 @@ bool FLFiscalBixolon::sendCmd( int * status, int * error, QString cmd ){
 
 int FLFiscalBixolon::sendNcmd( int * status, int * error,  QString cmd ){
 	
-	typedef int (* FNPTR)( int *, int *, char * );
+/*	typedef int (* FNPTR)( int *, int *, char * );
 	
 	const char * ccmd = cmd.ascii();
 
@@ -141,7 +160,7 @@ int FLFiscalBixolon::sendNcmd( int * status, int * error,  QString cmd ){
 
 	if(pFn){	
 	return pFn( status, error, cmdcmd );
-	}
+  }*/
 	qDebug("FLFiscalBixolon sendNcmd");
   	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("sendNCmd( status=%1, cmd=%2").arg(*status).arg(cmd).ascii() );
   	return 0;
@@ -150,7 +169,7 @@ int FLFiscalBixolon::sendNcmd( int * status, int * error,  QString cmd ){
 
 int FLFiscalBixolon::sendFile( int * status, int * error,  QString file ){
 
-	typedef int (* FNPTR)( int *, int *,  char * );
+/*	typedef int (* FNPTR)( int *, int *,  char * );
 
 	const char * cfile = file.ascii();
 
@@ -165,7 +184,7 @@ int FLFiscalBixolon::sendFile( int * status, int * error,  QString file ){
 	if(pFn){
 
 		return pFn( status, error, cmdfile );
-	}
+  }*/
   	qDebug("FLFiscalBixolon SendFile");
   	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon",
     	QString("sendFile( status=%1, file=%2").arg(*status).arg(file).ascii() );
@@ -175,7 +194,7 @@ int FLFiscalBixolon::sendFile( int * status, int * error,  QString file ){
 
 bool FLFiscalBixolon::uploadStatus( int * status, int * error,  QString cmd,  QString file ){
 
-	typedef bool (* FNPTR)( int *, int *,  char *,  char * );	
+/*	typedef bool (* FNPTR)( int *, int *,  char *,  char * );
 
 	const char * cfile = file.ascii();
 
@@ -195,7 +214,7 @@ bool FLFiscalBixolon::uploadStatus( int * status, int * error,  QString cmd,  QS
 
 	if(pFn){
 		return pFn( status, error, cmdcmd, cmdfile );
-	}
+  }*/
 	qDebug("FLFiscalBixolon uploadStatus");
   	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon",
     	QString("UploadStatus( status=%1, cmd=%2 file=%3").arg(*status).arg(cmd).arg(file).ascii() );
