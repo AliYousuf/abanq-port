@@ -19,11 +19,13 @@ FLFiscalBixolon::FLFiscalBixolon() {
 	qDebug("FLFiscalBixolon Constructor");
 
   	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "Constructor" );
+
 	//verificado y OK!	
 }
 bool FLFiscalBixolon::openPort( QString port ) {
 
   typedef bool (* FNPTR)(char *);
+
   FNPTR pFn;
 
   bool result = false; // esto me asegura que siempre tengo un resultado
@@ -57,10 +59,11 @@ bool FLFiscalBixolon::closedPort(){
 	FNPTR pFn;
 
 	pFn=(FNPTR)lib->resolve("CloseFpctrl");
-	if(pFn){
-    result = pFn();
+  if(pFn){
+    
+  	  result = pFn();
   }
-	qDebug("FLFiscalBixolon closedPort");
+  qDebug("FLFiscalBixolon closedPort");
   QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "closedPort" );
   return result;
 }
@@ -76,7 +79,7 @@ bool FLFiscalBixolon::checkPrinter( ){
 
   pFn = (FNPTR) lib->resolve("CheckFprinter");
 
-	if(pFn){
+    if(pFn){
     result = pFn();
     if( result ) {
       qDebug("FLFiscalBixolon checkPrinter, impresora lista");
@@ -86,14 +89,20 @@ bool FLFiscalBixolon::checkPrinter( ){
       QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "impresora con error" );
     }
   } else {
-    qDebug("FLFiscalBixolon checkPrinter, error enla funcion");
-    QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "error en la funcion" );
+    qDebug("FLFiscalBixolon checkPrinter, error en la funcion");
+    QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "error en la funcion checkPrinter" );
   }
   return result;
 }
 
 
 bool FLFiscalBixolon::readStatus( int * status, int * error ){
+
+	typedef bool (* FNPTR)( int *, int * );
+	
+	FNPTR pFn;
+
+	bool result = false; // esto me asegura que siempre tengo un resultado
 
 /*	typedef bool (* FNPTR)( int *, int * );
 
@@ -104,13 +113,31 @@ bool FLFiscalBixolon::readStatus( int * status, int * error ){
 	if(pFn){
 	return pFn( status, error );
   }*/
-	qDebug("FLFiscalBixolon readStatus");
-  	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("readStatus %1").arg(*status).ascii() );
-  	return true;
+
+	pFn=(FNPTR)lib->resolve("ReadFpStatus");
+
+	if(pFn){
+	
+		result = pFn( status, error );
+		 if( result ) {
+      			qDebug("FLFiscalBixolon readStatus, Lectura de Status");
+     			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("readStatus %1").arg(*status).ascii() );
+    		} else {
+      			qDebug("FLFiscalBixolon readStatus, No hubo Retorno");
+      			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "Sin Retorno de Status" );
+    		}
+	}else{
+		qDebug("FLFiscalBixolon readStatus, error en la función");
+  		QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "error en la función de readStatus" );
+
+	}
+	
+  	return result;
 
 }
 
 bool FLFiscalBixolon::sendCmd( int * status, int * error, QString cmd ){
+
 	
 /*	typedef bool (* FNPTR)( int *, int *, char *);
 
