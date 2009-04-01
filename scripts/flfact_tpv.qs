@@ -886,7 +886,7 @@ function oficial_pagarRecibo(idRecibo:String, datosRecibo:Array):Boolean
 function oficial_imprimirDatos(datos:String, maxLon:Number, alineacion:Number)
 {
 	// Si hay códigos de escape por imprimir, se imprimen antes de enviar los datos
-	if (this.iface.printerESC != "ESC:") {
+	/*if (this.iface.printerESC != "ESC:") {
 		this.iface.printer.send(this.iface.printerESC, this.iface.printerXPos, this.iface.printerYPos);
 		this.iface.printerESC = "ESC:";
 	}
@@ -906,7 +906,13 @@ function oficial_imprimirDatos(datos:String, maxLon:Number, alineacion:Number)
 	}
 
 	this.iface.printer.send(datos, this.iface.printerXPos, this.iface.printerYPos);
-	this.iface.printerXPos += datos.length;
+	this.iface.printerXPos += datos.length;*/
+
+	
+
+
+
+
 }
 
 function oficial_espaciosIzquierda(texto:String, totalLongitud:Number):String
