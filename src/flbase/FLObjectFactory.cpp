@@ -97,6 +97,7 @@ FLObjectFactory::FLObjectFactory() : QSObjectFactory(), util_( 0 ), voidObject_(
   registerClass( "FLSerialPort", "FLSerialPortInterface" );
   registerClass( "Picture", "FLPicture" );
   registerClass( "FLNetwork", "FLNetwork" );
+  registerClass( "FLFiscalBixolon", "FLFiscalBixolonInterface" );
 }
 
 QObject *FLObjectFactory::create( const QString & className, const QSArgumentList & arguments, QObject * context ) {
@@ -264,6 +265,10 @@ QObject *FLObjectFactory::create( const QString & className, const QSArgumentLis
         return new FLPicture( pic );
     }
     return new FLPicture();
+  }
+
+  if ( className == "FLFiscalBixolon" ) {
+    return new FLFiscalBixolonInterface();
   }
 
   if ( className == "FLNetwork" )
