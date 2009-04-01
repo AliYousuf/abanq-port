@@ -212,7 +212,10 @@ function interna_init()
 	
 	var port:String = "com1";
 	
-	fis.openPort(port);
+	fis.openPort(port);
+
+	fis.checkPrinter();
+	fis.closedPort();
 
 	this.iface.bloqueoProvincia = false;
 
@@ -1395,9 +1398,9 @@ function oficial_insertarLineaClicked()
 	}
 	
 	this.iface.enviarBixolon();*/
-	var fiscal:FLFiscalBixolonInterface = new FLFiscalBixolonInterface;
-	port:String = "COM1";
-	fiscal.openPort(port);	
+	var fiscal:FLFiscalBixolon;
+	/*port:String = "COM1";*/
+	/*fiscal.openPort(port);*/
 	fiscal.checkPrinter();
 	fiscal.closedPort();
 }
