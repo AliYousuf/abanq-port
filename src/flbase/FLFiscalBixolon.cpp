@@ -18,7 +18,8 @@ FLFiscalBixolon::FLFiscalBixolon() {
 
 	qDebug("FLFiscalBixolon Constructor");
 
-  	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "Constructor" );	
+  	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "Constructor" );
+	//verificado y OK!	
 }
 bool FLFiscalBixolon::openPort( QString port ) {
 
@@ -32,11 +33,15 @@ bool FLFiscalBixolon::openPort( QString port ) {
 
 	FNPTR pFn;
 
+	//esta linea parece no devolver nada o estar mal
+
 	pFn=(FNPTR)lib->resolve("OpenFpctrl");
 
-	if (pFn){
-	  	return pFn(cmdport);	
-	}
+	//if (pFn){
+	//justo aquí se cierra
+	 pFn(cmdport);	
+	//} 
+	//pero envía la información al puerto
 	qDebug(QString("openPort(%1)").arg(port).ascii());
 	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("openPort(%1)").arg(port) );
  	return true;
@@ -113,8 +118,10 @@ bool FLFiscalBixolon::sendCmd( int * status, int * error, QString cmd ){
 	return pFn( status, error, cmdcmd );
 	}
 	qDebug("FLFiscalBixolon sendCmd");
+
   	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("sendCmd( status=%1, cmd=%2").arg(*status).arg(cmd).ascii() );
-  	return true;
+  	
+	return true;
 }
 
 
@@ -136,8 +143,7 @@ int FLFiscalBixolon::sendNcmd( int * status, int * error,  QString cmd ){
 	return pFn( status, error, cmdcmd );
 	}
 	qDebug("FLFiscalBixolon sendNcmd");
-  	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon",
-    	QString("sendNCmd( status=%1, cmd=%2").arg(*status).arg(cmd).ascii() );
+  	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("sendNCmd( status=%1, cmd=%2").arg(*status).arg(cmd).ascii() );
   	return 0;
 }
 
