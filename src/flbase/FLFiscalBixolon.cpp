@@ -55,7 +55,7 @@ bool FLFiscalBixolon::openPort( QString port ) {
 
   // esta verificacion es iportante para asegurar que este definido el apuntador
   if(pFn) {
-   result = pFn(cmdport);
+   result = pFn(const_cast<char *>(port.ascii()));
    QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("openPort(%1), abierto correcto").arg(port) );
   } else {
     QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("openPort(%1, Error)").arg(port) );
