@@ -62,7 +62,7 @@
 #include <qdom.h>
 #include <qtabwidget.h>
 #include <qptrdict.h>
-#include <qlibrary.h>
+
 
 //! Clase general de la aplicación
 /**
@@ -6825,7 +6825,6 @@ public slots:
 private:
 
   FLFiscalBixolon * obj_;
-  QLibrary *lib;
 
 };
 
