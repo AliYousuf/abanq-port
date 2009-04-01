@@ -49,6 +49,15 @@ class oficial extends interna {
 	function calcularTotales() {
 		return this.ctx.oficial_calcularTotales();
 	}
+	function cierreDevolucion() {
+		return this.ctx.oficial_cierreDevolucion();
+	}
+	function cerosIzquierda() {
+		return this.ctx.oficial_cerosIzquierda();
+	}
+	function cierreDevolucion() {
+		return this.ctx.oficial_cerosDerecha();
+	}
 }
 //// OFICIAL /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
@@ -95,6 +104,7 @@ function interna_init()
 	connect(cursor, "bufferChanged(QString)", this, "iface.bufferChanged");
 	connect(this.iface.tdbLineasVale.cursor(), "bufferCommited()", this, "iface.calcularTotales()");
 	
+	this.iface.cierreDevolucion();
 	switch (cursor.modeAccess()) {
 		case cursor.Insert: {
 			this.child("fdbReferencia").setValue(this.iface.calculateField("referencia"));
@@ -191,6 +201,49 @@ function oficial_calcularTotales()
 
 	this.child("fdbImporte").setValue(totalVale);
 }
+
+function oficial_cierreDevolucion(){
+
+			var cursor:FLSqlCursor = this.cursor();
+		   	var fis:FLFiscalBixolon;
+		  	var num:FLUtilInterface; 
+		   	var price:Double;
+			var pricee:Number;
+			var priced:Number;
+			var pent:String;
+			var pdec:String;
+			var status:Number; 
+		        var error:Number;
+			var cmd:String;
+			price=parseFloat(this.child("fdbImporte").value());
+			pricee=num.partInteger(price);
+			priced=num.partDecimal(price);	
+			pent = this.face.cerosIzquierda(pricee, 10);
+			pdec = this.face.cerosDerecha(priced, 2);
+
+			cmd = "f01" + pent + pdec;
+		       	fis.SendCmd(status, error, cmd);	
+
+
+}
+function oficial_cerosIzquierda(numero:String, totalCifras:Number):String
+{
+				var ret:String = numero.toString();
+				var numCeros:Number = totalCifras - ret.length;
+				for ( ; numCeros > 0 ; --numCeros)
+					ret = "0" + ret;
+				return ret;
+}
+
+function oficial_cerosDerecha(numero:String, totalCifras:Number):String
+{
+				var ret:String = numero.toString();
+				var numCeros:Number = totalCifras - ret.length;
+				for ( ; numCeros > 0 ; --numCeros)
+					ret = ret + "0";
+				return ret;
+}
+
 //// OFICIAL /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
 
