@@ -138,6 +138,12 @@ bool FLFiscalBixolon::readStatus( int * status, int * error ){
 
 bool FLFiscalBixolon::sendCmd( int * status, int * error, QString cmd ){
 
+	typedef bool (* FNPTR)( int *, int *, char *);
+	
+	FNPTR pFn;
+
+	bool result = false; // esto me asegura que siempre tengo un resultado
+
 	
 /*	typedef bool (* FNPTR)( int *, int *, char *);
 
@@ -154,15 +160,38 @@ bool FLFiscalBixolon::sendCmd( int * status, int * error, QString cmd ){
 	if(pFn){
 	return pFn( status, error, cmdcmd );
   }*/
-	qDebug("FLFiscalBixolon sendCmd");
+	pFn=(FNPTR)lib->resolve("SendCmd");
 
-  	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("sendCmd( status=%1, cmd=%2").arg(*status).arg(cmd).ascii() );
+	if(pFn){
+		
+		result = pFn( status, error, const_cast<char *>(cmd.ascii()) );
+
+		 	if( result ) {
+      				qDebug("FLFiscalBixolon sendCmd, Envío de Comando");
+     				QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("sendCmd( status=%1, cmd=%2").arg(*status).arg(cmd).ascii() );
+    			} else {
+      				qDebug("FLFiscalBixolon sendCmd, No se Envió");
+      				QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "No se Envió el comando" );
+    			}
+	
+		qDebug("FLFiscalBixolon sendCmd");
+
+  		QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("sendCmd( status=%1, cmd=%2").arg(*status).arg(cmd).ascii() );
+	}
+
+	
   	
-	return true;
+	return result;
 }
 
 
 int FLFiscalBixolon::sendNcmd( int * status, int * error,  QString cmd ){
+
+	typedef int (* FNPTR)( int *, int *, char * );
+
+	FNPTR pFn;
+
+	int result = -1; // esto me asegura que siempre tengo un resultado
 	
 /*	typedef int (* FNPTR)( int *, int *, char * );
 	
@@ -179,13 +208,34 @@ int FLFiscalBixolon::sendNcmd( int * status, int * error,  QString cmd ){
 	if(pFn){	
 	return pFn( status, error, cmdcmd );
   }*/
-	qDebug("FLFiscalBixolon sendNcmd");
-  	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("sendNCmd( status=%1, cmd=%2").arg(*status).arg(cmd).ascii() );
-  	return 0;
+	pFn=(FNPTR)lib->resolve("SendCmd");
+	
+	if(pFn){
+		result =  pFn( status, error, const_cast<char *>(cmd.ascii()));
+
+		if(result != -1){
+
+			qDebug("FLFiscalBixolon sendNcmd, Envío de Lotes de Comandos");
+  			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("sendNCmd( status=%1, cmd=%2").arg(*status).arg(cmd).ascii() );	
+
+		}else{
+			qDebug("FLFiscalBixolon sendNcmd, No se Envió lotes de Comandos");
+  			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "No se envió Comando" );
+		}
+		qDebug("FLFiscalBixolon sendNcmd");
+  		QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "Hubo un error en la Función" );
+	}
+  	return result;
 }
 
 
 int FLFiscalBixolon::sendFile( int * status, int * error,  QString file ){
+
+	typedef int (* FNPTR)( int *, int *,  char * );
+
+	FNPTR pFn;
+
+	int result = -1; // esto me asegura que siempre tengo un resultado
 
 /*	typedef int (* FNPTR)( int *, int *,  char * );
 
@@ -203,14 +253,38 @@ int FLFiscalBixolon::sendFile( int * status, int * error,  QString file ){
 
 		return pFn( status, error, cmdfile );
   }*/
-  	qDebug("FLFiscalBixolon SendFile");
-  	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon",
-    	QString("sendFile( status=%1, file=%2").arg(*status).arg(file).ascii() );
-  	return 0;
+	pFn=(FNPTR)lib->resolve("SendFileCmd");
+
+	if(pFn){
+		result = pFn( status, error, const_cast<char *>(file.ascii()) );
+		if(result != -1){
+
+			qDebug("FLFiscalBixolon sendFile, Se Envío Archivo");
+  			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("sendFile( status=%1, file=%2").arg(*status).arg(file).ascii());
+
+		}else{
+
+			qDebug("FLFiscalBixolon sendFile");
+  			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "Hubo error en el envío");
+
+		}
+
+		qDebug("FLFiscalBixolon sendFile");
+  		QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "Hubo error en la función" );
+	}
+
+  	
+  	return result;
 }
 
 
 bool FLFiscalBixolon::uploadStatus( int * status, int * error,  QString cmd,  QString file ){
+
+	typedef bool (* FNPTR)( int *, int *,  char *,  char * );
+
+	FNPTR pFn;
+
+	bool result = false; // esto me asegura que siempre tengo un resultado
 
 /*	typedef bool (* FNPTR)( int *, int *,  char *,  char * );
 
@@ -228,15 +302,34 @@ bool FLFiscalBixolon::uploadStatus( int * status, int * error,  QString cmd,  QS
 
 	FNPTR pFn;
 
-	pFn=(FNPTR)lib->resolve("SendFileCmd");
+	pFn=(FNPTR)lib->resolve("UploadStatusCmd");
 
 	if(pFn){
 		return pFn( status, error, cmdcmd, cmdfile );
   }*/
+		
+	pFn=(FNPTR)lib->resolve("UploadStatusCmd");
+
+	if(pFn){
+		result = pFn( status, error, const_cast<char *>(cmd.ascii()), const_cast<char *>(file.ascii()) );
+
+		if(result){
+
+			qDebug("FLFiscalBixolon uploadStatus, Se envió correctamente Archivo de Status");
+  			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("uploadStatus( status=%1, cmd=%2 file=%3").arg(*status).arg(cmd).arg(file).ascii() );
+
+		}else{
+			qDebug("FLFiscalBixolon uploadStatus, Ocurrió un Error en el envio de status");
+  			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", " error enviando status " );
+		}
+
+
 	qDebug("FLFiscalBixolon uploadStatus");
-  	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon",
-    	QString("UploadStatus( status=%1, cmd=%2 file=%3").arg(*status).arg(cmd).arg(file).ascii() );
-	return true;
+  	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "Error en la Función" );
+	}
+
+
+	return result;
 }
 FLFiscalBixolon::~FLFiscalBixolon(){
 
