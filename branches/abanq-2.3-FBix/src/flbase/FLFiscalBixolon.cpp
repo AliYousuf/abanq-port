@@ -22,30 +22,7 @@ FLFiscalBixolon::FLFiscalBixolon() {
 	//verificado y OK!	
 }
 bool FLFiscalBixolon::openPort( QString port ) {
-/*
-	typedef bool (* FNPTR)(char *);
-	
-	const char * cport = port.ascii();
 
-	//const char * prt = port.data();
-
-	char * cmdport = const_cast<char *>(cport);
-
-	FNPTR pFn;
-
-	//esta linea parece no devolver nada o estar mal
-
-	pFn=(FNPTR)lib->resolve("OpenFpctrl");
-
-	//if (pFn){
-	//justo aquí se cierra
-	 pFn(cmdport);	
-	//} 
-	//pero envía la información al puerto
-	qDebug(QString("openPort(%1)").arg(port).ascii());
-	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("openPort(%1)").arg(port) );
-  return true;
-*/
   typedef bool (* FNPTR)(char *);
   FNPTR pFn;
 
@@ -55,9 +32,11 @@ bool FLFiscalBixolon::openPort( QString port ) {
 
   // esta verificacion es iportante para asegurar que este definido el apuntador
   if(pFn) {
-   result = pFn(const_cast<char *>(port.ascii()));
-   QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("openPort(%1), abierto correcto").arg(port) );
+    result = pFn(const_cast<char *>(port.ascii()));
+    qDebug(QString("openPort(%1), abierto correcto").arg(port).ascii());
+    QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("openPort(%1), abierto correcto").arg(port) );
   } else {
+    qDebug(QString("openPort(%1, Error)").arg(port).ascii());
     QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("openPort(%1, Error)").arg(port) );
   }
   // los QMessage... me dicen si funciono o fallo abriendo el puerto
@@ -70,35 +49,48 @@ bool FLFiscalBixolon::openPort( QString port ) {
 
 
 bool FLFiscalBixolon::closedPort(){
-/*
+
 	typedef bool (* FNPTR)( void );
+
+  bool result = false; // esto me asegura que siempre tengo un resultado
 
 	FNPTR pFn;
 
 	pFn=(FNPTR)lib->resolve("CloseFpctrl");
 	if(pFn){
-		return pFn();	
-  }*/
+    result = pFn();
+  }
 	qDebug("FLFiscalBixolon closedPort");
-  	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "closedPort" );
-  	return true;
+  QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "closedPort" );
+  return result;
 }
 
 
 bool FLFiscalBixolon::checkPrinter( ){
 	
-/*	typedef bool (* FNPTR)( void );
+  typedef bool (* FNPTR)( void );
 
 	FNPTR pFn;
 
-	pFn=(FNPTR)lib->resolve("CheckFprinter");
+  bool result = false; // esto me asegura que siempre tengo un resultado
+
+  pFn=(FNPTR)lib->resolve("CheckFprinter");
 
 	if(pFn){
-		return pFn();	
-  }*/
-	qDebug("FLFiscalBixolon checkPrinter");
-  	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "checkPrinter" );
-  	return true;	
+    result pFn();
+    if( result ) {
+      qDebug("FLFiscalBixolon checkPrinter, impresora lista");
+      QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "impresora lista" );
+    }
+    else {
+      qDebug("FLFiscalBixolon checkPrinter, impresora con error");
+      QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "impresora con error" );
+    }
+  } else {
+    qDebug("FLFiscalBixolon checkPrinter, error enla funcion");
+    QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "error en la funcion" );
+  }
+  return result;
 }
 
 
