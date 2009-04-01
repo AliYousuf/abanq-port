@@ -1,2 +1,0 @@
-?package(facturalux):needs=X11|text|vc|wm section=Apps/see-menu-manual\
-  title="facturalux" command="/usr/bin/facturalux"
