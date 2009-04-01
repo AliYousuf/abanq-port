@@ -1,5 +1,0 @@
-CONFIG		+= qt warn_on
-LIBS		+= -lqsa
-!shared {
-	DEFINES += QSA_NO_DLL
-}

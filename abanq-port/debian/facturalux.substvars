@@ -1,1 +1,0 @@
-shlibs:Depends=libc6 (>= 2.3.2.ds1-4), libgcc1 (>= 1:3.3.3-1), libqsa1, libqt3c102-mt (>= 3:3.3.1), libstdc++5 (>= 1:3.3.3-1), libx11-6 | xlibs (>> 4.1.0), libxext6 | xlibs (>> 4.1.0)

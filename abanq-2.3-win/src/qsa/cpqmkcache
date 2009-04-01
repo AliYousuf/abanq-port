@@ -1,3 +1,0 @@
-cp ../qt/.qmake.cache .qmake.cache
-cp ../qt/.qmake.cache src/qsa/
-cp ../qt/.qmake.cache src/plugin/
