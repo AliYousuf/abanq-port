@@ -166,7 +166,7 @@ bool FLFiscalBixolon::sendCmd( int status, int error, QString cmd ){
 	if(pFn){
 	return pFn( status, error, cmdcmd );
   }*/
-	pFn=(FNPTR)lib->resolve("SendCmd");
+	pFn=(FNPTR) lib->resolve("SendCmd");
 
 	if(pFn){
 		
@@ -200,7 +200,7 @@ int FLFiscalBixolon::sendNcmd( int status, int error,  QString cmd ){
 
 	FNPTR pFn;
 
-	int result = -1; // esto me asegura que siempre tengo un resultado
+	int result; // esto me asegura que siempre tengo un resultado
 	
 /*	typedef int (* FNPTR)( int *, int *, char * );
 	
@@ -217,12 +217,12 @@ int FLFiscalBixolon::sendNcmd( int status, int error,  QString cmd ){
 	if(pFn){	
 	return pFn( status, error, cmdcmd );
   }*/
-	pFn=(FNPTR)lib->resolve("SendCmd");
+	pFn=(FNPTR) lib->resolve("SendCmd");
 	
 	if(pFn){
 		result =  pFn( st, err, const_cast<char *>(cmd.ascii()));
 
-		if(result != -1){
+		if(result){
 
 			qDebug("FLFiscalBixolon sendNcmd, Envío de Lotes de Comandos");
   			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("sendNCmd( status=%1, cmd=%2").arg(*st).arg(cmd).ascii() );	
@@ -265,7 +265,7 @@ int FLFiscalBixolon::sendFile( int status, int error,  QString file ){
 
 		return pFn( status, error, cmdfile );
   }*/
-	pFn=(FNPTR)lib->resolve("SendFileCmd");
+	pFn=(FNPTR) lib->resolve("SendFileCmd");
 
 	if(pFn){
 		result = pFn( st, err, const_cast<char *>(file.ascii()) );
@@ -323,7 +323,7 @@ bool FLFiscalBixolon::uploadStatus( int status, int error,  QString cmd,  QStrin
 		return pFn( status, error, cmdcmd, cmdfile );
   }*/
 		
-	pFn=(FNPTR)lib->resolve("UploadStatusCmd");
+	pFn=(FNPTR) lib->resolve("UploadStatusCmd");
 
 	if(pFn){
 		result = pFn( st, err, const_cast<char *>(cmd.ascii()), const_cast<char *>(file.ascii()) );
