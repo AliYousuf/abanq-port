@@ -58,7 +58,7 @@ class oficial extends interna {
 	var bloqueoProvincia:Boolean;
 	var importePagado:Number;
 	var control:Boolean = false;
-	var numb:FLUtilInterface; 
+	var numb:FLUtil-; 
 	function oficial( context ) { interna( context ); } 
 	function inicializarControles() {
 		return this.ctx.oficial_inicializarControles();
