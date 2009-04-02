@@ -26,6 +26,8 @@ private:
 
   QLibrary *lib; 
 
+  int error;
+
 public:
 
 	FLFiscalBixolon();
@@ -37,6 +39,10 @@ public:
 	bool checkPrinter( );
 	
 	bool readStatus( int status, int error );
+
+  int readStatus();
+
+  int lastError() { return error; }
 	
 	bool sendCmd( int status, int error, QString cmd );
 	
