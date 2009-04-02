@@ -42,7 +42,7 @@ class oficial extends interna {
 	var lblCantCambio:Object;
 	var lblCantPte:Object;
 	var lblEntregado:Object;
-	var lblCambio:Object;
+	var lblCambio:Object;
 	var fdbEstado:Object;
 	var seleccionado:Boolean;
 	var refrescoActivo:Boolean;
@@ -58,7 +58,7 @@ class oficial extends interna {
 	var bloqueoProvincia:Boolean;
 	var importePagado:Number;
 	var control:Boolean = false;
-	var numb:FLUtil-; 
+	var numb:FLUtilInterface; 
 	function oficial( context ) { interna( context ); } 
 	function inicializarControles() {
 		return this.ctx.oficial_inicializarControles();
@@ -169,12 +169,12 @@ class oficial extends interna {
 		return this.ctx.oficial_espaciosDerecha(cad, totalCifras);	
 	}
 }
-//// OFICIAL /////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////
+//// OFICIAL /////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
 /** @class_declaration head */
-/////////////////////////////////////////////////////////////////
-//// DESARROLLO /////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+//// DESARROLLO /////////////////////////////////////////////////
 class head extends oficial {
     function head( context ) { oficial ( context ); }
 }
@@ -197,48 +197,41 @@ const iface = new ifaceCtx( this );
 //// DEFINICION ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////
-//// INTERNA /////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+//// INTERNA /////////////////////////////////////////////////////
 /** \C 
 Se calcula el arqueo buscando uno abierto para ese punto de venta que corresponda con la fecha establecida<br/>
 Se establece por defecto el punto de venta local y como agente el agente asociado al punto de venta.
 <br/>Al pulsar el botón pagar y establecer una cantidad la comanda se muestra en el recuadro superior derecho el importe entregado por el cliente y calcula el cambio que debemos devolverle.<br/>
-Al pagar una comanda ésta se cerrará automáticamente creándose la factura, recibo, pago y asiento contable correspondientes.
-*/
-function interna_init()
-{
-	var util:FLUtil = new FLUtil();	
-
+Al pagar una comanda ésta se cerrará automáticamente creándose la factura, recibo, pago y asiento contable correspondientes.
+*/
+function interna_init()
+{
+	var util:FLUtil = new FLUtil();	
 	var fis:FLFiscalBixolon;
 	
-	var port:String = "COM1";
+	var port:String = "com1";
         
 	var status:Number;
-
 	var error:Number;
-
-	var cmd:String = "i01Luisa Maria";
-
+	var cmd:String="i01Luisa Maria";
+	
 	fis.openPort(port);
-
 	fis.checkPrinter();
-
 	fis.readStatus(status, error);
-
 	fis.sendCmd(status, error, cmd);
-
 	fis.closedPort();
 
 	this.iface.bloqueoProvincia = false;
-	
+
 	if (!this.iface.curLineas)
-		this.iface.curLineas = this.child("tdbLineasComanda").cursor();
+		this.iface.curLineas = this.child("tdbLineasComanda").cursor();
 	if (!this.iface.curPagos)
-		this.iface.curPagos = this.child("tdbPagos").cursor();
+		this.iface.curPagos = this.child("tdbPagos").cursor();
 	
-	this.iface.lblCantEntregada = this.child("lblCantEntregada");
-	this.iface.lblCantCambio = this.child("lblCantCambio");
-	this.iface.lblCantPte = this.child("lblCantPte");
+	this.iface.lblCantEntregada = this.child("lblCantEntregada");
+	this.iface.lblCantCambio = this.child("lblCantCambio");
+	this.iface.lblCantPte = this.child("lblCantPte");
 	this.iface.lblEntregado = this.child("lblEntregado");
 	this.iface.lblCambio = this.child("lblCambio");
 	this.iface.fdbEstado = this.child("fdbEstado");
@@ -298,80 +291,80 @@ function interna_init()
 			else {
 				MessageBox.warning(util.translate("scripts",
 				"No hay establecido ningún Punto de Venta Local\no el Punto de Venta establecido no es válido.\nSeleccione un Punto de Venta válido en la tabla \ny pulse el botón Cambiar"),MessageBox.Ok,MessageBox.NoButton,MessageBox.NoButton);
-				this.form.close();
-			}
-			this.child("fdbTarifa").setValue(util.sqlSelect("tpv_datosgenerales","tarifa","1=1"));
-			this.child("fdbCodPago").setValue(util.sqlSelect("tpv_datosgenerales","pagoefectivo","1=1"));
-			
-			this.iface.txtCanArticulo.text = 1;
-			this.child("fdbReferencia").setFocus();
-			this.child("fdbCodCliente").setValue(util.sqlSelect("tpv_datosgenerales", "codcliente", "1 = 1"));
-			break;
-		}
-		case cursor.Edit: {
-			this.child("fdbCodigo").setDisabled(true);
-			this.child("fdbCodTpvPuntoventa").setDisabled(true);
-			this.iface.txtCanArticulo.text = 1;
-			this.child("fdbReferencia").setFocus();
-			break;
-		}
-	}
-	this.iface.inicializarControles();
-	this.iface.bufferChanged("tipopago");
-	
-	this.iface.importePagado = 0;
-}
-
-function interna_calculateField(fN:String):String
-{
-	var util:FLUtil = new FLUtil();
-	var valor:String;
-	var cursor:FLSqlCursor = this.cursor();
-
-	switch (fN) {
-		/** \C
-		El --pagado-- es la suma de los pagos
-		*/
-		case "pagado": {
-			valor = util.sqlSelect("tpv_pagoscomanda", "SUM(importe)", "idtpv_comanda = " + cursor.valueBuffer("idtpv_comanda") + " AND estado = '" + util.translate("scripts" , "Pagado") + "'");
-			valor = util.roundFieldValue(valor, "tpv_comandas", "pagado");
-			break;
-		}
-		/** \C
-		El --Pendiente-- es el --total-- menos el --pagado--
-		*/
-		case "pendiente": {
-			valor = parseFloat(cursor.valueBuffer("total")) - parseFloat(cursor.valueBuffer("pagado"));
-			break;
-		}
-		/** \C
-		El --total-- es el --neto-- más el --totaliva-- 
-		*/
-		case "total": {
-			var neto:Number = parseFloat(this.iface.calculateField("neto"));
-			var totalIva:Number = parseFloat(this.iface.calculateField("totaliva")); 
-			valor = neto + totalIva;
-			break;
-		}
-		/** \C
-		El --neto-- es la suma del pvp total de las líneas de la comanda
-		*/
-		case "neto": {
-			valor = util.sqlSelect("tpv_lineascomanda", "SUM(pvptotal)", "idtpv_comanda = " + cursor.valueBuffer("idtpv_comanda"));
-			if (!valor)
-				valor = 0;
-			valor = util.roundFieldValue(valor, "tpv_comandas", "neto");
-			break;
-		}
-		/** \C
-		El --totaliva-- es la suma del iva correspondiente a las líneas de la comanda
+				this.form.close();
+			}
+			this.child("fdbTarifa").setValue(util.sqlSelect("tpv_datosgenerales","tarifa","1=1"));
+			this.child("fdbCodPago").setValue(util.sqlSelect("tpv_datosgenerales","pagoefectivo","1=1"));
+			
+			this.iface.txtCanArticulo.text = 1;
+			this.child("fdbReferencia").setFocus();
+			this.child("fdbCodCliente").setValue(util.sqlSelect("tpv_datosgenerales", "codcliente", "1 = 1"));
+			break;
+		}
+		case cursor.Edit: {
+			this.child("fdbCodigo").setDisabled(true);
+			this.child("fdbCodTpvPuntoventa").setDisabled(true);
+			this.iface.txtCanArticulo.text = 1;
+			this.child("fdbReferencia").setFocus();
+			break;
+		}
+	}
+	this.iface.inicializarControles();
+	this.iface.bufferChanged("tipopago");
+	
+	this.iface.importePagado = 0;
+}
+
+function interna_calculateField(fN:String):String
+{
+	var util:FLUtil = new FLUtil();
+	var valor:String;
+	var cursor:FLSqlCursor = this.cursor();
+
+	switch (fN) {
+		/** \C
+		El --pagado-- es la suma de los pagos
 		*/
-		case "totaliva": {
+		case "pagado": {
+			valor = util.sqlSelect("tpv_pagoscomanda", "SUM(importe)", "idtpv_comanda = " + cursor.valueBuffer("idtpv_comanda") + " AND estado = '" + util.translate("scripts" , "Pagado") + "'");
+			valor = util.roundFieldValue(valor, "tpv_comandas", "pagado");
+			break;
+		}
+		/** \C
+		El --Pendiente-- es el --total-- menos el --pagado--
+		*/
+		case "pendiente": {
+			valor = parseFloat(cursor.valueBuffer("total")) - parseFloat(cursor.valueBuffer("pagado"));
+			break;
+		}
+		/** \C
+		El --total-- es el --neto-- más el --totaliva-- 
+		*/
+		case "total": {
+			var neto:Number = parseFloat(this.iface.calculateField("neto"));
+			var totalIva:Number = parseFloat(this.iface.calculateField("totaliva")); 
+			valor = neto + totalIva;
+			break;
+		}
+		/** \C
+		El --neto-- es la suma del pvp total de las líneas de la comanda
+		*/
+		case "neto": {
+			valor = util.sqlSelect("tpv_lineascomanda", "SUM(pvptotal)", "idtpv_comanda = " + cursor.valueBuffer("idtpv_comanda"));
+			if (!valor)
+				valor = 0;
+			valor = util.roundFieldValue(valor, "tpv_comandas", "neto");
+			break;
+		}
+		/** \C
+		El --totaliva-- es la suma del iva correspondiente a las líneas de la comanda
+		*/
+		case "totaliva": {
 			valor = util.sqlSelect("tpv_lineascomanda", "SUM((pvptotal * iva) / 100)", "idtpv_comanda = " + cursor.valueBuffer("idtpv_comanda"));
-			valor = util.roundFieldValue(valor, "tpv_comandas", "totaliva");
-			break;
-		}
-		case "desarticulo": {
+			valor = util.roundFieldValue(valor, "tpv_comandas", "totaliva");
+			break;
+		}
+		case "desarticulo": {
 			valor = util.sqlSelect("articulos", "descripcion", "referencia = '" + cursor.valueBuffer("referencia") + "'");
 			if (!valor)
 				valor = "";
@@ -1412,7 +1405,11 @@ function oficial_insertarLineaClicked()
 	this.iface.enviarBixolon();*/
 	var fiscal:FLFiscalBixolon;
 	//port:String = "COM1";
-	//fiscal.openPort(port);	}/** |D Establece los datos de la línea de ventas a crear mediante la inserción rápida
+	//fiscal.openPort(port);	
+
+}
+
+/** |D Establece los datos de la línea de ventas a crear mediante la inserción rápida
 \end */
 function oficial_datosLineaVenta():Boolean
 {
@@ -1427,14 +1424,20 @@ function oficial_datosLineaVenta():Boolean
 	this.iface.curLineas.setValueBuffer("pvpsindto", formRecordtpv_lineascomanda.iface.pub_commonCalculateField("pvpsindto", this.iface.curLineas));
 	this.iface.curLineas.setValueBuffer("pvptotal", formRecordtpv_lineascomanda.iface.pub_commonCalculateField("pvptotal", this.iface.curLineas));
 	return true;
-}/** \D Imprime el vale seleccionado
+}
+
+/** \D Imprime el vale seleccionado
 \end */
 function oficial_imprimirVale()
 {
 	var referenciaVale:String = this.child("tdbVales").cursor().valueBuffer("referencia");
 	if (!referenciaVale)
-		return;	formtpv_vales.iface.pub_imprimir(referenciaVale);
-}/** \D Muestra la factura asociada a la venta
+		return;
+
+	formtpv_vales.iface.pub_imprimir(referenciaVale);
+}
+
+/** \D Muestra la factura asociada a la venta
 \end */
 function oficial_mostrarFactura()
 {
@@ -1447,17 +1450,23 @@ function oficial_mostrarFactura()
 	if (!curFactura.first())
 		return;
 	curFactura.browseRecord();
-}function oficial_datosVisorArt(curLineas:FLSqlCursor)
+}
+
+function oficial_datosVisorArt(curLineas:FLSqlCursor)
 {
 	var cursor:FLSqlCursor = this.cursor();
 	var util:FLUtil = new FLUtil();
-	var codPuntoVenta:String = cursor.valueBuffer("codtpv_puntoventa");	var datos:Array = [];
+	var codPuntoVenta:String = cursor.valueBuffer("codtpv_puntoventa");
+
+	var datos:Array = [];
 	datos[0] = cursor.valueBuffer("referencia");
 	
 	var des:String = util.sqlSelect("articulos", "descripcion", "referencia = '" + datos[0] + "'");
 	if (!des)
 		des = "";
-	datos[1] = des;	var otrosDatos:Array = [];
+	datos[1] = des;
+
+	var otrosDatos:Array = [];
 	otrosDatos[0] = "PVP";
 	
 	var precio:Number = util.roundFieldValue(this.child("txtPvpArticulo").text, "tpv_comandas", "total");
@@ -1473,10 +1482,14 @@ function oficial_mostrarFactura()
 debug(datosVisor);
 	this.iface.escribirEnVisor(codPuntoVenta, datosVisor);
 }
+
+
 function oficial_datosVisorPagar()
 {
 	var cursor:FLSqlCursor = this.cursor();
-	var codPuntoVenta:String = cursor.valueBuffer("codtpv_puntoventa");	var datos:Array = [];
+	var codPuntoVenta:String = cursor.valueBuffer("codtpv_puntoventa");
+
+	var datos:Array = [];
 	datos[0] = "TOTAL";
 	datos[1] = cursor.valueBuffer("total");
 	
@@ -1486,22 +1499,30 @@ function oficial_datosVisorPagar()
 	datosVisor[0] = linea1;
 	datosVisor[1] = linea2;
 	this.iface.escribirEnVisor(codPuntoVenta, datosVisor);
-}function oficial_datosVisorImprimir()
+}
+
+function oficial_datosVisorImprimir()
 {
 	var cursor:FLSqlCursor = this.cursor();
 	var util:FLUtil = new FLUtil();
 	var codPuntoVenta:String = cursor.valueBuffer("codtpv_puntoventa");
 	var datos:Array = [];
 	datos [0] = "ENTREGADO";
-	datos [1] = util.roundFieldValue(this.iface.importePagado,"tpv_comandas","total");	var otrosDatos:Array = [];
+	datos [1] = util.roundFieldValue(this.iface.importePagado,"tpv_comandas","total");
+
+	var otrosDatos:Array = [];
 	otrosDatos[0] = "CAMBIO";
-	otrosDatos[1] = util.roundFieldValue(parseFloat(this.iface.importePagado - cursor.valueBuffer("total")),"tpv_comandas","total");	var linea1:String = this.iface.formatearLineaVisor(codPuntoVenta, 1, datos, "SEPARAR");
+	otrosDatos[1] = util.roundFieldValue(parseFloat(this.iface.importePagado - cursor.valueBuffer("total")),"tpv_comandas","total");
+
+	var linea1:String = this.iface.formatearLineaVisor(codPuntoVenta, 1, datos, "SEPARAR");
 	var linea2:String = this.iface.formatearLineaVisor(codPuntoVenta, 2, otrosDatos, "SEPARAR");
 	var datosVisor:Array = [];
 	datosVisor[0] = linea1;
 	datosVisor[1] = linea2;
 	this.iface.escribirEnVisor(codPuntoVenta, datosVisor);
-}function oficial_formatearLineaVisor(codPuntoVenta:String, numLinea:Number, datos:Array, formato:String):String
+}
+
+function oficial_formatearLineaVisor(codPuntoVenta:String, numLinea:Number, datos:Array, formato:String):String
 {
 	var cursor:FLSqlCursor = this.cursor();
 	var util:FLUtil = new FLUtil();
@@ -1539,28 +1560,40 @@ function oficial_datosVisorPagar()
 			cadena += ultimoValor;
 			break;
 		}
-	}	var visor:String = "";
+	}
+
+	var visor:String = "";
 	for (var i:Number = 0; i < longLinea; i++) {
 		visor += "*";
 	}
 debug(visor);
 debug(cadena);
 	return cadena;
-}function oficial_escribirEnVisor(codPuntoVenta:String, datos:Array)
+}
+
+function oficial_escribirEnVisor(codPuntoVenta:String, datos:Array)
 {
-	var util:FLUtil = new FLUtil();	try {
+	var util:FLUtil = new FLUtil();
+
+	try {
     	var serialPort:FLSerialPort = new FLSerialPort( nameSerialPort );
-	} catch (e) { return; }	var usarVisor:Boolean = util.sqlSelect("tpv_puntosventa", "usarvisor", "codtpv_puntoventa = '" + codPuntoVenta + "'");
+	} catch (e) { return; }
+
+	var usarVisor:Boolean = util.sqlSelect("tpv_puntosventa", "usarvisor", "codtpv_puntoventa = '" + codPuntoVenta + "'");
 	if (usarVisor != true) {
 		return;
 	}
-    var nameSerialPort:String = util.sqlSelect("tpv_puntosventa", "nombrepuertovisor", "codtpv_puntoventa = '" + codPuntoVenta + "'");	if (!nameSerialPort || nameSerialPort == "") {
+    var nameSerialPort:String = util.sqlSelect("tpv_puntosventa", "nombrepuertovisor", "codtpv_puntoventa = '" + codPuntoVenta + "'");
+
+	if (!nameSerialPort || nameSerialPort == "") {
 		MessageBox.information(util.translate("scripts",
 		"No es posible usar el visor asociado al punto de venta '" + codPuntoVenta + "'.\n Debe informar el campo Nombre puerto en el formulario del punto de venta"),MessageBox.Ok,MessageBox.NoButton);
 		return false;
 	}
 	
-	var serialPort:FLSerialPort = new FLSerialPort( nameSerialPort );	var baud:String = "";
+	var serialPort:FLSerialPort = new FLSerialPort( nameSerialPort );
+
+	var baud:String = "";
 	var baudRateVisor:Number = util.sqlSelect("tpv_puntosventa", "baudratevisor", "codtpv_puntoventa = '" + codPuntoVenta + "'");
 	if (!baudRateVisor || baudRateVisor == "") {
 		MessageBox.information(util.translate("scripts",
@@ -1656,7 +1689,9 @@ debug(cadena);
 			baud = serialPort.BAUD256000;
 			break;
 		}
-	}	var data:String = "";
+	}
+
+	var data:String = "";
 	var bitDatos:Number = util.sqlSelect("tpv_puntosventa", "bitdatosvisor", "codtpv_puntoventa = '" + codPuntoVenta + "'");
 	if (!bitDatos || bitDatos == "") {
 		MessageBox.information(util.translate("scripts",
@@ -1680,7 +1715,9 @@ debug(cadena);
 			data = serialPort.DATA_8;
 			break;
 		}
-	}	var par:String = "";
+	}
+
+	var par:String = "";
 	var paridad:String = util.sqlSelect("tpv_puntosventa", "paridadvisor", "codtpv_puntoventa = '" + codPuntoVenta + "'");
 	if (!paridad || paridad == "") {
 		MessageBox.information(util.translate("scripts",
@@ -1708,7 +1745,9 @@ debug(cadena);
 			par = serialPort.PAR_SPACE;
 			break;
 		}
-	}	var stop:String = "";
+	}
+
+	var stop:String = "";
 	var bitStop:String = util.sqlSelect("tpv_puntosventa", "bitstopvisor", "codtpv_puntoventa = '" + codPuntoVenta + "'");
 	if (!bitStop || bitStop == "") {
 		MessageBox.information(util.translate("scripts",
@@ -1734,7 +1773,9 @@ debug(cadena);
     serialPort.setParity( par );
     serialPort.setStopBits( stop );
     serialPort.setFlowControl( serialPort.FLOW_HARDWARE );
-    serialPort.setTimeout( 0, 30 );	var qry:FLSqlQuery = new FLSqlQuery();
+    serialPort.setTimeout( 0, 30 );
+
+	var qry:FLSqlQuery = new FLSqlQuery();
 	qry.setTablesList("tpv_puntosventa");
 	qry.setSelect("iniciarvisor, limpiarvisor, prefprimeralinea, sufprimeralinea, prefsegundalinea, sufsegundalinea");
 	qry.setFrom("tpv_puntosventa");
@@ -1778,7 +1819,9 @@ debug(cadena);
 		for (var i:Number = 0; i < arraySsl.length; i++) {
 			sufSegunda += String.fromCharCode(arraySsl[i]);
 		}
-	}	var sec:String;
+	}
+
+	var sec:String;
     if ( serialPort.open() ) {
 	sec = iniciar;
 	sec += limpiar;
@@ -1791,7 +1834,9 @@ debug(cadena);
 	serialPort.writeText( sec );
 	serialPort.close();
     } 
-}//     debug( "Prueba posdiplay" );
+}
+
+//     debug( "Prueba posdiplay" );
 //     var nameSerialPort:String = "/dev/ttyS0";
 //     var serialPort:FLSerialPort = new FLSerialPort( nameSerialPort );
 //     
@@ -1812,8 +1857,14 @@ debug(cadena);
 // 	serialPort.writeText( sec );
 // 	serialPort.close();
 //     } else
-// 	debug( "Error abriendo puerto serie " + nameSerialPort );//// OFICIAL /////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////** @class_definition head */
+// 	debug( "Error abriendo puerto serie " + nameSerialPort );
+
+//// OFICIAL /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
-//// DESARROLLO ///////////////////////////////////////////////////// DESARROLLO /////////////////////////////////////////////////
+
+/** @class_definition head */
+/////////////////////////////////////////////////////////////////
+//// DESARROLLO /////////////////////////////////////////////////
+
+//// DESARROLLO /////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
