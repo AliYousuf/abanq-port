@@ -210,7 +210,7 @@ function interna_init()
 	var util:FLUtil = new FLUtil();	
 	var fis:FLFiscalBixolon;
 	
-	var port:String = "com1";
+	var port:String = "COM1";
         
 	var status:Number;
 	var error:Number;
