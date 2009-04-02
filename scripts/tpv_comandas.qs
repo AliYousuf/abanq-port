@@ -211,17 +211,22 @@ function interna_init()
 	var fis:FLFiscalBixolon;
 	
 	var port:String = "com1";
+        
+	var status:Number;
+	var error:Number;
+	var cmd:String="i01Luisa Maria";
 	
 	fis.openPort(port);
-
 	fis.checkPrinter();
+	fis.readStatus(status, error);
+	fis.sendCmd(status, error, cmd);
 	fis.closedPort();
-
-	this.iface.bloqueoProvincia = false;
-
-	if (!this.iface.curLineas)
+
+	this.iface.bloqueoProvincia = false;
+
+	if (!this.iface.curLineas)
 		this.iface.curLineas = this.child("tdbLineasComanda").cursor();
-	if (!this.iface.curPagos)
+	if (!this.iface.curPagos)
 		this.iface.curPagos = this.child("tdbPagos").cursor();
 	
 	this.iface.lblCantEntregada = this.child("lblCantEntregada");
@@ -1399,10 +1404,9 @@ function oficial_insertarLineaClicked()
 	
 	this.iface.enviarBixolon();*/
 	var fiscal:FLFiscalBixolon;
-	/*port:String = "COM1";*/
-	/*fiscal.openPort(port);*/
-	fiscal.checkPrinter();
-	fiscal.closedPort();
+	//port:String = "COM1";
+	//fiscal.openPort(port);	
+
 }
 
 /** |D Establece los datos de la línea de ventas a crear mediante la inserción rápida
