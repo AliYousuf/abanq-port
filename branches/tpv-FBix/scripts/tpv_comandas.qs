@@ -208,6 +208,7 @@ Al pagar una comanda ésta se cerrará automáticamente creándose la factura, recib
 function interna_init()
 {
 	var util:FLUtil = new FLUtil();	
+
 	var fis:FLFiscalBixolon;
 	
 	var port:String = "COM1";
@@ -297,80 +298,80 @@ function interna_init()
 			else {
 				MessageBox.warning(util.translate("scripts",
 				"No hay establecido ningún Punto de Venta Local\no el Punto de Venta establecido no es válido.\nSeleccione un Punto de Venta válido en la tabla \ny pulse el botón Cambiar"),MessageBox.Ok,MessageBox.NoButton,MessageBox.NoButton);
-				this.form.close();
-			}
-			this.child("fdbTarifa").setValue(util.sqlSelect("tpv_datosgenerales","tarifa","1=1"));
-			this.child("fdbCodPago").setValue(util.sqlSelect("tpv_datosgenerales","pagoefectivo","1=1"));
-			
-			this.iface.txtCanArticulo.text = 1;
-			this.child("fdbReferencia").setFocus();
-			this.child("fdbCodCliente").setValue(util.sqlSelect("tpv_datosgenerales", "codcliente", "1 = 1"));
-			break;
-		}
-		case cursor.Edit: {
-			this.child("fdbCodigo").setDisabled(true);
-			this.child("fdbCodTpvPuntoventa").setDisabled(true);
-			this.iface.txtCanArticulo.text = 1;
-			this.child("fdbReferencia").setFocus();
-			break;
-		}
-	}
-	this.iface.inicializarControles();
-	this.iface.bufferChanged("tipopago");
-	
-	this.iface.importePagado = 0;
-}
-
-function interna_calculateField(fN:String):String
-{
-	var util:FLUtil = new FLUtil();
-	var valor:String;
-	var cursor:FLSqlCursor = this.cursor();
-
-	switch (fN) {
-		/** \C
-		El --pagado-- es la suma de los pagos
-		*/
-		case "pagado": {
-			valor = util.sqlSelect("tpv_pagoscomanda", "SUM(importe)", "idtpv_comanda = " + cursor.valueBuffer("idtpv_comanda") + " AND estado = '" + util.translate("scripts" , "Pagado") + "'");
-			valor = util.roundFieldValue(valor, "tpv_comandas", "pagado");
-			break;
-		}
-		/** \C
-		El --Pendiente-- es el --total-- menos el --pagado--
-		*/
-		case "pendiente": {
-			valor = parseFloat(cursor.valueBuffer("total")) - parseFloat(cursor.valueBuffer("pagado"));
-			break;
-		}
-		/** \C
-		El --total-- es el --neto-- más el --totaliva-- 
-		*/
-		case "total": {
-			var neto:Number = parseFloat(this.iface.calculateField("neto"));
-			var totalIva:Number = parseFloat(this.iface.calculateField("totaliva")); 
-			valor = neto + totalIva;
-			break;
-		}
-		/** \C
-		El --neto-- es la suma del pvp total de las líneas de la comanda
-		*/
+				this.form.close();
+			}
+			this.child("fdbTarifa").setValue(util.sqlSelect("tpv_datosgenerales","tarifa","1=1"));
+			this.child("fdbCodPago").setValue(util.sqlSelect("tpv_datosgenerales","pagoefectivo","1=1"));
+			
+			this.iface.txtCanArticulo.text = 1;
+			this.child("fdbReferencia").setFocus();
+			this.child("fdbCodCliente").setValue(util.sqlSelect("tpv_datosgenerales", "codcliente", "1 = 1"));
+			break;
+		}
+		case cursor.Edit: {
+			this.child("fdbCodigo").setDisabled(true);
+			this.child("fdbCodTpvPuntoventa").setDisabled(true);
+			this.iface.txtCanArticulo.text = 1;
+			this.child("fdbReferencia").setFocus();
+			break;
+		}
+	}
+	this.iface.inicializarControles();
+	this.iface.bufferChanged("tipopago");
+	
+	this.iface.importePagado = 0;
+}
+
+function interna_calculateField(fN:String):String
+{
+	var util:FLUtil = new FLUtil();
+	var valor:String;
+	var cursor:FLSqlCursor = this.cursor();
+
+	switch (fN) {
+		/** \C
+		El --pagado-- es la suma de los pagos
+		*/
+		case "pagado": {
+			valor = util.sqlSelect("tpv_pagoscomanda", "SUM(importe)", "idtpv_comanda = " + cursor.valueBuffer("idtpv_comanda") + " AND estado = '" + util.translate("scripts" , "Pagado") + "'");
+			valor = util.roundFieldValue(valor, "tpv_comandas", "pagado");
+			break;
+		}
+		/** \C
+		El --Pendiente-- es el --total-- menos el --pagado--
+		*/
+		case "pendiente": {
+			valor = parseFloat(cursor.valueBuffer("total")) - parseFloat(cursor.valueBuffer("pagado"));
+			break;
+		}
+		/** \C
+		El --total-- es el --neto-- más el --totaliva-- 
+		*/
+		case "total": {
+			var neto:Number = parseFloat(this.iface.calculateField("neto"));
+			var totalIva:Number = parseFloat(this.iface.calculateField("totaliva")); 
+			valor = neto + totalIva;
+			break;
+		}
+		/** \C
+		El --neto-- es la suma del pvp total de las líneas de la comanda
+		*/
 		case "neto": {
-			valor = util.sqlSelect("tpv_lineascomanda", "SUM(pvptotal)", "idtpv_comanda = " + cursor.valueBuffer("idtpv_comanda"));
-			if (!valor)
-				valor = 0;
-			valor = util.roundFieldValue(valor, "tpv_comandas", "neto");
-			break;
-		}
-		/** \C
-		El --totaliva-- es la suma del iva correspondiente a las líneas de la comanda
+			valor = util.sqlSelect("tpv_lineascomanda", "SUM(pvptotal)", "idtpv_comanda = " + cursor.valueBuffer("idtpv_comanda"));
+			if (!valor)
+				valor = 0;
+			valor = util.roundFieldValue(valor, "tpv_comandas", "neto");
+			break;
+		}
+		/** \C
+		El --totaliva-- es la suma del iva correspondiente a las líneas de la comanda
 		*/
-		case "totaliva": {
+		case "totaliva": {
 			valor = util.sqlSelect("tpv_lineascomanda", "SUM((pvptotal * iva) / 100)", "idtpv_comanda = " + cursor.valueBuffer("idtpv_comanda"));
-			valor = util.roundFieldValue(valor, "tpv_comandas", "totaliva");
-			break;
-		}
-		case "desarticulo": {
+			valor = util.roundFieldValue(valor, "tpv_comandas", "totaliva");
+			break;
+		}
+		case "desarticulo": {
 			valor = util.sqlSelect("articulos", "descripcion", "referencia = '" + cursor.valueBuffer("referencia") + "'");
 			if (!valor)
 				valor = "";
