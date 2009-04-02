@@ -20,6 +20,7 @@ FLFiscalBixolon::FLFiscalBixolon() {
 
   	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "Constructor" );
 
+  error = 0;
 	//verificado y OK!	
 }
 bool FLFiscalBixolon::openPort( QString port ) {
@@ -136,6 +137,39 @@ bool FLFiscalBixolon::readStatus( int status, int error ){
 	}
 	
   	return result;
+
+}
+
+int FLFiscalBixolon::readStatus(){
+
+  int status;
+
+  typedef bool (* FNPTR)( int *, int *  );
+
+  bool result = false; // esto me asegura que siempre tengo un resultado
+
+  FNPTR pFn;
+
+  pFn=(FNPTR)lib->resolve("ReadFpStatus");
+
+  if(pFn){
+
+    result = pFn( &status, &error );
+     if( result ) {
+            qDebug("FLFiscalBixolon readStatus, Lectura de Status");
+          QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("readStatus %1").arg(status).ascii() );
+        } else {
+            qDebug("FLFiscalBixolon readStatus, No hubo Retorno");
+            QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "Sin Retorno de Status" );
+            status = -1;
+        }
+  }else{
+    qDebug("FLFiscalBixolon readStatus, error en la función");
+      QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "error en la función de readStatus" );
+
+  }
+
+    return status;
 
 }
 
