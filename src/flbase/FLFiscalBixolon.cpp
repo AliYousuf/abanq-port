@@ -161,7 +161,7 @@ int FLFiscalBixolon::readStatus(){
         } else {
             qDebug("FLFiscalBixolon readStatus, No hubo Retorno");
             QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "Sin Retorno de Status" );
-            status = -1;
+            //status = -1;
         }
   }else{
     qDebug("FLFiscalBixolon readStatus, error en la función");
@@ -224,6 +224,37 @@ bool FLFiscalBixolon::sendCmd( int status, int _error, QString cmd ){
 	return result;
 }
 
+int FLFiscalBixolon::sendCmd( QString cmd ) {
+
+  int status;
+
+  typedef bool (* FNPTR)( int *, int *, char *);
+
+  FNPTR pFn;
+
+  bool result = false; // esto me asegura que siempre tengo un resultado
+
+  pFn=(FNPTR) lib->resolve("SendCmd");
+
+  if(pFn){
+
+    result = pFn( &status, &error, const_cast<char *>(cmd.ascii()) );
+
+      if( result ) {
+            qDebug("FLFiscalBixolon sendCmd, Envío de Comando");
+            QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("sendCmd( status=%1, error=%2 cmd=%3").arg(status).arg(error).arg(cmd).ascii() );
+          } else {
+              qDebug("FLFiscalBixolon sendCmd, No se Envió");
+              QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "No se Envió el comando" );
+          }
+
+    qDebug("FLFiscalBixolon sendCmd");
+
+    QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "Error en la Función" );
+  }
+
+  return status;
+}
 
 int FLFiscalBixolon::sendNcmd( int status, int _error,  QString cmd ){
 
