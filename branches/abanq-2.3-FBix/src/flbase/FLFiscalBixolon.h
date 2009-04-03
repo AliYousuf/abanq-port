@@ -46,6 +46,8 @@ public:
 	
   bool sendCmd( int status, int _error, QString cmd );
 	
+  int sendCmd( QString cmd );
+
   int sendNcmd( int status, int _error, QString cmd );
 	
   int sendFile( int status, int _error, QString file );

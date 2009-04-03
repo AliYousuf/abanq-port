@@ -6818,6 +6818,10 @@ public slots:
 	  return obj_->sendCmd(status, error, cmd);
   }
 
+  int sendCmd( QString cmd ){
+    return obj_->sendCmd(cmd);
+  }
+
   int sendNcmd( int status, int error, QString cmd ){
   	return obj_->sendNcmd(status, error, cmd);
   }
