@@ -6810,6 +6810,10 @@ public slots:
   return obj_->readStatus();
   }
 
+  int lastError(){
+  return obj_->lastError();
+  }
+
   bool sendCmd( int status, int error, QString cmd ){
 	  return obj_->sendCmd(status, error, cmd);
   }
