@@ -58,7 +58,8 @@ class oficial extends interna {
 	var bloqueoProvincia:Boolean;
 	var importePagado:Number;
 	var control:Boolean = false;
-	var numb:FLUtilInterface; 
+	var numb:FLUtil; 
+	var fiscal:FLFiscalBixolon;
 	function oficial( context ) { interna( context ); } 
 	function inicializarControles() {
 		return this.ctx.oficial_inicializarControles();
@@ -200,26 +201,34 @@ const iface = new ifaceCtx( this );
 //////////////////////////////////////////////////////////////////
 //// INTERNA /////////////////////////////////////////////////////
 /** \C 
-Se calcula el arqueo buscando uno abierto para ese punto de venta que corresponda con la fecha establecida<br/>
-Se establece por defecto el punto de venta local y como agente el agente asociado al punto de venta.
-<br/>Al pulsar el botón pagar y establecer una cantidad la comanda se muestra en el recuadro superior derecho el importe entregado por el cliente y calcula el cambio que debemos devolverle.<br/>
-Al pagar una comanda ésta se cerrará automáticamente creándose la factura, recibo, pago y asiento contable correspondientes.
-*/
-function interna_init()
-{
-	var util:FLUtil = new FLUtil();	
+Se calcula el arqueo buscando uno abierto para ese punto de venta que corresponda con la fecha establecida<br/>
+Se establece por defecto el punto de venta local y como agente el agente asociado al punto de venta.
+<br/>Al pulsar el botón pagar y establecer una cantidad la comanda se muestra en el recuadro superior derecho el importe entregado por el cliente y calcula el cambio que debemos devolverle.<br/>
+Al pagar una comanda ésta se cerrará automáticamente creándose la factura, recibo, pago y asiento contable correspondientes.
+*/
+function interna_init()
+{
+	var util:FLUtil = new FLUtil();	
 	var fis:FLFiscalBixolon;
 	
-	var port:String = "com1";
+	var port:String = "COM1";
+
+	fis.openPort(port);
         
 	var status:Number;
 	var error:Number;
 	var cmd:String="i01Luisa Maria";
 	
-	fis.openPort(port);
 	fis.checkPrinter();
+
 	fis.readStatus(status, error);
+
+	fis.readStatus();
+
+	fis.lastError();
+
 	fis.sendCmd(status, error, cmd);
+
 	fis.closedPort();
 
 	this.iface.bloqueoProvincia = false;
@@ -457,17 +466,14 @@ function oficial_enviarBixolon():Boolean
 			var cursor:FLSqlCursor = this.cursor();
 		        
 			if (!this.iface.curLineas)
-				this.iface.curLineas = this.child("tdbLineasComanda").cursor();
-			
-
-		   var fis:FLFiscalBixolon;
+				this.iface.curLineas = this.child("tdbLineasComanda").cursor();
 		  	var num:FLUtil; 
-		   var imp:String;
-		   var cn:Double;
-		   var price:Double;
-		   var descrip:String;
-		   var desc:String;
-		   var cne:Number;
+		        var imp:String;
+		        var cn:Double;
+		        var price:Double;
+		        var descrip:String;
+		        var desc:String;
+		        var cne:Number;
 			var cnd:Number;
 			var pricee:Number;
 			var priced:Number;
@@ -477,18 +483,9 @@ function oficial_enviarBixolon():Boolean
 			var prid:String;
 			var comando:String;
  			var status:Number; 
- 	      var error:Number;
- 		
-		        
-			var comando:String;
-			
-			var port:String = "COM1"; 
-
-			if(!fis.openPort(port)){
-				return false;
-			}
+ 	        
 			if(this.iface.calculateField("ivaarticulo") == "EXENTO"){
-				imp = " ";
+				imp = " ";
 			}
 			else { 
 				imp = "!";
@@ -504,7 +501,7 @@ function oficial_enviarBixolon():Boolean
 				desc = this.iface.espaciosDerecha(descrip, 40); 
 			else if (descrip.length > 40)
 				desc = descrip.mid(0,40);
-				
+				
 			cne = num.partInteger(cn);
 			cnd = num.partDecimal(cn);
 			pricee = num.partInteger(price);
@@ -517,14 +514,8 @@ function oficial_enviarBixolon():Boolean
 			comando = imp + prie + prid + cante + cantd + desc;
 			
 			
-			if (fis.sendCmd(status, error, comando))
-
-				return true;
-			
-			else
-			
-				return false;
-		/* Hasta Aquí*/
+			fiscal.sendCmd(status, error, comando);
+			/* Hasta Aquí*/
 
 	
 }
@@ -573,65 +564,24 @@ function oficial_calcularTotales()
 }
 
 function oficial_datosClientes():Boolean
-{
-
-	var cursor:FLSqlCursor = this.cursor();
-	var util:FLUtil = new FLUtil();
-	var util1:FLUtil = new FLUtil();
-	var util2:FLUtil = new FLUtil();
-	var nombre:String;
-	var cedula:String;
-	var direccion:String;
-	var nom:String;
-	var ced:String;
-	var dir:String;
-	var cmd1:String;
-	var cmd2:String;
-	var cmd3:String;
-	var status:Number;
-	var error:Number;
-
-	nombre = util.sqlSelect("tpv_comandas", "nombrecliente", "idtpv_comanda = " + cursor.valueBuffer("idtpv_comanda"));
-	cedula = util1.sqlSelect("tpv_comandas", "cifnif", "idtpv_comanda = " + cursor.valueBuffer("idtpv_comanda"));
-	direccion = util2.sqlSelect("tpv_comandas", "direccion", "idtpv_comanda = " + cursor.valueBuffer("idtpv_comanda"));
-
-	if (nombre.length < 31)
-		nom = this.iface.espaciosDerecha(nombre, 31);
-	else if (nombre.length > 31)
-		nom = nombre.mid(0, 31);
-	else 
-		nom = nombre;
-	
-	cmd1 = "i01" + nom;
-
-	if(fiscal.sendCmd(status, error, cmd1)){
-	
-		ced = this.iface.espaciosDerecha(cedula, 26);
-
-		cmd2 = "i02" + ced;
-
-		if (fiscal.sendCmd(status, error, cmd2)){
-
-			if (direccion.length < 29)
-				dir = this.iface.espaciosDerecha(direccion, 29);
-			else if (direccion.length > 29)
-				dir = direccion.mid(0, 29);
-			else 
-				dir = direccion;
-			
-			cmd3 = "i03" + dir;
-
-			if (fiscal.sendCmd(status, error, cmd3))
-
-				return true;
-
-			else
-				return false;
-		}
-	}
-
-}
-
+{
+	
+	var error:Number;
+	
+	var status:Number;
+
+	var fis:FLFiscalBixolon;
+	
+	var cmd:String = "i01Prueba";
+
+
+	if(fis.sendCmd(status, error, cmd)){
+		return true;
+	}else{
+		return;
+	}
+}
+
 function oficial_bufferChanged(fN:String)
 {
 	var util:FLUtil = new FLUtil();
@@ -1379,6 +1329,7 @@ function oficial_insertarLineaClicked()
 			return;
 		}
 	}
+
 	this.iface.curLineas.refreshBuffer();
 	if (!this.iface.datosLineaVenta()){
 		return;
@@ -1388,24 +1339,42 @@ function oficial_insertarLineaClicked()
 
 	if (!this.iface.curLineas.commitBuffer()){
 		return;
-	}
-	this.iface.txtCanArticulo.text = "";
-	this.child("fdbReferencia").setValue("");
-	this.iface.txtDesArticulo.text = "";
-	this.iface.txtPvpArticulo.text = "";
-	this.iface.ivaArticulo = "";
-	this.iface.txtCanArticulo.text = "1";
-	this.child("fdbReferencia").setFocus();
-	this.child("tdbLineasComanda").refresh();
+	}
+
+		/*var port:String = "COM1";
+		var fiscal:FLFiscalBixolon;
+
+		fiscal.openPort(port);
+
+		var error:Number;
+	
+		var status:Number;
+	
+		var cmd:String = "i01Prueba";
+
+
+		fiscal.sendCmd(status, error, cmd);*/
+
+		
+		this.iface.txtCanArticulo.text = "";
+		this.child("fdbReferencia").setValue("");
+		this.iface.txtDesArticulo.text = "";
+		this.iface.txtPvpArticulo.text = "";
+		this.iface.ivaArticulo = "";
+		this.iface.txtCanArticulo.text = "1";
+		this.child("fdbReferencia").setFocus();
+		this.child("tdbLineasComanda").refresh();
+
 
-	/*if (!control){
-		this.iface.datosClientes();
-	}
-	
-	this.iface.enviarBixolon();*/
-	var fiscal:FLFiscalBixolon;
+/*	if (!control){
+
+		this.iface.datosClientes();
+	}*/
+
+	/*this.iface.enviarBixolon();
+	
 	//port:String = "COM1";
-	//fiscal.openPort(port);	
+	//fiscal.openPort(port);	*/
 
 }
 
