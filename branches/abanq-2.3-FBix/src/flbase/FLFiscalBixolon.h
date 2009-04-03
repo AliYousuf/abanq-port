@@ -38,19 +38,19 @@ public:
 	
 	bool checkPrinter( );
 	
-	bool readStatus( int status, int error );
+  bool readStatus( int status, int _error );
 
   int readStatus();
 
   int lastError() { return error; }
 	
-	bool sendCmd( int status, int error, QString cmd );
+  bool sendCmd( int status, int _error, QString cmd );
 	
-	int sendNcmd( int status, int error, QString cmd );
+  int sendNcmd( int status, int _error, QString cmd );
 	
-	int sendFile( int status, int error, QString file );
+  int sendFile( int status, int _error, QString file );
 	
-	bool uploadStatus( int status, int error, QString cmd, QString file );
+  bool uploadStatus( int status, int _error, QString cmd, QString file );
 
 	~FLFiscalBixolon();
 
