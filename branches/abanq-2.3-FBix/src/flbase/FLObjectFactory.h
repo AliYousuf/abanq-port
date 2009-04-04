@@ -6826,6 +6826,10 @@ public slots:
   	return obj_->sendNcmd(status, error, cmd);
   }
 
+  int sendNcmd( QString cmd ){
+  	return obj_->sendNcmd( cmd );
+  }
+
   int sendFile( int status, int error, QString file ){
   	return obj_->sendFile(status, error, file);
   }

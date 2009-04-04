@@ -302,6 +302,45 @@ int FLFiscalBixolon::sendNcmd( int status, int _error,  QString cmd ){
   	return result;
 }
 
+int FLFiscalBixolon::sendNcmd( QString cmd ){
+	
+  int status;
+
+  typedef bool (* FNPTR)( int *, int *, char *);
+
+  FNPTR pFn;
+
+  int result = 99;  //esto me asegura que siempre tengo un resultado se fija en falso porque no hay estatus 99
+
+  pFn=(FNPTR) lib->resolve("SendCmd");
+
+  if(pFn){
+
+    result = pFn( &status, &error, const_cast<char *>(cmd.ascii()) );
+
+      if( result ) {
+
+            qDebug("FLFiscalBixolon sendCmd, Envío de lotes de Comandos");
+
+            QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("sendCmd( status=%1, error=%2 cmd=%3").arg(status).arg(error).arg(cmd).ascii() );
+	    
+      } else {
+
+              qDebug("FLFiscalBixolon sendCmd, No se Envió lotes de comandos");
+
+              QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "No se Envió el comando" );
+
+          }
+
+    qDebug("FLFiscalBixolon sendCmd");
+
+    QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "Error en la Función" );
+
+  }
+
+  return status;
+
+}
 
 int FLFiscalBixolon::sendFile( int status, int _error,  QString file ){
 
