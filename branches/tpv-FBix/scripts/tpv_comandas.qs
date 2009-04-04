@@ -213,7 +213,15 @@ function interna_init()
 	
 	var port:String = "COM1";
 
-	fis.openPort(port);
+	var flag:Boolean = true;
+
+	/*fis.openPort(port);*/
+
+	if(fis.openPort(port)){
+		MessageBox.warning(util.translate("scripts", "Status " + fis.readStatus() + ""),MessageBox.Ok,MessageBox.NoButton,MessageBox.NoButton);
+			MessageBox.warning(util.translate("scripts", "Error " + fis.lastError() + ""),MessageBox.Ok,MessageBox.NoButton,MessageBox.NoButton);
+	}
+
         
 	var status:Number;
 	var error:Number;
@@ -223,13 +231,22 @@ function interna_init()
 
 	fis.readStatus(status, error);
 
-	fis.readStatus();
-
 	fis.lastError();
 
-	fis.sendCmd(status, error, cmd);
+	/*fis.sendCmd(cmd);*/
+
+	 if(flag){
+		 	MessageBox.warning(util.translate("scripts", "Status " + fis.readStatus() + ""),MessageBox.Ok,MessageBox.NoButton,MessageBox.NoButton);
+
+			MessageBox.warning(util.translate("scripts", "Error " + fis.lastError() + ""),MessageBox.Ok,MessageBox.NoButton,MessageBox.NoButton);
+
+			MessageBox.warning(util.translate("scripts", "status " + fis.sendCmd(cmd) + ""),MessageBox.Ok,MessageBox.NoButton,MessageBox.NoButton);
+
+			MessageBox.warning(util.translate("scripts", "status " + lastError() + ""),MessageBox.Ok,MessageBox.NoButton,MessageBox.NoButton);
+	 }
 
 	fis.closedPort();
+
 
 	this.iface.bloqueoProvincia = false;
 
