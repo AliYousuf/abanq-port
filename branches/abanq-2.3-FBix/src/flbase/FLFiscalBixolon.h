@@ -53,12 +53,18 @@ public:
 	int sendNcmd( QString cmd );
 	
  	int sendFile( int status, int _error, QString file );
+
+	int sendFile( QString file );
 	
   	bool uploadStatus( int status, int _error, QString cmd, QString file );
 
+	int uploadStatus( QString cmd, QString file );
+
+	bool uploadReport( int status, int _error, QString cmd, QString file );
+
+	int uploadReport( QString cmd, QString file );
+
 	~FLFiscalBixolon();
-
-
 
 };
 
