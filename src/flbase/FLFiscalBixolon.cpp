@@ -318,7 +318,7 @@ int FLFiscalBixolon::sendNcmd( QString cmd ){
 
     result = pFn( &status, &error, const_cast<char *>(cmd.ascii()) );
 
-      if( result ) {
+      if( result != 99 ) {
 
             qDebug("FLFiscalBixolon sendCmd, Envío de lotes de Comandos");
 
