@@ -6834,8 +6834,23 @@ public slots:
   	return obj_->sendFile(status, error, file);
   }
 
+  int sendFile( QString file ){
+  	return obj_->sendFile( file );
+  }
+
   bool uploadStatus( int status, int error, QString cmd, QString file ){
   	return obj_->uploadStatus(status, error, cmd, file);
+  }
+  int uploadStatus( QString cmd, QString file ){
+  	return obj_->uploadStatus( cmd, file );	
+  }
+  
+  bool uploadReport( int status, int error, QString cmd, QString file ){
+  	return obj_->uploadReport(status, error, cmd, file);
+  }
+
+  int uploadReport( QString cmd, QString file ){
+  	return obj_->uploadReport( cmd, file );
   }
 
 private:
