@@ -1,206 +1,214 @@
-/***************************************************************************
-                 tpv_comandas.qs  -  description
-                             -------------------
-    begin                : lun ago 19 2005
-    copyright            : Por ahora (C) 2005 by InfoSiAL S.L.
-    email                : lveb@telefonica.net
- ***************************************************************************/
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
-
-/** @file */
-
-/** @class_declaration interna */
-////////////////////////////////////////////////////////////////////////////
-//// DECLARACION ///////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////
-//// INTERNA /////////////////////////////////////////////////////
-class interna {
-    var ctx:Object;
-    function interna( context ) { this.ctx = context; }
-    function init() { this.ctx.interna_init(); }
-	function calculateField(fN:String):String { return this.ctx.interna_calculateField(fN); }
-	function validateForm():Boolean { return this.ctx.interna_validateForm(); }
-	function acceptedForm() { return this.ctx.interna_acceptedForm(); }
-}
-//// INTERNA /////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////
-
-/** @class_declaration oficial */
-//////////////////////////////////////////////////////////////////
-//// OFICIAL /////////////////////////////////////////////////////
-class oficial extends interna {
-	var lblCantEntregada:Object;
-	var lblCantCambio:Object;
-	var lblCantPte:Object;
-	var lblEntregado:Object;
-	var lblCambio:Object;
-	var fdbEstado:Object;
-	var seleccionado:Boolean;
-	var refrescoActivo:Boolean;
-	var txtCanArticulo:Object;
-	var txtDesArticulo:Object;
-	var txtPvpArticulo:Object;
-	var ivaArticulo:String;
-	var tbnInsertarLinea:Object;
-	var tbnImprimirVale:Object;
-	var cursor:FLSqlCursor;
-	var curLineas:FLSqlCursor;
-	var curPagos:FLSqlCursor;
-	var bloqueoProvincia:Boolean;
-	var importePagado:Number;
-	var control:Boolean = false;
-	var numb:FLUtil; 
-	var fiscal:FLFiscalBixolon;
-	function oficial( context ) { interna( context ); } 
-	function inicializarControles() {
-		return this.ctx.oficial_inicializarControles();
-	}
-	function calcularTotales() {
-		return this.ctx.oficial_calcularTotales();
-	}
-	function bufferChanged(fN:String) {
-		return this.ctx.oficial_bufferChanged(fN);
-	}
-	function verificarHabilitaciones() {
-		return this.ctx.oficial_verificarHabilitaciones();
-	}
-	function realizarPago():Boolean {
-		return this.ctx.oficial_realizarPago();
-	}
-	function imprimirQuickClicked(){
-		return this.ctx.oficial_imprimirQuickClicked();
-	}
-	function seleccionarTodo(){
-		return this.ctx.oficial_seleccionarTodo();
-	}
-	function unoMas(){
-		return this.ctx.oficial_unoMas();
-	}
-	function unoMenos(){
-		return this.ctx.oficial_unoMenos();
-	}
-	function aplicarDescuento(){
-		return this.ctx.oficial_aplicarDescuento();
-	}
-	function Descuentos():Boolean{
-		return this.ctx.oficial_Descuentos();
-	}
-	function corregir():Boolean{
-		return this.ctx.oficial_corregir();
-	}
-	function sumarUno(idLinea:Number):Boolean{
-		return this.ctx.oficial_sumarUno(idLinea);
-	}
-	function restarUno(idLinea:Number):Boolean{
-		return this.ctx.oficial_restarUno(idLinea);
-	}
-	function descontar(idLinea:Number,descuentoLineal:Number,porDescuento:Number):Boolean {
-		return this.ctx.oficial_descontar(idLinea,descuentoLineal,porDescuento);
-	}
-	function calcularTotalesLinea(fN:String,cursor:FLSqlCursor):Number{
-		return this.ctx.oficial_calcularTotalesLinea(fN,cursor);
-	}
-	function aplicarTarifa() {
-		return this.ctx.oficial_aplicarTarifa();
-	}
-	function desconectar() {
-		return this.ctx.oficial_desconectar();
-	}
-	function crearPago(importe:Number):Boolean {
-		return this.ctx.oficial_crearPago(importe);
-	}
-	function enviarBixolon():Boolean {
-		return this.ctx.oficial_enviarBixolon();	
-	}
-	function datosClientes():Boolean {
-		return this.ctx.oficial_datosClientes();	
-	}
-	function refrescarPte() {
-		return this.ctx.oficial_refrescarPte();
-	}
-	function calcularPagado() {
-		return this.ctx.oficial_calcularPagado();
-	}
-	function abrirCajonClicked() {
-		return this.ctx.oficial_abrirCajonClicked();
-	}
-	function insertarLineaClicked() {
-		return this.ctx.oficial_insertarLineaClicked();
-	}
-	function datosLineaVenta():Boolean {
-		return this.ctx.oficial_datosLineaVenta();
-	}
-	function imprimirVale() {
-		return this.ctx.oficial_imprimirVale();
-	}
-	function mostrarFactura() {
-		return this.ctx.oficial_mostrarFactura();
-	}
-	function datosVisorArt(curLineas:FLSqlCursor) {
-		return this.ctx.oficial_datosVisorArt(curLineas);
-	}
-	function datosVisorPagar() {
-		return this.ctx.oficial_datosVisorPagar();
-	}
-	function datosVisorImprimir() {
-		return this.ctx.oficial_datosVisorImprimir();
-	}
-	function formatearLineaVisor(codPuntoVenta:String, numLinea:Number, datos:Array, formato:String):String {
-		return this.ctx.oficial_formatearLineaVisor(codPuntoVenta, numLinea, datos, formato);
-	}
-	function escribirEnVisor(codPuntoVenta:String, datos:Array) {
-		return this.ctx.oficial_escribirEnVisor(codPuntoVenta, datos);
-	}
-	function cerosIzquierda(numero:String, totalCifras:Number):String {
-		return this.ctx.oficial_cerosIzquierda(numero, totalCifras);	
-	}
-	function cerosDerecha(numero:String, totalCifras:Number):String {
-		return this.ctx.oficial_cerosDerecha(numero, totalCifras);	
-	}
-	function espaciosDerecha(cad:String, totalCifras:Number):String {
-		return this.ctx.oficial_espaciosDerecha(cad, totalCifras);	
-	}
-}
-//// OFICIAL /////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////
-
-/** @class_declaration head */
-/////////////////////////////////////////////////////////////////
-//// DESARROLLO /////////////////////////////////////////////////
-class head extends oficial {
-    function head( context ) { oficial ( context ); }
-}
-//// DESARROLLO /////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////
-
-/** @class_declaration ifaceCtx */
-/////////////////////////////////////////////////////////////////
-//// INTERFACE  /////////////////////////////////////////////////
-class ifaceCtx extends head {
-    function ifaceCtx( context ) { head( context ); }
-}
-
-const iface = new ifaceCtx( this );
-//// INTERFACE  /////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////
-
-/** @class_definition interna */
-////////////////////////////////////////////////////////////////////////////
-//// DEFINICION ////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////
-//// INTERNA /////////////////////////////////////////////////////
-/** \C 
+/***************************************************************************
+                 tpv_comandas.qs  -  description
+                             -------------------
+    begin                : lun ago 19 2005
+    copyright            : Por ahora (C) 2005 by InfoSiAL S.L.
+    email                : lveb@telefonica.net
+ ***************************************************************************/
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
+
+/** @file */
+
+/** @class_declaration interna */
+////////////////////////////////////////////////////////////////////////////
+//// DECLARACION ///////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////
+//// INTERNA /////////////////////////////////////////////////////
+class interna {
+    var ctx:Object;
+    function interna( context ) { this.ctx = context; }
+    function init() { this.ctx.interna_init(); }
+	function calculateField(fN:String):String { return this.ctx.interna_calculateField(fN); }
+	function validateForm():Boolean { return this.ctx.interna_validateForm(); }
+	function acceptedForm() { return this.ctx.interna_acceptedForm(); }
+}
+//// INTERNA /////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+
+/** @class_declaration oficial */
+//////////////////////////////////////////////////////////////////
+//// OFICIAL /////////////////////////////////////////////////////
+class oficial extends interna {
+	var lblCantEntregada:Object;
+	var lblCantCambio:Object;
+	var lblCantPte:Object;
+	var lblEntregado:Object;
+	var lblCambio:Object;
+	var fdbEstado:Object;
+	var seleccionado:Boolean;
+	var refrescoActivo:Boolean;
+	var txtCanArticulo:Object;
+	var txtDesArticulo:Object;
+	var txtPvpArticulo:Object;
+	var ivaArticulo:String;
+	var tbnInsertarLinea:Object;
+	var tbnImprimirVale:Object;
+	var cursor:FLSqlCursor;
+	var curLineas:FLSqlCursor;
+	var curPagos:FLSqlCursor;
+	var bloqueoProvincia:Boolean;
+	var importePagado:Number;
+	var control:Boolean = false;
+	function oficial( context ) { interna( context ); } 
+	function inicializarControles() {
+		return this.ctx.oficial_inicializarControles();
+	}
+	function calcularTotales() {
+		return this.ctx.oficial_calcularTotales();
+	}
+	function bufferChanged(fN:String) {
+		return this.ctx.oficial_bufferChanged(fN);
+	}
+	function verificarHabilitaciones() {
+		return this.ctx.oficial_verificarHabilitaciones();
+	}
+	function realizarPago():Boolean {
+		return this.ctx.oficial_realizarPago();
+	}
+	function imprimirQuickClicked(){
+		return this.ctx.oficial_imprimirQuickClicked();
+	}
+	function seleccionarTodo(){
+		return this.ctx.oficial_seleccionarTodo();
+	}
+	function unoMas(){
+		return this.ctx.oficial_unoMas();
+	}
+	function unoMenos(){
+		return this.ctx.oficial_unoMenos();
+	}
+	function aplicarDescuento(){
+		return this.ctx.oficial_aplicarDescuento();
+	}
+	function sumarUno(idLinea:Number):Boolean{
+		return this.ctx.oficial_sumarUno(idLinea);
+	}
+	function restarUno(idLinea:Number):Boolean{
+		return this.ctx.oficial_restarUno(idLinea);
+	}
+	function descontar(idLinea:Number,descuentoLineal:Number,porDescuento:Number):Boolean {
+		return this.ctx.oficial_descontar(idLinea,descuentoLineal,porDescuento);
+	}
+	function calcularTotalesLinea(fN:String,cursor:FLSqlCursor):Number{
+		return this.ctx.oficial_calcularTotalesLinea(fN,cursor);
+	}
+	function aplicarTarifa() {
+		return this.ctx.oficial_aplicarTarifa();
+	}
+	function desconectar() {
+		return this.ctx.oficial_desconectar();
+	}
+	function crearPago(importe:Number):Boolean {
+		return this.ctx.oficial_crearPago(importe);
+	}
+	function refrescarPte() {
+		return this.ctx.oficial_refrescarPte();
+	}
+	function calcularPagado() {
+		return this.ctx.oficial_calcularPagado();
+	}
+	function abrirCajonClicked() {
+		return this.ctx.oficial_abrirCajonClicked();
+	}
+	function insertarLineaClicked() {
+		return this.ctx.oficial_insertarLineaClicked();
+	}
+	function datosLineaVenta():Boolean {
+		return this.ctx.oficial_datosLineaVenta();
+	}
+	function imprimirVale() {
+		return this.ctx.oficial_imprimirVale();
+	}
+	function mostrarFactura() {
+		return this.ctx.oficial_mostrarFactura();
+	}
+	function datosVisorArt(curLineas:FLSqlCursor) {
+		return this.ctx.oficial_datosVisorArt(curLineas);
+	}
+	function datosVisorPagar() {
+		return this.ctx.oficial_datosVisorPagar();
+	}
+	function datosVisorImprimir() {
+		return this.ctx.oficial_datosVisorImprimir();
+	}
+	function formatearLineaVisor(codPuntoVenta:String, numLinea:Number, datos:Array, formato:String):String {
+		return this.ctx.oficial_formatearLineaVisor(codPuntoVenta, numLinea, datos, formato);
+	}
+	function escribirEnVisor(codPuntoVenta:String, datos:Array) {
+		return this.ctx.oficial_escribirEnVisor(codPuntoVenta, datos);
+	}
+	function enviarBixolon():Boolean {
+		return this.ctx.oficial_enviarBixolon();
+	}
+	function espaciosDerecha(cad:String, totalCifras:Number):String {
+		return this.ctx.oficial_espaciosDerecha( cad, totalCifras );
+	}
+	function cerosIzquierda(numero:String, totalCifras:Number):String {
+		return this.ctx.oficial_cerosIzquierda( numero, totalCifras );
+	}
+	function cerosDerecha(numero:String, totalCifras:Number):String {
+		return this.ctx.oficial_cerosDerecha( numero, totalCifras );	
+	}
+	function datosCliente():Boolean {
+		return this.ctx.oficial_datosCliente();
+	}
+	function corregirCmd():Boolean {
+		return this.ctx.oficial_corregirCmd();
+	}
+	function subtotal():Boolean {
+		return this.ctx.oficial_subtotal();
+	}
+	function restarLinea(idLinea:Number):Boolean {
+		return this.ctx.oficial_restarLinea(idLinea);
+	}
+	function menosLinea():Boolean {
+		return this.ctx.oficial_menosLinea();
+	}
+	function enviarPago():Boolean {
+		return this.ctx.oficial_enviarPago();
+	}
+
+}
+//// OFICIAL /////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+
+/** @class_declaration head */
+/////////////////////////////////////////////////////////////////
+//// DESARROLLO /////////////////////////////////////////////////
+class head extends oficial {
+    function head( context ) { oficial ( context ); }
+}
+//// DESARROLLO /////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+
+/** @class_declaration ifaceCtx */
+/////////////////////////////////////////////////////////////////
+//// INTERFACE  /////////////////////////////////////////////////
+class ifaceCtx extends head {
+    function ifaceCtx( context ) { head( context ); }
+}
+
+const iface = new ifaceCtx( this );
+//// INTERFACE  /////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+
+/** @class_definition interna */
+////////////////////////////////////////////////////////////////////////////
+//// DEFINICION ////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////
+//// INTERNA /////////////////////////////////////////////////////
+/** \C 
 Se calcula el arqueo buscando uno abierto para ese punto de venta que corresponda con la fecha establecida<br/>
 Se establece por defecto el punto de venta local y como agente el agente asociado al punto de venta.
 <br/>Al pulsar el botón pagar y establecer una cantidad la comanda se muestra en el recuadro superior derecho el importe entregado por el cliente y calcula el cambio que debemos devolverle.<br/>
@@ -208,1191 +216,940 @@ Al pagar una comanda ésta se cerrará automáticamente creándose la factura, recib
 */
 function interna_init()
 {
-	var util:FLUtil = new FLUtil();	
-	var fis:FLFiscalBixolon;
+	var util:FLUtil = new FLUtil();
 	
-	var port:String = "COM1";
-
-	var flag:Boolean = true;
-
-	/*fis.openPort(port);*/
-
-	if(fis.openPort(port)){
-		MessageBox.warning(util.translate("scripts", "Status " + fis.readStatus() + ""),MessageBox.Ok,MessageBox.NoButton,MessageBox.NoButton);
-			MessageBox.warning(util.translate("scripts", "Error " + fis.lastError() + ""),MessageBox.Ok,MessageBox.NoButton,MessageBox.NoButton);
-	}
-
-        
-	var status:Number;
-	var error:Number;
-	var cmd:String="i01Luisa Maria";
-	
-	fis.checkPrinter();
-
-	fis.readStatus(status, error);
-
-	fis.lastError();
-
-	/*fis.sendCmd(cmd);*/
-
-	 if(flag){
-		 	MessageBox.warning(util.translate("scripts", "Status " + fis.readStatus() + ""),MessageBox.Ok,MessageBox.NoButton,MessageBox.NoButton);
-
-			MessageBox.warning(util.translate("scripts", "Error " + fis.lastError() + ""),MessageBox.Ok,MessageBox.NoButton,MessageBox.NoButton);
-
-			MessageBox.warning(util.translate("scripts", "status " + fis.sendCmd(cmd) + ""),MessageBox.Ok,MessageBox.NoButton,MessageBox.NoButton);
-
-			MessageBox.warning(util.translate("scripts", "status " + lastError() + ""),MessageBox.Ok,MessageBox.NoButton,MessageBox.NoButton);
-	 }
-
-	fis.closedPort();
-
+	MessageBox.information(util.translate("Enviar Articulo", this.iface.enviarPago() ),MessageBox.Ok,MessageBox.NoButton);
 
 	this.iface.bloqueoProvincia = false;
 
 	if (!this.iface.curLineas)
-		this.iface.curLineas = this.child("tdbLineasComanda").cursor();
+		this.iface.curLineas = this.child("tdbLineasComanda").cursor();
 	if (!this.iface.curPagos)
-		this.iface.curPagos = this.child("tdbPagos").cursor();
-	
-	this.iface.lblCantEntregada = this.child("lblCantEntregada");
-	this.iface.lblCantCambio = this.child("lblCantCambio");
-	this.iface.lblCantPte = this.child("lblCantPte");
-	this.iface.lblEntregado = this.child("lblEntregado");
-	this.iface.lblCambio = this.child("lblCambio");
-	this.iface.fdbEstado = this.child("fdbEstado");
-	this.iface.lblCantCambio.setText("");
-	this.iface.lblCantEntregada.setText("");
-	this.iface.lblEntregado.setText("");
-	this.iface.lblCambio.setText(""); 
-	this.iface.seleccionado = false;
-	this.iface.refrescoActivo = true;
-	
-	this.iface.txtCanArticulo = this.child("txtCanArticulo");
-	this.iface.txtDesArticulo = this.child("txtDesArticulo");
-	this.iface.txtPvpArticulo = this.child("txtPvpArticulo");
-	this.iface.ivaArticulo = ""
-	this.iface.tbnInsertarLinea = this.child("tbnInsertarLinea");
-	this.iface.tbnImprimirVale = this.child("tbnImprimirVale");
-	
-	this.child("tdbRecibos").setReadOnly(true);
-	
-	var cursor:FLSqlCursor = this.cursor();
-	connect(cursor, "bufferChanged(QString)", this, "iface.bufferChanged");
-	
-	connect(this.iface.curLineas, "bufferCommited()", this, "iface.calcularTotales()");
-	connect(this.iface.curPagos, "bufferCommited()", this, "iface.calcularPagado()");
-	
-	connect(this.child("pbnPagar"), "clicked()", this, "iface.realizarPago()");
-	connect(this.child("tbnPrintQuick"),"clicked()", this, "iface.imprimirQuickClicked()");
-	connect(this.child("tbnSelTodo"), "clicked()", this, "iface.seleccionarTodo()");
-	connect(this.child("tbnUnoMas"), "clicked()", this, "iface.unoMas()");
-	connect(this.child("tbnUnoMenos"), "clicked()", this, "iface.unoMenos()");
-	connect(this.child("tbnDescuento"), "clicked()", this, "iface.aplicarDescuento()");
-	connect(this.child("tbnOpenCash"),"clicked()", this, "iface.abrirCajonClicked()");
-	connect(this.child("tbnCorregir"), "clicked()", this, "iface.corregir()");
-	connect(this.child("pbnDescontar"), "clicked()", this, "iface.Descuentos()");
-	connect(this.iface.tbnInsertarLinea, "clicked()", this, "iface.insertarLineaClicked()");
-	connect(this.iface.tbnImprimirVale, "clicked()", this, "iface.imprimirVale()");
-	connect(this.child("toolButtonZoomFactura"), "clicked()", this, "iface.mostrarFactura()");
-
-	connect(this.iface.txtDesArticulo, "returnPressed()", this, "iface.insertarLineaClicked()");
-	connect(this.iface.txtCanArticulo, "returnPressed()", this, "iface.insertarLineaClicked()");
-	connect(this.iface.txtPvpArticulo, "returnPressed()", this, "iface.insertarLineaClicked()");
-
-	this.iface.refrescarPte();
-	switch (cursor.modeAccess()) {
-		case cursor.Insert: {
-			var codTerminal:String = util.readSettingEntry("scripts/fltpv_ppal/codTerminal");
-			if (codTerminal && util.sqlSelect("tpv_puntosventa","codtpv_puntoventa","codtpv_puntoventa ='" + codTerminal + "'")) {
-				this.child("fdbCodTpvPuntoventa").setValue(codTerminal);
-				var agente:String = util.sqlSelect("tpv_puntosventa","codtpv_agente","codtpv_puntoventa ='" + codTerminal + "'");
-				if (!agente || agente == "") {
-					MessageBox.warning(util.translate("scripts",
-					"No hay establecido ningún agente para el punto de venta '" + codTerminal + "'"),MessageBox.Ok,MessageBox.NoButton,MessageBox.NoButton);
-					this.form.close();
-				}
-				this.child("fdbAgente").setValue(agente);
-			}
-			else {
-				MessageBox.warning(util.translate("scripts",
-				"No hay establecido ningún Punto de Venta Local\no el Punto de Venta establecido no es válido.\nSeleccione un Punto de Venta válido en la tabla \ny pulse el botón Cambiar"),MessageBox.Ok,MessageBox.NoButton,MessageBox.NoButton);
-				this.form.close();
-			}
-			this.child("fdbTarifa").setValue(util.sqlSelect("tpv_datosgenerales","tarifa","1=1"));
-			this.child("fdbCodPago").setValue(util.sqlSelect("tpv_datosgenerales","pagoefectivo","1=1"));
-			
-			this.iface.txtCanArticulo.text = 1;
-			this.child("fdbReferencia").setFocus();
-			this.child("fdbCodCliente").setValue(util.sqlSelect("tpv_datosgenerales", "codcliente", "1 = 1"));
-			break;
-		}
-		case cursor.Edit: {
-			this.child("fdbCodigo").setDisabled(true);
-			this.child("fdbCodTpvPuntoventa").setDisabled(true);
-			this.iface.txtCanArticulo.text = 1;
-			this.child("fdbReferencia").setFocus();
-			break;
-		}
-	}
-	this.iface.inicializarControles();
-	this.iface.bufferChanged("tipopago");
-	
-	this.iface.importePagado = 0;
-}
-
-function interna_calculateField(fN:String):String
-{
-	var util:FLUtil = new FLUtil();
-	var valor:String;
-	var cursor:FLSqlCursor = this.cursor();
-
-	switch (fN) {
-		/** \C
-		El --pagado-- es la suma de los pagos
-		*/
-		case "pagado": {
-			valor = util.sqlSelect("tpv_pagoscomanda", "SUM(importe)", "idtpv_comanda = " + cursor.valueBuffer("idtpv_comanda") + " AND estado = '" + util.translate("scripts" , "Pagado") + "'");
-			valor = util.roundFieldValue(valor, "tpv_comandas", "pagado");
-			break;
-		}
-		/** \C
-		El --Pendiente-- es el --total-- menos el --pagado--
-		*/
-		case "pendiente": {
-			valor = parseFloat(cursor.valueBuffer("total")) - parseFloat(cursor.valueBuffer("pagado"));
-			break;
-		}
-		/** \C
-		El --total-- es el --neto-- más el --totaliva-- 
-		*/
-		case "total": {
-			var neto:Number = parseFloat(this.iface.calculateField("neto"));
-			var totalIva:Number = parseFloat(this.iface.calculateField("totaliva")); 
-			valor = neto + totalIva;
-			break;
-		}
-		/** \C
-		El --neto-- es la suma del pvp total de las líneas de la comanda
-		*/
-		case "neto": {
-			valor = util.sqlSelect("tpv_lineascomanda", "SUM(pvptotal)", "idtpv_comanda = " + cursor.valueBuffer("idtpv_comanda"));
-			if (!valor)
-				valor = 0;
-			valor = util.roundFieldValue(valor, "tpv_comandas", "neto");
-			break;
-		}
-		/** \C
-		El --totaliva-- es la suma del iva correspondiente a las líneas de la comanda
-		*/
-		case "totaliva": {
-			valor = util.sqlSelect("tpv_lineascomanda", "SUM((pvptotal * iva) / 100)", "idtpv_comanda = " + cursor.valueBuffer("idtpv_comanda"));
-			valor = util.roundFieldValue(valor, "tpv_comandas", "totaliva");
-			break;
-		}
-		case "desarticulo": {
-			valor = util.sqlSelect("articulos", "descripcion", "referencia = '" + cursor.valueBuffer("referencia") + "'");
-			if (!valor)
-				valor = "";
-			break;
-		}
-		case "pvparticulo": {
-			valor = util.sqlSelect("articulostarifas", "pvp", "referencia = '" + cursor.valueBuffer("referencia") + "'");
-			if (!valor)
-				valor = "0";
-			break;
-		}
-		case "ivaarticulo": {
-			valor = util.sqlSelect("articulos", "codimpuesto", "referencia = '" + cursor.valueBuffer("referencia") + "'");
-			if (!valor)
-				valor = "";
-			break;
-		}
-		case "estado": {
-			var total:Number = parseFloat(cursor.valueBuffer("total"));
-			if (total > 0 && total == parseFloat(cursor.valueBuffer("pagado"))) {
-				valor = "Cerrada";
-			} else {
-				valor = "Abierta";
-			}
-			break;
-		}
-		case "coddir": {
-			valor = util.sqlSelect("dirclientes", "id", "codcliente = '" + cursor.valueBuffer("codcliente") +  "' AND domfacturacion = 'true'");
-			break;
-		}
-		case "provincia": {
-			valor = util.sqlSelect("dirclientes", "provincia", "id = " + cursor.valueBuffer("coddir"));
-			if (!valor)
-				valor = cursor.valueBuffer("provincia");
-			break;
-		}
-		case "codpais": {
-			valor = util.sqlSelect("dirclientes", "codpais", "id = " + cursor.valueBuffer("coddir"));
-			if (!valor)
-				valor = cursor.valueBuffer("codpais");
-			break;
-		}
-	}
-	return valor;
-}
-
-
-/** \D Comprueba que el total es mayor que la suma de los pagos
-\end */
-function interna_validateForm():Boolean
-{
-	var util:FLUtil = new FLUtil;
-	if (parseFloat(this.cursor().valueBuffer("total")) < parseFloat(this.cursor().valueBuffer("pagado"))) {
-		MessageBox.warning(util.translate("scripts", "El total de la venta no puede ser inferior a los pagos registrados"), MessageBox.Ok, MessageBox.NoButton);
-		return false;
-	}
-	if (parseFloat(this.cursor().valueBuffer("total")) == parseFloat(this.cursor().valueBuffer("pagado"))) {
-		//this.cursor().setValueBuffer("estado", "Cerrada");
-		//this.cursor().setValueBuffer("editable", false);
-	}
-	
-	return true;
-
-}
-
-/** \D Si la comanda está completamente pagada, pasa a estado Cerrada
-\end */
-function interna_acceptedForm()
-{
-}
-//// INTERNA /////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////
-
-/** @class_definition oficial */
-//////////////////////////////////////////////////////////////////
-//// OFICIAL /////////////////////////////////////////////////////
-/** \D
-Llama a la función verificarHabilitaciones
-*/
-function oficial_inicializarControles()
-{
-	this.iface.verificarHabilitaciones();
-}
-
-function oficial_enviarBixolon():Boolean
-{
-		/* Pedazo de Software para enviar datos a la impresora*/
-		   /* Variable para Instanciar la clase FLFiscalBixolon*/
-			
-			var cursor:FLSqlCursor = this.cursor();
-		        
-			if (!this.iface.curLineas)
-				this.iface.curLineas = this.child("tdbLineasComanda").cursor();
-		  	var num:FLUtil; 
-		        var imp:String;
-		        var cn:Double;
-		        var price:Double;
-		        var descrip:String;
-		        var desc:String;
-		        var cne:Number;
-			var cnd:Number;
-			var pricee:Number;
-			var priced:Number;
-			var cante:String;
-			var cantd:String;
-			var prie:String;
-			var prid:String;
-			var comando:String;
- 			var status:Number; 
- 	        
-			if(this.iface.calculateField("ivaarticulo") == "EXENTO"){
-				imp = " ";
-			}
-			else { 
-				imp = "!";
-			}
-			
-			cn = parseFloat(curLineas.valueBuffer("cantidad"));
-			price = parseFloat(curLineas.valueBuffer("pvpunitario"));
-			descrip = this.iface.calculateField("desarticulo");
-
-			if(descrip.length == 40)
-				desc = descrip;
-			else if(descrip.length < 40)
-				desc = this.iface.espaciosDerecha(descrip, 40); 
-			else if (descrip.length > 40)
-				desc = descrip.mid(0,40);
-				
-			cne = num.partInteger(cn);
-			cnd = num.partDecimal(cn);
-			pricee = num.partInteger(price);
-			priced = num.partDecimal(price);
-			cante =  this.iface.cerosIzquierda(cne, 8);
-			cantd =  this.iface.cerosDerecha(cnd, 3);
-			prie =  this.iface.cerosIzquierda(pricee, 8);
-			prid =  this.iface.cerosDerecha(priced, 2);
-			
-			comando = imp + prie + prid + cante + cantd + desc;
-			
-			
-			fiscal.sendCmd(status, error, comando);
-			/* Hasta Aquí*/
-
-	
-}
-
-
-/** \D
-Calcula el neto, totaliva y total llamando a la función claculateField
-*/
-
-
-function oficial_cerosIzquierda(numero:String, totalCifras:Number):String
-{
-				var ret:String = numero.toString();
-				var numCeros:Number = totalCifras - ret.length;
-				for ( ; numCeros > 0 ; --numCeros)
-					ret = "0" + ret;
-				return ret;
-}
-
-function oficial_cerosDerecha(numero:String, totalCifras:Number):String
-{
-				var ret:String = numero.toString();
-				var numCeros:Number = totalCifras - ret.length;
-				for ( ; numCeros > 0 ; --numCeros)
-					ret = ret + "0";
-				return ret;
-}
-
-function oficial_espaciosDerecha(cad:String, totalCifras:Number):String
-{
-				var ret:String = cad.toString();
-				var numEsp:Number = totalCifras - ret.length;
-				for ( ; numEsp > 0 ; --numEsp)
-					ret = ret + " ";
-				return ret;
-}
-
-
-function oficial_calcularTotales()
-{
-	this.child("fdbNeto").setValue(this.iface.calculateField("neto"));
-	this.child("fdbTotalIva").setValue(this.iface.calculateField("totaliva"));
-	this.child("fdbTotalComanda").setValue(this.iface.calculateField("total"));
-	
-	this.iface.verificarHabilitaciones();
-}
-
-function oficial_datosClientes():Boolean
+		this.iface.curPagos = this.child("tdbPagos").cursor();
+	
+	this.iface.lblCantEntregada = this.child("lblCantEntregada");
+	this.iface.lblCantCambio = this.child("lblCantCambio");
+	this.iface.lblCantPte = this.child("lblCantPte");
+	this.iface.lblEntregado = this.child("lblEntregado");
+	this.iface.lblCambio = this.child("lblCambio");
+	this.iface.fdbEstado = this.child("fdbEstado");
+	this.iface.lblCantCambio.setText("");
+	this.iface.lblCantEntregada.setText("");
+	this.iface.lblEntregado.setText("");
+	this.iface.lblCambio.setText(""); 
+	this.iface.seleccionado = false;
+	this.iface.refrescoActivo = true;
+	
+	this.iface.txtCanArticulo = this.child("txtCanArticulo");
+	this.iface.txtDesArticulo = this.child("txtDesArticulo");
+	this.iface.txtPvpArticulo = this.child("txtPvpArticulo");
+	this.iface.ivaArticulo = ""
+	this.iface.tbnInsertarLinea = this.child("tbnInsertarLinea");
+	this.iface.tbnImprimirVale = this.child("tbnImprimirVale");
+	
+	this.child("tdbRecibos").setReadOnly(true);
+	
+	var cursor:FLSqlCursor = this.cursor();
+	connect(cursor, "bufferChanged(QString)", this, "iface.bufferChanged");
+	
+	connect(this.iface.curLineas, "bufferCommited()", this, "iface.calcularTotales()");
+	connect(this.iface.curPagos, "bufferCommited()", this, "iface.calcularPagado()");
+	
+	connect(this.child("pbnPagar"), "clicked()", this, "iface.realizarPago()");
+	connect(this.child("tbnPrintQuick"),"clicked()", this, "iface.imprimirQuickClicked()");
+	connect(this.child("tbnSelTodo"), "clicked()", this, "iface.seleccionarTodo()");
+	connect(this.child("tbnUnoMas"), "clicked()", this, "iface.unoMas()");
+	connect(this.child("tbnUnoMenos"), "clicked()", this, "iface.unoMenos()");
+	connect(this.child("tbnDescuento"), "clicked()", this, "iface.aplicarDescuento()");
+	connect(this.child("tbnOpenCash"),"clicked()", this, "iface.abrirCajonClicked()");
+	connect(this.iface.tbnInsertarLinea, "clicked()", this, "iface.insertarLineaClicked()");
+	connect(this.child("tbnCorregir"), "clicked()", this, "iface.menosLinea()");
+	connect(this.iface.tbnImprimirVale, "clicked()", this, "iface.imprimirVale()");
+	connect(this.child("toolButtonZoomFactura"), "clicked()", this, "iface.mostrarFactura()");
+
+	connect(this.iface.txtDesArticulo, "returnPressed()", this, "iface.insertarLineaClicked()");
+	connect(this.iface.txtCanArticulo, "returnPressed()", this, "iface.insertarLineaClicked()");
+	connect(this.iface.txtPvpArticulo, "returnPressed()", this, "iface.insertarLineaClicked()");
+
+	this.iface.refrescarPte();
+	switch (cursor.modeAccess()) {
+		case cursor.Insert: {
+			var codTerminal:String = util.readSettingEntry("scripts/fltpv_ppal/codTerminal");
+			if (codTerminal && util.sqlSelect("tpv_puntosventa","codtpv_puntoventa","codtpv_puntoventa ='" + codTerminal + "'")) {
+				this.child("fdbCodTpvPuntoventa").setValue(codTerminal);
+				var agente:String = util.sqlSelect("tpv_puntosventa","codtpv_agente","codtpv_puntoventa ='" + codTerminal + "'");
+				if (!agente || agente == "") {
+					MessageBox.warning(util.translate("scripts",
+					"No hay establecido ningún agente para el punto de venta '" + codTerminal + "'"),MessageBox.Ok,MessageBox.NoButton,MessageBox.NoButton);
+					this.form.close();
+				}
+				this.child("fdbAgente").setValue(agente);
+			}
+			else {
+				MessageBox.warning(util.translate("scripts",
+				"No hay establecido ningún Punto de Venta Local\no el Punto de Venta establecido no es válido.\nSeleccione un Punto de Venta válido en la tabla \ny pulse el botón Cambiar"),MessageBox.Ok,MessageBox.NoButton,MessageBox.NoButton);
+				this.form.close();
+			}
+			this.child("fdbTarifa").setValue(util.sqlSelect("tpv_datosgenerales","tarifa","1=1"));
+			this.child("fdbCodPago").setValue(util.sqlSelect("tpv_datosgenerales","pagoefectivo","1=1"));
+			
+			this.iface.txtCanArticulo.text = 1;
+			this.child("fdbReferencia").setFocus();
+			this.child("fdbCodCliente").setValue(util.sqlSelect("tpv_datosgenerales", "codcliente", "1 = 1"));
+			break;
+		}
+		case cursor.Edit: {
+			this.child("fdbCodigo").setDisabled(true);
+			this.child("fdbCodTpvPuntoventa").setDisabled(true);
+			this.iface.txtCanArticulo.text = 1;
+			this.child("fdbReferencia").setFocus();
+			break;
+		}
+	}
+	this.iface.inicializarControles();
+	this.iface.bufferChanged("tipopago");
+	
+	this.iface.importePagado = 0;
+
+}
+
+function interna_calculateField(fN:String):String
 {
-	
-	var error:Number;
-	
-	var status:Number;
+	var util:FLUtil = new FLUtil();
+	var valor:String;
+	var cursor:FLSqlCursor = this.cursor();
 
-	var fis:FLFiscalBixolon;
+	switch (fN) {
+		/** \C
+		El --pagado-- es la suma de los pagos
+		*/
+		case "pagado": {
+			valor = util.sqlSelect("tpv_pagoscomanda", "SUM(importe)", "idtpv_comanda = " + cursor.valueBuffer("idtpv_comanda") + " AND estado = '" + util.translate("scripts" , "Pagado") + "'");
+			valor = util.roundFieldValue(valor, "tpv_comandas", "pagado");
+			break;
+		}
+		/** \C
+		El --Pendiente-- es el --total-- menos el --pagado--
+		*/
+		case "pendiente": {
+			valor = parseFloat(cursor.valueBuffer("total")) - parseFloat(cursor.valueBuffer("pagado"));
+			break;
+		}
+		/** \C
+		El --total-- es el --neto-- más el --totaliva-- 
+		*/
+		case "total": {
+			var neto:Number = parseFloat(this.iface.calculateField("neto"));
+			var totalIva:Number = parseFloat(this.iface.calculateField("totaliva")); 
+			valor = neto + totalIva;
+			break;
+		}
+		/** \C
+		El --neto-- es la suma del pvp total de las líneas de la comanda
+		*/
+		case "neto": {
+			valor = util.sqlSelect("tpv_lineascomanda", "SUM(pvptotal)", "idtpv_comanda = " + cursor.valueBuffer("idtpv_comanda"));
+			if (!valor)
+				valor = 0;
+			valor = util.roundFieldValue(valor, "tpv_comandas", "neto");
+			break;
+		}
+		/** \C
+		El --totaliva-- es la suma del iva correspondiente a las líneas de la comanda
+		*/
+		case "totaliva": {
+			valor = util.sqlSelect("tpv_lineascomanda", "SUM((pvptotal * iva) / 100)", "idtpv_comanda = " + cursor.valueBuffer("idtpv_comanda"));
+			valor = util.roundFieldValue(valor, "tpv_comandas", "totaliva");
+			break;
+		}
+		case "desarticulo": {
+			valor = util.sqlSelect("articulos", "descripcion", "referencia = '" + cursor.valueBuffer("referencia") + "'");
+			if (!valor)
+				valor = "";
+			break;
+		}
+		case "pvparticulo": {
+			valor = util.sqlSelect("articulostarifas", "pvp", "referencia = '" + cursor.valueBuffer("referencia") + "'");
+			if (!valor)
+				valor = "0";
+			break;
+		}
+		case "ivaarticulo": {
+			valor = util.sqlSelect("articulos", "codimpuesto", "referencia = '" + cursor.valueBuffer("referencia") + "'");
+			if (!valor)
+				valor = "";
+			break;
+		}
+		case "estado": {
+			var total:Number = parseFloat(cursor.valueBuffer("total"));
+			if (total > 0 && total == parseFloat(cursor.valueBuffer("pagado"))) {
+				valor = "Cerrada";
+			} else {
+				valor = "Abierta";
+			}
+			break;
+		}
+		case "coddir": {
+			valor = util.sqlSelect("dirclientes", "id", "codcliente = '" + cursor.valueBuffer("codcliente") +  "' AND domfacturacion = 'true'");
+			break;
+		}
+		case "provincia": {
+			valor = util.sqlSelect("dirclientes", "provincia", "id = " + cursor.valueBuffer("coddir"));
+			if (!valor)
+				valor = cursor.valueBuffer("provincia");
+			break;
+		}
+		case "codpais": {
+			valor = util.sqlSelect("dirclientes", "codpais", "id = " + cursor.valueBuffer("coddir"));
+			if (!valor)
+				valor = cursor.valueBuffer("codpais");
+			break;
+		}
+	}
+	return valor;
+}
+
+/** \D Comprueba que el total es mayor que la suma de los pagos
+\end */
+function interna_validateForm():Boolean
+{
+	var util:FLUtil = new FLUtil;
+	if (parseFloat(this.cursor().valueBuffer("total")) < parseFloat(this.cursor().valueBuffer("pagado"))) {
+		MessageBox.warning(util.translate("scripts", "El total de la venta no puede ser inferior a los pagos registrados"), MessageBox.Ok, MessageBox.NoButton);
+		return false;
+	}
+	if (parseFloat(this.cursor().valueBuffer("total")) == parseFloat(this.cursor().valueBuffer("pagado"))) {
+		//this.cursor().setValueBuffer("estado", "Cerrada");
+		//this.cursor().setValueBuffer("editable", false);
+	}
 	
-	var cmd:String = "i01Prueba";
+	return true;
 
+}
 
-	if(fis.sendCmd(status, error, cmd)){
-		return true;
-	}else{
-		return;
+/** \D Si la comanda está completamente pagada, pasa a estado Cerrada
+\end */
+function interna_acceptedForm()
+{
+}
+//// INTERNA /////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+
+/** @class_definition oficial */
+//////////////////////////////////////////////////////////////////
+//// OFICIAL /////////////////////////////////////////////////////
+/** \D
+Llama a la función verificarHabilitaciones
+*/
+function oficial_inicializarControles()
+{
+	this.iface.verificarHabilitaciones();
+}
+
+/** \D
+Calcula el neto, totaliva y total llamando a la función claculateField
+*/
+function oficial_calcularTotales()
+{
+	this.child("fdbNeto").setValue(this.iface.calculateField("neto"));
+	this.child("fdbTotalIva").setValue(this.iface.calculateField("totaliva"));
+	this.child("fdbTotalComanda").setValue(this.iface.calculateField("total"));
+	
+	this.iface.verificarHabilitaciones();
+}
+
+function oficial_bufferChanged(fN:String)
+{
+	var util:FLUtil = new FLUtil();
+	var cursor:FLSqlCursor = this.cursor();
+	switch (fN) {
+		/** \C
+		Al cambiar el --totaliva-- se calcula el --total-- 
+		*/
+		case "totaliva":{
+			this.child("fdbTotalComanda").setValue(this.iface.calculateField("total"));
+			this.iface.verificarHabilitaciones();
+			break;
+		}
+		/** \C
+		Al cambiar el --total-- o el --pagado-- se actualiza el pendiente de pago
+		*/
+		case "total":
+		case "pagado": {
+			this.child("fdbPendiente").setValue(this.iface.calculateField("pendiente"));
+			this.iface.refrescarPte();
+			cursor.setValueBuffer("estado", this.iface.calculateField("estado"));
+			break;
+		}
+		/** \C
+		Al calculase el arqueo se desabilita el código, punto de venta, agente y fecha
+		*/
+		case "idtpv_arqueo":{
+			if(cursor.valueBuffer("idtpv_arqueo")) {
+				this.child("fdbCodigo").setDisabled(true);
+				this.child("fdbCodTpvPuntoventa").setDisabled(true);
+				this.child("fdbAgente").setDisabled(true);
+				this.child("fdbFecha").setDisabled(true);
+			}
+			break;
+		}
+		/** \C
+		Al cambiar la --codtarifa-- se recalculan los totales aplicando la nueva tarifa a todas las lineas de la comanda preguntando antes si deseamos hacerlo
+		*/
+		case "codtarifa":{
+			if (!cursor.valueBuffer("codtarifa"))
+				break;
+			if(this.child("tdbLineasComanda").cursor().size() > 0){
+				var res:Number = MessageBox.warning(util.translate("scripts", "¿Desea aplicar la nueva tarifa a todas las lineas?"),MessageBox.Yes, MessageBox.No, MessageBox.NoButton);
+				if(res == MessageBox.Yes)
+					this.iface.aplicarTarifa();
+			}
+			break;
+		}
+		/** \C
+		Al cambiar el --tipopago-- se calcula la forma de pago establecida por defecto para ese tipo de pago en el formulario de datos generales
+		*/
+		case "tipopago":{
+			if (cursor.valueBuffer("tipopago") == "Efectivo") {
+				var pagoEfectivo:String = util.sqlSelect("tpv_datosgenerales", "pagoefectivo", "1=1");
+				if(!pagoEfectivo || pagoEfectivo == "")
+					MessageBox.information(util.translate("scripts", "No tiene configurada la forma de pago efectivo en el formulario de datos generales"),MessageBox.Ok, MessageBox.NoButton);
+				cursor.setValueBuffer("codpago", pagoEfectivo);
+			}
+			else if (cursor.valueBuffer("tipopago") == "Tarjeta") {
+				var pagoTarjeta:String = util.sqlSelect("tpv_datosgenerales", "pagotarjeta", "1=1");
+				if(!pagoTarjeta || pagoTarjeta == "")
+					MessageBox.information(util.translate("scripts", "No tiene configurada la forma de pago tarjeta en el formulario de datos generales"),MessageBox.Ok, MessageBox.NoButton);
+				cursor.setValueBuffer("codpago", pagoTarjeta);
+			}
+			else {
+				var pagoVale:String = util.sqlSelect("tpv_datosgenerales", "pagovale", "1=1");
+				if (!pagoVale || pagoVale == "")
+					MessageBox.information(util.translate("scripts", "No tiene configurada la forma de pago vale en el formulario de datos generales"),MessageBox.Ok, MessageBox.NoButton);
+				cursor.setValueBuffer("codpago", pagoVale );
+			}
+			break;
+		}
+		/** \C
+		Al cambiar la --referencia-- se calcula su descripción y precio unitario, y se almacena su impuesto asociado
+		*/
+		case "referencia": {
+			this.iface.txtDesArticulo.text = this.iface.calculateField("desarticulo");
+			this.iface.txtPvpArticulo.text = this.iface.calculateField("pvparticulo");
+			this.iface.ivaArticulo = this.iface.calculateField("ivaarticulo");
+			if(cursor.valueBuffer("tipopago") == "Efectivo") 
+				cursor.setValueBuffer("codpago",util.sqlSelect("tpv_datosgenerales","pagoefectivo","1=1"));
+			else
+				cursor.setValueBuffer("codpago",util.sqlSelect("tpv_datosgenerales","pagotarjeta","1=1"));
+			break;
+		}
+		/** \C
+		El valor de --coddir-- por defecto corresponde a la dirección del cliente marcada como dirección de facturación
+		\end */
+		case "codcliente": {
+			this.child("fdbCodDir").setValue("0");
+			this.child("fdbCodDir").setValue(this.iface.calculateField("coddir"));
+			break;
+		}
+		case "provincia": {
+			if (!this.iface.bloqueoProvincia) {
+				this.iface.bloqueoProvincia = true;
+				flfactppal.iface.pub_obtenerProvincia(this);
+				this.iface.bloqueoProvincia = false;
+			}
+			break;
+		}
+		case "idprovincia": {
+			if (cursor.valueBuffer("idprovincia") == 0)
+				cursor.setNull("idprovincia");
+			break;
+		}
+		case "coddir": {
+			this.child("fdbProvincia").setValue(this.iface.calculateField("provincia"));
+			this.child("fdbCodPais").setValue(this.iface.calculateField("codpais"));
+			break;
+		}
 	}
 }
 
-function oficial_bufferChanged(fN:String)
-{
-	var util:FLUtil = new FLUtil();
-	var cursor:FLSqlCursor = this.cursor();
-	switch (fN) {
-		/** \C
-		Al cambiar el --totaliva-- se calcula el --total-- 
-		*/
-		case "totaliva":{
-			this.child("fdbTotalComanda").setValue(this.iface.calculateField("total"));
-			this.iface.verificarHabilitaciones();
-			break;
-		}
-		/** \C
-		Al cambiar el --total-- o el --pagado-- se actualiza el pendiente de pago
-		*/
-		case "total":
-		case "pagado": {
-			this.child("fdbPendiente").setValue(this.iface.calculateField("pendiente"));
-			this.iface.refrescarPte();
-			cursor.setValueBuffer("estado", this.iface.calculateField("estado"));
-			break;
-		}
-		/** \C
-		Al calculase el arqueo se desabilita el código, punto de venta, agente y fecha
-		*/
-		case "idtpv_arqueo":{
-			if(cursor.valueBuffer("idtpv_arqueo")) {
-				this.child("fdbCodigo").setDisabled(true);
-				this.child("fdbCodTpvPuntoventa").setDisabled(true);
-				this.child("fdbAgente").setDisabled(true);
-				this.child("fdbFecha").setDisabled(true);
-			}
-			break;
-		}
-		/** \C
-		Al cambiar la --codtarifa-- se recalculan los totales aplicando la nueva tarifa a todas las lineas de la comanda preguntando antes si deseamos hacerlo
-		*/
-		case "codtarifa":{
-			if (!cursor.valueBuffer("codtarifa"))
-				break;
-			if(this.child("tdbLineasComanda").cursor().size() > 0){
-				var res:Number = MessageBox.warning(util.translate("scripts", "¿Desea aplicar la nueva tarifa a todas las lineas?"),MessageBox.Yes, MessageBox.No, MessageBox.NoButton);
-				if(res == MessageBox.Yes)
-					this.iface.aplicarTarifa();
-			}
-			break;
-		}
-		/** \C
-		Al cambiar el --tipopago-- se calcula la forma de pago establecida por defecto para ese tipo de pago en el formulario de datos generales
-		*/
-		case "tipopago":{
-			if (cursor.valueBuffer("tipopago") == "Efectivo") {
-				var pagoEfectivo:String = util.sqlSelect("tpv_datosgenerales", "pagoefectivo", "1=1");
-				if(!pagoEfectivo || pagoEfectivo == "")
-					MessageBox.information(util.translate("scripts", "No tiene configurada la forma de pago efectivo en el formulario de datos generales"),MessageBox.Ok, MessageBox.NoButton);
-				cursor.setValueBuffer("codpago", pagoEfectivo);
-			}
-			else if (cursor.valueBuffer("tipopago") == "Tarjeta") {
-				var pagoTarjeta:String = util.sqlSelect("tpv_datosgenerales", "pagotarjeta", "1=1");
-				if(!pagoTarjeta || pagoTarjeta == "")
-					MessageBox.information(util.translate("scripts", "No tiene configurada la forma de pago tarjeta en el formulario de datos generales"),MessageBox.Ok, MessageBox.NoButton);
-				cursor.setValueBuffer("codpago", pagoTarjeta);
-			}
-			else {
-				var pagoVale:String = util.sqlSelect("tpv_datosgenerales", "pagovale", "1=1");
-				if (!pagoVale || pagoVale == "")
-					MessageBox.information(util.translate("scripts", "No tiene configurada la forma de pago vale en el formulario de datos generales"),MessageBox.Ok, MessageBox.NoButton);
-				cursor.setValueBuffer("codpago", pagoVale );
-			}
-			break;
-		}
-		/** \C
-		Al cambiar la --referencia-- se calcula su descripción y precio unitario, y se almacena su impuesto asociado
-		*/
-		case "referencia": {
-			this.iface.txtDesArticulo.text = this.iface.calculateField("desarticulo");
-			this.iface.txtPvpArticulo.text = this.iface.calculateField("pvparticulo");
-			this.iface.ivaArticulo = this.iface.calculateField("ivaarticulo");
-			if(cursor.valueBuffer("tipopago") == "Efectivo") 
-				cursor.setValueBuffer("codpago",util.sqlSelect("tpv_datosgenerales","pagoefectivo","1=1"));
-			else
-				cursor.setValueBuffer("codpago",util.sqlSelect("tpv_datosgenerales","pagotarjeta","1=1"));
-			break;
-		}
-		/** \C
-		El valor de --coddir-- por defecto corresponde a la dirección del cliente marcada como dirección de facturación
-		\end */
-		case "codcliente": {
-			this.child("fdbCodDir").setValue("0");
-			this.child("fdbCodDir").setValue(this.iface.calculateField("coddir"));
-			break;
-		}
-		case "provincia": {
-			if (!this.iface.bloqueoProvincia) {
-				this.iface.bloqueoProvincia = true;
-				flfactppal.iface.pub_obtenerProvincia(this);
-				this.iface.bloqueoProvincia = false;
-			}
-			break;
-		}
-		case "idprovincia": {
-			if (cursor.valueBuffer("idprovincia") == 0)
-				cursor.setNull("idprovincia");
-			break;
-		}
-		case "coddir": {
-			this.child("fdbProvincia").setValue(this.iface.calculateField("provincia"));
-			this.child("fdbCodPais").setValue(this.iface.calculateField("codpais"));
-			break;
-		}
-	}
-}
-
-/** \C
-Si la comanda está cerrada no podrá modificarse.<br/>
-Si el --total-- es 0 no se podrá pagar, aplicar un descuento o sumar y restar 1 a la cantidad de las lineas
-*/
-function oficial_verificarHabilitaciones()
-{
-	var util:FLUtil = new FLUtil;
-
-	if (parseFloat(this.child("fdbTotalComanda").value()) == 0){
-			this.child("pbnPagar").setDisabled(true);
-			this.child("tbnSelTodo").setOn(false);
-			this.iface.seleccionado = false;
-			this.child("tbnSelTodo").setDisabled(true);
-			this.child("tbnUnoMas").setDisabled(true);
-			this.child("tbnUnoMenos").setDisabled(true);
-			this.child("tbnDescuento").setDisabled(true);
-	} else {
-		this.child("pbnPagar").setDisabled(false);
-		this.child("tbnSelTodo").setDisabled(false);
-		this.child("tbnUnoMas").setDisabled(false);
-		this.child("tbnUnoMenos").setDisabled(false);
-		this.child("tbnDescuento").setDisabled(false);
-	}
-/*
-	var integracionFac:String = util.sqlSelect("tpv_datosgenerales", "integracionfac", "1 = 1");
-	if (integracionFac == "No" && this.cursor().isNull("idfactura"))
-		this.child("tbwComanda").setTabEnabled("recibos", false);
-*/
-}
-
-/** \C
-Al establecer una cantidad de pago se calcula el importe a devolver
-Si el importe entregado es mayor o igual al importe total de las lineas de la comanda, ésta se establecerá como cerrada
-*/
-function oficial_realizarPago():Boolean
-{
-	var util:FLUtil = new FLUtil();
-	var cursor:FLSqlCursor = this.cursor();
-	var cmd:String;
-	var status:Number;
-	var error:Number;
-	var subtotal:String;
-	this.iface.datosVisorPagar();
-
-	this.iface.refrescarPte();
-	var impPendiente:Number = parseFloat(this.iface.lblCantPte.text);
-	if (!impPendiente)
-		return false;
-	
-	/*
-	var dialog:Dialog = new Dialog(util.translate ( "scripts", "Importe entregado" ), 0, "entregado");
-	
-	dialog.OKButtonText = util.translate ( "scripts", "Aceptar" );
-	dialog.cancelButtonText = util.translate ( "scripts", "Cancelar" );
-	
-	var entregado:LineEdit= new LineEdit;
-	entregado.label = util.translate ( "scripts", "Importe entregado:" );
-	entregado.text = impPendiente;
-	dialog.add( entregado );
-
-	if ( !dialog.exec() )
-		return false;
-	*/
-	var idUsuario:String = sys.nameUser();
-	var f:Object = new FLFormSearchDB("tpv_cantidadpago");
-	var curCantidadPago:FLSqlCursor = f.cursor();
-	
-	curCantidadPago.select("idusuario = '" + idUsuario + "'");
-	if (!curCantidadPago.first())
-		curCantidadPago.setModeAccess(curCantidadPago.Insert);
-	else
-		curCantidadPago.setModeAccess(curCantidadPago.Edit);
-	
-	
-	f.setMainWidget();
-	curCantidadPago.refreshBuffer();
-	curCantidadPago.setValueBuffer("idusuario", idUsuario);
-	curCantidadPago.setValueBuffer("importe", impPendiente);
-	
-	var entregado:String = f.exec("importe");
-	if (!entregado)
-		return false;
-
-	this.iface.importePagado = entregado;
-		
-	curCantidadPago.commitBuffer();
-	
-	var impEntregado:Number = parseFloat(entregado);
-	var cambio:Number = 0;
-	if (impEntregado == 0)
-		return false;
-		
-	this.iface.lblEntregado.setText(util.translate("scripts", "Entregado"));
-	this.iface.lblCantEntregada.setText(util.roundFieldValue(impEntregado, "tpv_comandas", "total"));
-	cursor.setValueBuffer("ultentregado", util.roundFieldValue(impEntregado, "tpv_comandas", "total"));
-		
-	cambio = impEntregado - impPendiente;
-	if (cambio > 0) {
-		this.iface.lblCambio.setText(util.translate("scripts", "Cambio"));
-		this.iface.lblCantCambio.setText(util.roundFieldValue(cambio, "tpv_comandas", "total"));
-		cursor.setValueBuffer("ultcambio", util.roundFieldValue(cambio, "tpv_comandas", "total"));
-		if (!this.iface.crearPago(impPendiente))
-			return false;
-	} else {
-		this.iface.lblCambio.setText(util.translate("scripts", "Nuevo Pte."));
-		this.iface.lblCantCambio.setText(util.roundFieldValue(cambio * -1, "tpv_comandas", "total"));
-		cursor.setValueBuffer("ultcambio", 0);
-		if (!this.iface.crearPago(impEntregado))
-			return false;
-	}
-	
-	this.iface.verificarHabilitaciones();
-
-	subtotal="3";
-	
-	fiscal.sendCmd(status, error, subtotal);
- 	
-	cmd="101";
-	
-	fiscal.sendCmd(status, error, cmd);
-	
-	return true;
-}
-
-/** \D
-Imprime el tique de la comanda. Antes guarda los datos actuales para poder obtenerlos correctamente en el informe
-*/
-function oficial_imprimirQuickClicked()
-{
-	var cursor:FLSqlCursor = this.cursor();
-
-	this.iface.datosVisorImprimir();
-
-	if (!this.iface.validateForm())
-		return false;
-	this.iface.acceptedForm();
-	if (!cursor.commitBuffer())
-		return false;
-	cursor.setModeAccess(cursor.Edit);
-	cursor.refreshBuffer();
-
-	var util:FLUtil = new FLUtil();
-	var pv:String = util.readSettingEntry( "scripts/fltpv_ppal/codTerminal" );
-
-	if ( !pv )
-			pv = util.sqlSelect( "tpv_puntosventa", "codtpv_puntoventa", "1=1") ;
-		
-	var impresora:String = util.sqlSelect( "tpv_puntosventa", "impresora","codtpv_puntoventa = '" + pv + "'") ;
-	
-	if (!formtpv_comandas.iface.pub_imprimirQuick(this.cursor().valueBuffer("codigo"), impresora))
-		return false;
-}
-
-/** \D
-Selecciona todas las lineas de la comanda
-*/
-function oficial_seleccionarTodo()
-{
-	if(this.iface.seleccionado){
-		this.child("tbnSelTodo").setOn(false);
-		this.iface.seleccionado = false;
-	}
-	else {
-		this.child("tbnSelTodo").setOn(true);
-		this.iface.seleccionado = true;
-	}
-}
-
-/** \D
-Suma uno a la cantidad de las líneas seleccionadas
-*/
-function oficial_unoMas()
-{
-	var cursor:FLSqlCursor = this.cursor();
-	var curTrans:FLSqlCursor = new FLSqlCursor("tpv_lineascomanda");
-	
-	if (this.iface.seleccionado){
-		var qry:FLSqlQuery = new FLSqlQuery();
-		qry.setTablesList("tpv_lineascomanda");
-		qry.setSelect("idtpv_linea");
-		qry.setFrom("tpv_lineascomanda");
-		qry.setWhere("idtpv_comanda = '" + cursor.valueBuffer("idtpv_comanda") + "'");
-		if (!qry.exec())
-			return;
-		while(qry.next()) {
-			curTrans.transaction(false);
-			try {
-				if (this.iface.sumarUno(qry.value(0)))
-					curTrans.commit();
-				else
-					curTrans.rollback();
-			} catch (e) {
-				curTrans.rollback();
-			}
-		}
-	} else {
-		curTrans.transaction(false);
-		try {
-			if (this.iface.sumarUno(this.child("tdbLineasComanda").cursor().valueBuffer("idtpv_linea")))
-				curTrans.commit();
-			else
-				curTrans.rollback();
-		} catch (e) {
-			curTrans.rollback();
-		}
-	}
-		
-	this.child("tdbLineasComanda").refresh();
-}
-
-/** \D
-Suma uno a la cantidad de una linea
-@param idLinea identificador de la linea
-@return devuelve true si se ha sumado correctamente y false si ha habido algún error
-*/
-function oficial_sumarUno(idLinea:Number):Boolean
-{
-	if (!idLinea)
-		return false;
-		
-	var curLinea:FLSqlCursor = new FLSqlCursor("tpv_lineascomanda");
-	curLinea.select("idtpv_linea = " + idLinea);
-	curLinea.first();
-	curLinea.setModeAccess(curLinea.Edit);
-	curLinea.refreshBuffer();
-	curLinea.setValueBuffer("cantidad",parseFloat(curLinea.valueBuffer("cantidad")) + 1);
-	curLinea.setValueBuffer("pvpsindto",this.iface.calcularTotalesLinea("pvpsindto",curLinea));
-	curLinea.setValueBuffer("pvptotal",this.iface.calcularTotalesLinea("pvptotal",curLinea));
-	if (!curLinea.commitBuffer())
-		return false;
-
-	this.iface.calcularTotales();
-	return true;
-}
-
-
-/** \D
-Resta uno a la cantidad de las lineas seleccionadas
-Si la cantidad es cero elimina las lineas
-*/
-function oficial_unoMenos()
-{
-	var cursor:FLSqlCursor = this.cursor();
-	var curTrans:FLSqlCursor = new FLSqlCursor("tpv_lineascomanda");
-
-	if (this.iface.seleccionado){
-		var qry:FLSqlQuery = new FLSqlQuery();
-		qry.setTablesList("tpv_lineascomanda");
-		qry.setSelect("idtpv_linea");
-		qry.setFrom("tpv_lineascomanda");
-		qry.setWhere("idtpv_comanda = '" + cursor.valueBuffer("idtpv_comanda") + "'");
-		if (!qry.exec())
-			return;
-		while (qry.next()) {
-			curTrans.transaction(false);
-			try {
-				if (this.iface.restarUno(qry.value(0)))
-					curTrans.commit();
-				else
-					curTrans.rollback();
-			} catch (e) {
-				curTrans.rollback();
-			}
-		}
-	} else {
-		curTrans.transaction(false);
-		try {
-			if (this.iface.restarUno(this.child("tdbLineasComanda").cursor().valueBuffer("idtpv_linea")))
-				curTrans.commit();
-			else
-				curTrans.rollback();
-		} catch (e) {
-			curTrans.rollback();
-		}
-	}
-	this.child("tdbLineasComanda").refresh();
-}
-
-/** \D
-Resta uno a la cantidad de una linea
-@param idLinea identificador de la linea
-@return devuelve true si se ha restado correctamente y false si ha habido algún error
-*/
-function oficial_restarUno(idLinea:Number):Boolean
-{
-	if(!idLinea)
-		return false;
-	
-	var util:FLUtil = new FLUtil();
-	var curLinea:FLSqlCursor = new FLSqlCursor("tpv_lineascomanda");
-	curLinea.select("idtpv_linea = " + idLinea);
-	curLinea.first();
-	var cantidad:Number = parseFloat(curLinea.valueBuffer("cantidad")) - 1;
-	if(cantidad == 0){
-		var res:Number = MessageBox.warning(util.translate("scripts", "La cantidad de la linea ") + idLinea + util.translate("scripts", " es 0 ¿Seguro que desea eliminarla?"),MessageBox.Yes, MessageBox.No, MessageBox.NoButton);
-		if(res != MessageBox.Yes)
-			return false;
-		curLinea.setModeAccess(curLinea.Del);
-	}
-	else {
-		curLinea.setModeAccess(curLinea.Edit);
-		curLinea.refreshBuffer();
-		curLinea.setValueBuffer("cantidad",cantidad);
-		curLinea.setValueBuffer("pvpsindto",this.iface.calcularTotalesLinea("pvpsindto",curLinea));
-		curLinea.setValueBuffer("pvptotal",this.iface.calcularTotalesLinea("pvptotal",curLinea));
-	}
-	if(!curLinea.commitBuffer())
-		return false;
-	this.iface.calcularTotales();
-	return true;
-}
-
-/** \D
-Aplica un descueto a las líneas selecciondas
-*/
-function oficial_aplicarDescuento()
-{
-	var util:FLUtil = new FLUtil();
-	var dialog:Dialog = new Dialog(util.translate ( "scripts", "Descuento" ), 0, "desucento");
-	
-	dialog.OKButtonText = util.translate ( "scripts", "Aceptar" );
-	dialog.cancelButtonText = util.translate ( "scripts", "Cancelar" );
-	
-	var descuentoLineal:NumberEdit= new NumberEdit;
-	descuentoLineal.value = this.child("tdbLineasComanda").cursor().valueBuffer("dtolineal");
-	descuentoLineal.label = util.translate ( "scripts", "Descuento lineal:" );
-	descuentoLineal.maximum = this.child("tdbLineasComanda").cursor().valueBuffer("pvpsindto");
-	descuentoLineal.decimals = 2;
-	dialog.add( descuentoLineal );
-	
-	var porDescuento:NumberEdit= new NumberEdit;
-	porDescuento.value = this.child("tdbLineasComanda").cursor().valueBuffer("dtopor");
-	porDescuento.label = util.translate ( "scripts", "% Descuento:" );
-	porDescuento.maximum = 100;
-	porDescuento.decimals = 2;
-	dialog.add( porDescuento );
-
-	if ( !dialog.exec() )
-		return true;
-
-	if(this.iface.seleccionado){
-		var qry:FLSqlQuery = new FLSqlQuery();
-		qry.setTablesList("tpv_lineascomanda");
-		qry.setSelect("idtpv_linea");
-		qry.setFrom("tpv_lineascomanda");
-		qry.setWhere("idtpv_comanda = '" + this.cursor().valueBuffer("idtpv_comanda") + "'");
-		if (!qry.exec())
-			return;
-		while(qry.next())
-			this.iface.descontar(qry.value(0),descuentoLineal.value,porDescuento.value);
-	}
-	else
-		this.iface.descontar(this.child("tdbLineasComanda").cursor().valueBuffer("idtpv_linea"),descuentoLineal.value,porDescuento.value);
-
-	this.child("tdbLineasComanda").refresh();
-}
-
-
-function oficial_Descuentos():Boolean
-{
-	var util:FLUtil = new FLUtil();
-	var dialog:Dialog = new Dialog(util.translate ( "scripts", "Descuento" ), 0, "descuento");
-	var pdto:Number;
-	var pdtoe:Number;
-	var pdtod:Number;
-	var cpdtoe:String;
-	var cpdtod:String;
-	var dto:String;
-	var status:Number;
-	var error:Number;
-
-
-	var cmd:String;
-	var pago:String;
-	var subt:String = "3";
-	dialog.OKButtonText = util.translate ( "scripts", "Aceptar" );
-	dialog.cancelButtonText = util.translate ( "scripts", "Cancelar" );
-	
-	var porDescuento:NumberEdit= new NumberEdit;
-	porDescuento.value = this.child("tdbLineasComanda").cursor().valueBuffer("dtopor");
-	porDescuento.label = util.translate ( "scripts", "% Descuento:" );
-	porDescuento.maximum = 100;
-	porDescuento.decimals = 2;
-	dialog.add( porDescuento );
-
-	if ( !dialog.exec() )
-		return true;
-
-
-	this.iface.lblCantPte.text = (this.iface.calculateField("total") - this.iface.calculateField("neto")*porDescuento.value/100);
-	this.child("fdbTotalComanda").setValue(this.iface.calculateField("total") - this.iface.calculateField("neto")*porDescuento.value/100);
-		
-	this.child("fdbPendiente").setValue(this.iface.calculateField("pendiente") - this.iface.calculateField("neto")*porDescuento.value/100);
-
-
-
-	this.iface.refrescarPte();
-
-	pdto = parseFloat(porDescuento.value);
-	pdtoe = numb.partInteger(pdto);
-	pdtod = numb.partDecimal(pdto);
-	cpdtoe = this.iface.cerosIzquierda(pdtoe, 2);
-	cpdtod = this.iface.cerosDerecha(pdtod, 2);
-	cmd = "p" + "-" + cpdtoe + cpdtod;
-	pago = "101";
-
-	if(fiscal.sendCmd(status, error, subt)){
-
-		if (fiscal.sendCmd(status, error, cmd)){
-
-			if (fiscal.sendCmd(status, error, pago))
-
-				return true;
-			else 
-				return false;
-	}
-
-}
-}
-
-function oficial_corregir():Boolean
-{
-
-	var status:Number;
-	var error:Number;
-
-	var cmd:String = "k";
-
-	if(fiscal.sendCmd(status, error, cmd))
-		return true;
-	else 
-		return false;
-}
-
-/** \D
-Aplica un descuento a la linea
-@param idLinea identificador de la linea
-@param descuentoLineal descuento lineal
-@param porDescuento descuento en porcentaje
-@return devuelve true si se ha aplicado correctamente y false si ha habido algún error
-*/
-function oficial_descontar(idLinea:Number,descuentoLineal:Number,porDescuento:Number):Boolean
-{
-	if(!idLinea)
-		return false;
-		
-	var curLinea:FLSqlCursor = new FLSqlCursor("tpv_lineascomanda");
-	curLinea.select("idtpv_linea = " + idLinea);
-	curLinea.first();
-	curLinea.setModeAccess(curLinea.Edit);
-	curLinea.refreshBuffer();
-	curLinea.setValueBuffer("dtolineal",descuentoLineal);
-	curLinea.setValueBuffer("dtopor",porDescuento);
-	curLinea.setValueBuffer("pvptotal",this.iface.calcularTotalesLinea("pvptotal",curLinea));
-	if(!curLinea.commitBuffer())
-		return false;
-	this.iface.calcularTotales();
-	return true;
-}
-
-/** \D
-Calcula los totales de la linea de la factura creada
-*/
-function oficial_calcularTotalesLinea(fN:String,cursor:FLSqlCursor):Number
-{
-	var util:FLUtil = new FLUtil();
-	var valor:Number;
-
-	switch (fN) {
-		/** \c
-		EL --pvpsindto-- es el --pvpunitario-- multiplicado por la --cantidad--
-		*/
-		case "pvpsindto":{
-			valor = parseFloat(cursor.valueBuffer("pvpunitario")) * parseFloat(cursor.valueBuffer("cantidad"));
-			valor = util.roundFieldValue(valor, "tpv_lineascomanda", "pvpsindto");
-			break;
-		}
-		/** \c
-		EL --pvptotal-- es el --pvpsindto-- menos el descuento --dtopor-- menos el --dtolineal--
-		*/
-		case "pvptotal":{ 
-			var dtoPor:Number = (cursor.valueBuffer("pvpsindto") * cursor.valueBuffer("dtopor")) / 100;
-			dtoPor = util.roundFieldValue(dtoPor, "tpv_lineascomanda", "pvpsindto");
-			valor = cursor.valueBuffer("pvpsindto") - parseFloat(dtoPor) - cursor.valueBuffer("dtolineal");
-			break;
-		}
-	}
-	return valor;
-}
-
-/** \D
-Aplica la tarifa establecida a todas las lineas de la comanda
-*/
-function oficial_aplicarTarifa()
-{
-	var codTarifa = this.cursor().valueBuffer("codtarifa");
-	var qry:FLSqlQuery = new FLSqlQuery();
-	qry.setTablesList("tpv_lineascomanda");
-	qry.setSelect("idtpv_linea,referencia");
-	qry.setFrom("tpv_lineascomanda");
-	qry.setWhere("idtpv_comanda = '" + this.cursor().valueBuffer("idtpv_comanda") + "'");
-	if (!qry.exec())
-		return;
-	while(qry.next()){
-		var pvp:Number = formRecordtpv_lineascomanda.iface.pub_calcularPvpTarifa(qry.value(1),codTarifa);
-		var curLinea:FLSqlCursor = new FLSqlCursor("tpv_lineascomanda");
-		curLinea.select("idtpv_linea = " + qry.value(0));
-		curLinea.first();
-		curLinea.setModeAccess(curLinea.Edit);
-		curLinea.refreshBuffer();
-		curLinea.setValueBuffer("pvpunitario",pvp);
-		curLinea.setValueBuffer("pvpsindto",this.iface.calcularTotalesLinea("pvpsindto",curLinea));
-		curLinea.setValueBuffer("pvptotal",this.iface.calcularTotalesLinea("pvptotal",curLinea));
-		if(!curLinea.commitBuffer())
-			return;
-	}
-	
-	this.iface.calcularTotales();
-	this.child("tdbLineasComanda").refresh();
-}
-
-/** \D
-Desconecta las funciones conectadas en el init
-*/
-function oficial_desconectar()
-{
-	disconnect(this.cursor(), "bufferChanged(QString)", this, "iface.bufferChanged");
-	disconnect(this.child("tdbLineasComanda").cursor(), "bufferCommited()", this, "iface.calcularTotales()");
-	disconnect(this.child("pbnPagar"), "clicked()", this, "iface.realizarPago()");
-	disconnect(this.child("tbnPrintQuick"),"clicked()", this, "iface.imprimirQuickClicked()");
-	disconnect(this.child("tbnSelTodo"), "clicked()", this, "iface.seleccionarTodo()");
-	disconnect(this.child("tbnUnoMas"), "clicked()", this, "iface.unoMas()");
-	disconnect(this.child("tbnUnoMenos"), "clicked()", this, "iface.unoMenos()");
-	disconnect(this.child("tbnDescuento"), "clicked()", this, "iface.aplicarDescuento()");
-	disconnect(this.child("tbnOpenCash"),"clicked()", this, "iface.abrirCajonClicked()");
-}
-
-/** \D
-Crea un pago
-@param	importe: Importe del pago
-@return	true si el pago se crea correctamente, false en caso contrario
-*/
-function oficial_crearPago(importe:Number):Boolean
-{
-	this.iface.refrescoActivo = false;
-	
-	var util:FLUtil = new FLUtil;
-	var fecha:Date = new Date;
-	var idComanda:String = this.cursor().valueBuffer("idtpv_comanda");
-	
-	var curPago:FLSqlCursor = this.child("tdbPagos").cursor();
-	var codTerminal:String = util.readSettingEntry("scripts/fltpv_ppal/codTerminal");
-	with (curPago) {
-		setModeAccess(Insert);
-		refreshBuffer();
-		setValueBuffer("idtpv_comanda", idComanda);
-		setValueBuffer("importe", importe);
-		setValueBuffer("fecha", fecha);
-		setValueBuffer("estado", util.translate("scripts", "Pagado"));
-		if (codTerminal) {
-			setValueBuffer("codtpv_puntoventa", codTerminal);
-			setValueBuffer("codtpv_agente", util.sqlSelect("tpv_puntosventa","codtpv_agente","codtpv_puntoventa ='" + codTerminal + "'"));
-		}
-	}
-	curPago.setValueBuffer("codpago", this.cursor().valueBuffer("codpago"));
-	
-	if (!curPago.commitBuffer()) {
-		this.iface.refrescoActivo = true;
-		return false;
-	}
-	
-	this.iface.refrescoActivo = true;
-	return true;
-}
-
-/** \D Refresca el display con la cantidad pendiente de pago
-\end */
-function oficial_refrescarPte() 
-{
-	if (!this.iface.refrescoActivo)
-		return;
-	
-	var util:FLUtil = new FLUtil;
-	this.iface.lblCantPte.setText(util.roundFieldValue(this.cursor().valueBuffer("pendiente"), "tpv_comandas", "total"));
-	this.iface.lblEntregado.setText("");
-	this.iface.lblCambio.setText("");
-	this.iface.lblCantEntregada.setText("");
-	this.iface.lblCantCambio.setText("");
-	
-}
-
-/** \D Calcula el total pagado cuando el cursor de pagos cambia
-\end */
-function oficial_calcularPagado()
-{
-	this.child("fdbPagado").setValue(this.iface.calculateField("pagado"));
-}
-
-/** \D Abre el cajón portamonedas
-*/
-function oficial_abrirCajonClicked() {
-	var util:FLUtil = new FLUtil();
-	var pv:String = util.readSettingEntry( "scripts/fltpv_ppal/codTerminal" );
-		
-	if ( !pv )
-		pv = util.sqlSelect( "tpv_puntosventa", "codtpv_puntoventa", "1=1") ;
-		
-	var impresora:String = util.sqlSelect( "tpv_puntosventa", "impresora","codtpv_puntoventa = '" + pv + "'") ;
-	formtpv_comandas.iface.pub_abrirCajon( impresora );
-}
-
-/** \D Inserta la línea con los datos de inserción rápida
-\end */
-function oficial_insertarLineaClicked()
-{
-	var util:FLUtil = new FLUtil;
-
-	if (isNaN(parseFloat(this.iface.txtCanArticulo.text)))
-		return;
-	if (isNaN(parseFloat(this.iface.txtPvpArticulo.text)))
-		return;
-	if (this.iface.txtDesArticulo.text == "")
-		return;
-
-	var cursor:FLSqlCursor = this.cursor();
-	this.iface.curLineas = this.child("tdbLineasComanda").cursor();
-	this.iface.curLineas.setModeAccess(this.iface.curLineas.Insert);
-
-	if (cursor.modeAccess() == cursor.Insert) {
-		if (!this.iface.curLineas.commitBufferCursorRelation()){
-			return;
-		}
-	}
+/** \C
+Si la comanda está cerrada no podrá modificarse.<br/>
+Si el --total-- es 0 no se podrá pagar, aplicar un descuento o sumar y restar 1 a la cantidad de las lineas
+*/
+function oficial_verificarHabilitaciones()
+{
+	var util:FLUtil = new FLUtil;
 
-	this.iface.curLineas.refreshBuffer();
-	if (!this.iface.datosLineaVenta()){
-		return;
-	}
-
-	this.iface.datosVisorArt(this.iface.curLineas);
-
-	if (!this.iface.curLineas.commitBuffer()){
-		return;
+	if (parseFloat(this.child("fdbTotalComanda").value()) == 0){
+			this.child("pbnPagar").setDisabled(true);
+			this.child("tbnSelTodo").setOn(false);
+			this.iface.seleccionado = false;
+			this.child("tbnSelTodo").setDisabled(true);
+			this.child("tbnUnoMas").setDisabled(true);
+			this.child("tbnUnoMenos").setDisabled(true);
+			this.child("tbnDescuento").setDisabled(true);
+	} else {
+		this.child("pbnPagar").setDisabled(false);
+		this.child("tbnSelTodo").setDisabled(false);
+		this.child("tbnUnoMas").setDisabled(false);
+		this.child("tbnUnoMenos").setDisabled(false);
+		this.child("tbnDescuento").setDisabled(false);
+	}
+/*
+	var integracionFac:String = util.sqlSelect("tpv_datosgenerales", "integracionfac", "1 = 1");
+	if (integracionFac == "No" && this.cursor().isNull("idfactura"))
+		this.child("tbwComanda").setTabEnabled("recibos", false);
+*/
+}
+
+/** \C
+Al establecer una cantidad de pago se calcula el importe a devolver
+Si el importe entregado es mayor o igual al importe total de las lineas de la comanda, ésta se establecerá como cerrada
+*/
+function oficial_realizarPago():Boolean
+{
+	var util:FLUtil = new FLUtil();
+	var cursor:FLSqlCursor = this.cursor();
+
+	this.iface.datosVisorPagar();
+
+	this.iface.refrescarPte();
+	var impPendiente:Number = parseFloat(this.iface.lblCantPte.text);
+	if (!impPendiente)
+		return false;
+	
+	/*
+	var dialog:Dialog = new Dialog(util.translate ( "scripts", "Importe entregado" ), 0, "entregado");
+	
+	dialog.OKButtonText = util.translate ( "scripts", "Aceptar" );
+	dialog.cancelButtonText = util.translate ( "scripts", "Cancelar" );
+	
+	var entregado:LineEdit= new LineEdit;
+	entregado.label = util.translate ( "scripts", "Importe entregado:" );
+	entregado.text = impPendiente;
+	dialog.add( entregado );
+
+	if ( !dialog.exec() )
+		return false;
+	*/
+	var idUsuario:String = sys.nameUser();
+	var f:Object = new FLFormSearchDB("tpv_cantidadpago");
+	var curCantidadPago:FLSqlCursor = f.cursor();
+	
+	curCantidadPago.select("idusuario = '" + idUsuario + "'");
+	if (!curCantidadPago.first())
+		curCantidadPago.setModeAccess(curCantidadPago.Insert);
+	else
+		curCantidadPago.setModeAccess(curCantidadPago.Edit);
+	
+	
+	f.setMainWidget();
+	curCantidadPago.refreshBuffer();
+	curCantidadPago.setValueBuffer("idusuario", idUsuario);
+	curCantidadPago.setValueBuffer("importe", impPendiente);
+	
+	var entregado:String = f.exec("importe");
+	if (!entregado)
+		return false;
+
+	this.iface.importePagado = entregado;
+		
+	curCantidadPago.commitBuffer();
+	
+	var impEntregado:Number = parseFloat(entregado);
+	var cambio:Number = 0;
+	if (impEntregado == 0)
+		return false;
+		
+	this.iface.lblEntregado.setText(util.translate("scripts", "Entregado"));
+	this.iface.lblCantEntregada.setText(util.roundFieldValue(impEntregado, "tpv_comandas", "total"));
+	cursor.setValueBuffer("ultentregado", util.roundFieldValue(impEntregado, "tpv_comandas", "total"));
+		
+	cambio = impEntregado - impPendiente;
+	if (cambio > 0) {
+		this.iface.lblCambio.setText(util.translate("scripts", "Cambio"));
+		this.iface.lblCantCambio.setText(util.roundFieldValue(cambio, "tpv_comandas", "total"));
+		cursor.setValueBuffer("ultcambio", util.roundFieldValue(cambio, "tpv_comandas", "total"));
+		if (!this.iface.crearPago(impPendiente))
+			return false;
+	} else {
+		this.iface.lblCambio.setText(util.translate("scripts", "Nuevo Pte."));
+		this.iface.lblCantCambio.setText(util.roundFieldValue(cambio * -1, "tpv_comandas", "total"));
+		cursor.setValueBuffer("ultcambio", 0);
+		if (!this.iface.crearPago(impEntregado))
+			return false;
 	}
 
-		/*var port:String = "COM1";
-		var fiscal:FLFiscalBixolon;
+	this.iface.verificarHabilitaciones();
+	return true;
+}
 
-		fiscal.openPort(port);
+/** \D
+Imprime el tique de la comanda. Antes guarda los datos actuales para poder obtenerlos correctamente en el informe
+*/
+function oficial_imprimirQuickClicked()
+{
+	var cursor:FLSqlCursor = this.cursor();
 
-		var error:Number;
-	
-		var status:Number;
-	
-		var cmd:String = "i01Prueba";
+	this.iface.datosVisorImprimir();
 
+	if (!this.iface.validateForm())
+		return false;
+	this.iface.acceptedForm();
+	if (!cursor.commitBuffer())
+		return false;
+	cursor.setModeAccess(cursor.Edit);
+	cursor.refreshBuffer();
 
-		fiscal.sendCmd(status, error, cmd);*/
+	var util:FLUtil = new FLUtil();
+	var pv:String = util.readSettingEntry( "scripts/fltpv_ppal/codTerminal" );
 
+	if ( !pv )
+			pv = util.sqlSelect( "tpv_puntosventa", "codtpv_puntoventa", "1=1") ;
 		
-		this.iface.txtCanArticulo.text = "";
-		this.child("fdbReferencia").setValue("");
-		this.iface.txtDesArticulo.text = "";
-		this.iface.txtPvpArticulo.text = "";
-		this.iface.ivaArticulo = "";
-		this.iface.txtCanArticulo.text = "1";
-		this.child("fdbReferencia").setFocus();
-		this.child("tdbLineasComanda").refresh();
+	var impresora:String = util.sqlSelect( "tpv_puntosventa", "impresora","codtpv_puntoventa = '" + pv + "'") ;
+	
+	if (!formtpv_comandas.iface.pub_imprimirQuick(this.cursor().valueBuffer("codigo"), impresora))
+		return false;
+}
 
-
-/*	if (!control){
+/** \D
+Selecciona todas las lineas de la comanda
+*/
+function oficial_seleccionarTodo()
+{
+	if(this.iface.seleccionado){
+		this.child("tbnSelTodo").setOn(false);
+		this.iface.seleccionado = false;
+	}
+	else {
+		this.child("tbnSelTodo").setOn(true);
+		this.iface.seleccionado = true;
+	}
+}
 
-		this.iface.datosClientes();
+/** \D
+Suma uno a la cantidad de las líneas seleccionadas
+*/
+function oficial_unoMas()
+{
+	var cursor:FLSqlCursor = this.cursor();
+	var curTrans:FLSqlCursor = new FLSqlCursor("tpv_lineascomanda");
+	
+	if (this.iface.seleccionado){
+		var qry:FLSqlQuery = new FLSqlQuery();
+		qry.setTablesList("tpv_lineascomanda");
+		qry.setSelect("idtpv_linea");
+		qry.setFrom("tpv_lineascomanda");
+		qry.setWhere("idtpv_comanda = '" + cursor.valueBuffer("idtpv_comanda") + "'");
+		if (!qry.exec())
+			return;
+		while(qry.next()) {
+			curTrans.transaction(false);
+			try {
+				if (this.iface.sumarUno(qry.value(0)))
+					curTrans.commit();
+				else
+					curTrans.rollback();
+			} catch (e) {
+				curTrans.rollback();
+			}
+		}
+	} else {
+		curTrans.transaction(false);
+		try {
+			if (this.iface.sumarUno(this.child("tdbLineasComanda").cursor().valueBuffer("idtpv_linea")))
+				curTrans.commit();
+			else
+				curTrans.rollback();
+		} catch (e) {
+			curTrans.rollback();
+		}
+	}
+		
+	this.child("tdbLineasComanda").refresh();
+}
+
+/** \D
+Suma uno a la cantidad de una linea
+@param idLinea identificador de la linea
+@return devuelve true si se ha sumado correctamente y false si ha habido algún error
+*/
+function oficial_sumarUno(idLinea:Number):Boolean
+{
+	if (!idLinea)
+		return false;
+		
+	var curLinea:FLSqlCursor = new FLSqlCursor("tpv_lineascomanda");
+	curLinea.select("idtpv_linea = " + idLinea);
+	curLinea.first();
+	curLinea.setModeAccess(curLinea.Edit);
+	curLinea.refreshBuffer();
+	curLinea.setValueBuffer("cantidad",parseFloat(curLinea.valueBuffer("cantidad")) + 1);
+	curLinea.setValueBuffer("pvpsindto",this.iface.calcularTotalesLinea("pvpsindto",curLinea));
+	curLinea.setValueBuffer("pvptotal",this.iface.calcularTotalesLinea("pvptotal",curLinea));
+	if (!curLinea.commitBuffer())
+		return false;
+
+	this.iface.calcularTotales();
+	return true;
+}
+
+
+/** \D
+Resta uno a la cantidad de las lineas seleccionadas
+Si la cantidad es cero elimina las lineas
+*/
+function oficial_unoMenos()
+{
+	var cursor:FLSqlCursor = this.cursor();
+	var curTrans:FLSqlCursor = new FLSqlCursor("tpv_lineascomanda");
+
+	if (this.iface.seleccionado){
+		var qry:FLSqlQuery = new FLSqlQuery();
+		qry.setTablesList("tpv_lineascomanda");
+		qry.setSelect("idtpv_linea");
+		qry.setFrom("tpv_lineascomanda");
+		qry.setWhere("idtpv_comanda = '" + cursor.valueBuffer("idtpv_comanda") + "'");
+		if (!qry.exec())
+			return;
+		while (qry.next()) {
+			curTrans.transaction(false);
+			try {
+				if (this.iface.restarUno(qry.value(0)))
+					curTrans.commit();
+				else
+					curTrans.rollback();
+			} catch (e) {
+				curTrans.rollback();
+			}
+		}
+	} else {
+		curTrans.transaction(false);
+		try {
+			if (this.iface.restarUno(this.child("tdbLineasComanda").cursor().valueBuffer("idtpv_linea")))
+				curTrans.commit();
+			else
+				curTrans.rollback();
+		} catch (e) {
+			curTrans.rollback();
+		}
+	}
+	this.child("tdbLineasComanda").refresh();
+}
+
+/** \D
+Resta uno a la cantidad de una linea
+@param idLinea identificador de la linea
+@return devuelve true si se ha restado correctamente y false si ha habido algún error
+*/
+function oficial_restarUno(idLinea:Number):Boolean
+{
+	if(!idLinea)
+		return false;
+	
+	var util:FLUtil = new FLUtil();
+	var curLinea:FLSqlCursor = new FLSqlCursor("tpv_lineascomanda");
+	curLinea.select("idtpv_linea = " + idLinea);
+	curLinea.first();
+	var cantidad:Number = parseFloat(curLinea.valueBuffer("cantidad")) - 1;
+	if(cantidad == 0){
+		var res:Number = MessageBox.warning(util.translate("scripts", "La cantidad de la linea ") + idLinea + util.translate("scripts", " es 0 ¿Seguro que desea eliminarla?"),MessageBox.Yes, MessageBox.No, MessageBox.NoButton);
+		if(res != MessageBox.Yes)
+			return false;
+		curLinea.setModeAccess(curLinea.Del);
+	}
+	else {
+		curLinea.setModeAccess(curLinea.Edit);
+		curLinea.refreshBuffer();
+		curLinea.setValueBuffer("cantidad",cantidad);
+		curLinea.setValueBuffer("pvpsindto",this.iface.calcularTotalesLinea("pvpsindto",curLinea));
+		curLinea.setValueBuffer("pvptotal",this.iface.calcularTotalesLinea("pvptotal",curLinea));
+	}
+	if(!curLinea.commitBuffer())
+		return false;
+	this.iface.calcularTotales();
+	return true;
+}
+
+/** \D
+Aplica un descueto a las líneas selecciondas
+*/
+function oficial_aplicarDescuento()
+{
+	var util:FLUtil = new FLUtil();
+	var dialog:Dialog = new Dialog(util.translate ( "scripts", "Descuento" ), 0, "desucento");
+	
+	dialog.OKButtonText = util.translate ( "scripts", "Aceptar" );
+	dialog.cancelButtonText = util.translate ( "scripts", "Cancelar" );
+	
+	var descuentoLineal:NumberEdit= new NumberEdit;
+	descuentoLineal.value = this.child("tdbLineasComanda").cursor().valueBuffer("dtolineal");
+	descuentoLineal.label = util.translate ( "scripts", "Descuento lineal:" );
+	descuentoLineal.maximum = this.child("tdbLineasComanda").cursor().valueBuffer("pvpsindto");
+	descuentoLineal.decimals = 2;
+	dialog.add( descuentoLineal );
+	
+	var porDescuento:NumberEdit= new NumberEdit;
+	porDescuento.value = this.child("tdbLineasComanda").cursor().valueBuffer("dtopor");
+	porDescuento.label = util.translate ( "scripts", "% Descuento:" );
+	porDescuento.maximum = 100;
+	porDescuento.decimals = 2;
+	dialog.add( porDescuento );
+
+	if ( !dialog.exec() )
+		return true;
+
+	if(this.iface.seleccionado){
+		var qry:FLSqlQuery = new FLSqlQuery();
+		qry.setTablesList("tpv_lineascomanda");
+		qry.setSelect("idtpv_linea");
+		qry.setFrom("tpv_lineascomanda");
+		qry.setWhere("idtpv_comanda = '" + this.cursor().valueBuffer("idtpv_comanda") + "'");
+		if (!qry.exec())
+			return;
+		while(qry.next())
+			this.iface.descontar(qry.value(0),descuentoLineal.value,porDescuento.value);
+	}
+	else
+		this.iface.descontar(this.child("tdbLineasComanda").cursor().valueBuffer("idtpv_linea"),descuentoLineal.value,porDescuento.value);
+
+	this.child("tdbLineasComanda").refresh();
+}
+
+/** \D
+Aplica un descuento a la linea
+@param idLinea identificador de la linea
+@param descuentoLineal descuento lineal
+@param porDescuento descuento en porcentaje
+@return devuelve true si se ha aplicado correctamente y false si ha habido algún error
+*/
+function oficial_descontar(idLinea:Number,descuentoLineal:Number,porDescuento:Number):Boolean
+{
+	if(!idLinea)
+		return false;
+		
+	var curLinea:FLSqlCursor = new FLSqlCursor("tpv_lineascomanda");
+	curLinea.select("idtpv_linea = " + idLinea);
+	curLinea.first();
+	curLinea.setModeAccess(curLinea.Edit);
+	curLinea.refreshBuffer();
+	curLinea.setValueBuffer("dtolineal",descuentoLineal);
+	curLinea.setValueBuffer("dtopor",porDescuento);
+	curLinea.setValueBuffer("pvptotal",this.iface.calcularTotalesLinea("pvptotal",curLinea));
+	if(!curLinea.commitBuffer())
+		return false;
+	this.iface.calcularTotales();
+	return true;
+}
+
+/** \D
+Calcula los totales de la linea de la factura creada
+*/
+function oficial_calcularTotalesLinea(fN:String,cursor:FLSqlCursor):Number
+{
+	var util:FLUtil = new FLUtil();
+	var valor:Number;
+
+	switch (fN) {
+		/** \c
+		EL --pvpsindto-- es el --pvpunitario-- multiplicado por la --cantidad--
+		*/
+		case "pvpsindto":{
+			valor = parseFloat(cursor.valueBuffer("pvpunitario")) * parseFloat(cursor.valueBuffer("cantidad"));
+			valor = util.roundFieldValue(valor, "tpv_lineascomanda", "pvpsindto");
+			break;
+		}
+		/** \c
+		EL --pvptotal-- es el --pvpsindto-- menos el descuento --dtopor-- menos el --dtolineal--
+		*/
+		case "pvptotal":{ 
+			var dtoPor:Number = (cursor.valueBuffer("pvpsindto") * cursor.valueBuffer("dtopor")) / 100;
+			dtoPor = util.roundFieldValue(dtoPor, "tpv_lineascomanda", "pvpsindto");
+			valor = cursor.valueBuffer("pvpsindto") - parseFloat(dtoPor) - cursor.valueBuffer("dtolineal");
+			break;
+		}
+	}
+	return valor;
+}
+
+/** \D
+Aplica la tarifa establecida a todas las lineas de la comanda
+*/
+function oficial_aplicarTarifa()
+{
+	var codTarifa = this.cursor().valueBuffer("codtarifa");
+	var qry:FLSqlQuery = new FLSqlQuery();
+	qry.setTablesList("tpv_lineascomanda");
+	qry.setSelect("idtpv_linea,referencia");
+	qry.setFrom("tpv_lineascomanda");
+	qry.setWhere("idtpv_comanda = '" + this.cursor().valueBuffer("idtpv_comanda") + "'");
+	if (!qry.exec())
+		return;
+	while(qry.next()){
+		var pvp:Number = formRecordtpv_lineascomanda.iface.pub_calcularPvpTarifa(qry.value(1),codTarifa);
+		var curLinea:FLSqlCursor = new FLSqlCursor("tpv_lineascomanda");
+		curLinea.select("idtpv_linea = " + qry.value(0));
+		curLinea.first();
+		curLinea.setModeAccess(curLinea.Edit);
+		curLinea.refreshBuffer();
+		curLinea.setValueBuffer("pvpunitario",pvp);
+		curLinea.setValueBuffer("pvpsindto",this.iface.calcularTotalesLinea("pvpsindto",curLinea));
+		curLinea.setValueBuffer("pvptotal",this.iface.calcularTotalesLinea("pvptotal",curLinea));
+		if(!curLinea.commitBuffer())
+			return;
+	}
+	
+	this.iface.calcularTotales();
+	this.child("tdbLineasComanda").refresh();
+}
+
+/** \D
+Desconecta las funciones conectadas en el init
+*/
+function oficial_desconectar()
+{
+	disconnect(this.cursor(), "bufferChanged(QString)", this, "iface.bufferChanged");
+	disconnect(this.child("tdbLineasComanda").cursor(), "bufferCommited()", this, "iface.calcularTotales()");
+	disconnect(this.child("pbnPagar"), "clicked()", this, "iface.realizarPago()");
+	disconnect(this.child("tbnPrintQuick"),"clicked()", this, "iface.imprimirQuickClicked()");
+	disconnect(this.child("tbnSelTodo"), "clicked()", this, "iface.seleccionarTodo()");
+	disconnect(this.child("tbnUnoMas"), "clicked()", this, "iface.unoMas()");
+	disconnect(this.child("tbnUnoMenos"), "clicked()", this, "iface.unoMenos()");
+	disconnect(this.child("tbnDescuento"), "clicked()", this, "iface.aplicarDescuento()");
+	disconnect(this.child("tbnOpenCash"),"clicked()", this, "iface.abrirCajonClicked()");
+}
+
+/** \D
+Crea un pago
+@param	importe: Importe del pago
+@return	true si el pago se crea correctamente, false en caso contrario
+*/
+function oficial_crearPago(importe:Number):Boolean
+{
+	this.iface.refrescoActivo = false;
+	
+	var util:FLUtil = new FLUtil;
+	var fecha:Date = new Date;
+	var idComanda:String = this.cursor().valueBuffer("idtpv_comanda");
+	
+	var curPago:FLSqlCursor = this.child("tdbPagos").cursor();
+	var codTerminal:String = util.readSettingEntry("scripts/fltpv_ppal/codTerminal");
+	with (curPago) {
+		setModeAccess(Insert);
+		refreshBuffer();
+		setValueBuffer("idtpv_comanda", idComanda);
+		setValueBuffer("importe", importe);
+		setValueBuffer("fecha", fecha);
+		setValueBuffer("estado", util.translate("scripts", "Pagado"));
+		if (codTerminal) {
+			setValueBuffer("codtpv_puntoventa", codTerminal);
+			setValueBuffer("codtpv_agente", util.sqlSelect("tpv_puntosventa","codtpv_agente","codtpv_puntoventa ='" + codTerminal + "'"));
+		}
+	}
+	curPago.setValueBuffer("codpago", this.cursor().valueBuffer("codpago"));
+	
+	if (!curPago.commitBuffer()) {
+		this.iface.refrescoActivo = true;
+		return false;
+	}
+	
+	this.iface.refrescoActivo = true;
+	return true;
+}
+
+/** \D Refresca el display con la cantidad pendiente de pago
+\end */
+function oficial_refrescarPte() 
+{
+	if (!this.iface.refrescoActivo)
+		return;
+	
+	var util:FLUtil = new FLUtil;
+	this.iface.lblCantPte.setText(util.roundFieldValue(this.cursor().valueBuffer("pendiente"), "tpv_comandas", "total"));
+	this.iface.lblEntregado.setText("");
+	this.iface.lblCambio.setText("");
+	this.iface.lblCantEntregada.setText("");
+	this.iface.lblCantCambio.setText("");
+	
+}
+
+/** \D Calcula el total pagado cuando el cursor de pagos cambia
+\end */
+function oficial_calcularPagado()
+{
+	this.child("fdbPagado").setValue(this.iface.calculateField("pagado"));
+}
+
+/** \D Abre el cajón portamonedas
+*/
+function oficial_abrirCajonClicked() {
+	var util:FLUtil = new FLUtil();
+	var pv:String = util.readSettingEntry( "scripts/fltpv_ppal/codTerminal" );
+		
+	if ( !pv )
+		pv = util.sqlSelect( "tpv_puntosventa", "codtpv_puntoventa", "1=1") ;
+		
+	var impresora:String = util.sqlSelect( "tpv_puntosventa", "impresora","codtpv_puntoventa = '" + pv + "'") ;
+	formtpv_comandas.iface.pub_abrirCajon( impresora );
+}
+
+/** \D Inserta la línea con los datos de inserción rápida
+\end */
+function oficial_insertarLineaClicked()
+{
+	var util:FLUtil = new FLUtil;
+
+	/*var fis:FLFiscalBixolon;
+
+	var port:String="COM1";*/
+
+	if (isNaN(parseFloat(this.iface.txtCanArticulo.text)))
+		return;
+	if (isNaN(parseFloat(this.iface.txtPvpArticulo.text)))
+		return;
+	if (this.iface.txtDesArticulo.text == "")
+		return;
+
+	var cursor:FLSqlCursor = this.cursor();
+	this.iface.curLineas = this.child("tdbLineasComanda").cursor();
+	this.iface.curLineas.setModeAccess(this.iface.curLineas.Insert);
+
+	if (cursor.modeAccess() == cursor.Insert) {
+		if (!this.iface.curLineas.commitBufferCursorRelation()){
+			return;
+		}
+	}
+	this.iface.curLineas.refreshBuffer();
+	if (!this.iface.datosLineaVenta()){
+		return;
+	}
+
+/*	if(fis.openPort(port)){
+
+		if(!this.iface.control) {
+		MessageBox.information(util.translate("Enviar Articulo", this.iface.datosCliente() ),MessageBox.Ok,MessageBox.NoButton);
+		this.iface.control = true;
+	}
+	
+		this.iface.enviarBixolon();
+	
 	}*/
 
-	/*this.iface.enviarBixolon();
-	
-	//port:String = "COM1";
-	//fiscal.openPort(port);	*/
+	this.iface.datosVisorArt(this.iface.curLineas);
 
+	if (!this.iface.curLineas.commitBuffer()){
+		return;
+	}
+	this.iface.txtCanArticulo.text = "";
+	this.child("fdbReferencia").setValue("");
+	this.iface.txtDesArticulo.text = "";
+	this.iface.txtPvpArticulo.text = "";
+	this.iface.ivaArticulo = "";
+	this.iface.txtCanArticulo.text = "1";
+	this.child("fdbReferencia").setFocus();
+
+	this.child("tdbLineasComanda").refresh();
 }
 
 /** |D Establece los datos de la línea de ventas a crear mediante la inserción rápida
@@ -1409,6 +1166,7 @@ function oficial_datosLineaVenta():Boolean
 	this.iface.curLineas.setValueBuffer("iva", formRecordtpv_lineascomanda.iface.pub_commonCalculateField("iva", this.iface.curLineas));
 	this.iface.curLineas.setValueBuffer("pvpsindto", formRecordtpv_lineascomanda.iface.pub_commonCalculateField("pvpsindto", this.iface.curLineas));
 	this.iface.curLineas.setValueBuffer("pvptotal", formRecordtpv_lineascomanda.iface.pub_commonCalculateField("pvptotal", this.iface.curLineas));
+
 	return true;
 }
 
@@ -1822,6 +1580,586 @@ function oficial_escribirEnVisor(codPuntoVenta:String, datos:Array)
     } 
 }
 
+function oficial_espaciosDerecha(cad:String, totalCifras:Number):String
+{
+	var ret:String = cad.toString();
+	var numEsp:Number = totalCifras - ret.length;
+	for ( ; numEsp > 0 ; --numEsp)
+		ret = ret + " ";
+		return ret;
+}
+
+function oficial_cerosIzquierda(numero:String, totalCifras:Number):String
+{
+				var ret:String = numero.toString();
+				var numCeros:Number = totalCifras - ret.length;
+				for ( ; numCeros > 0 ; --numCeros)
+					ret = "0" + ret;
+				return ret;
+}
+
+function oficial_cerosDerecha(numero:String, totalCifras:Number):String
+{
+				var ret:String = numero.toString();
+				var numCeros:Number = totalCifras - ret.length;
+				for ( ; numCeros > 0 ; --numCeros)
+					ret = ret + "0";
+				return ret;
+}
+
+function oficial_enviarBixolon():Boolean {
+
+	var fis:FLFiscalBixolon;
+	var num:FLUtil = new FLUtil(); 
+	var imp:String;
+	var cn:Number;
+	var price:Number;
+	var desc:String;
+	var descrip:String;
+	var cne:Number;
+	var cnd:Number;
+	var pricee:Number;
+	var priced:Number;
+	var cante:String;
+	var cantd:String;
+	var prie:String;
+	var prid:String;
+	var comando:String;
+ 	var status:Number; 
+ 	var error:Number;
+	var comando:String;
+        
+	var cmd:String = "Prueba";
+
+	var cursor:FLSqlCursor = this.cursor();
+		
+		        
+	if (!this.iface.curLineas){
+
+		this.iface.curLineas = this.child("tdbLineasComanda").cursor();
+	}
+
+	
+	if(this.iface.calculateField("ivaarticulo") == "EXENTO"){
+		imp = " ";
+	}else if(this.iface.calculateField("ivaarticulo") == "TASA1") { 
+		imp = "!";
+	}else if(this.iface.calculateField("ivaarticulo") == "TASA2") { 
+		imp = '"';
+	}else if(this.iface.calculateField("ivaarticulo") == "TASA3") { 
+		imp = "#";
+	}
+	
+	cn = parseFloat(this.iface.curLineas.valueBuffer("cantidad"));
+
+	price = parseFloat(this.iface.curLineas.valueBuffer("pvpunitario"));
+
+	descrip = this.iface.calculateField("desarticulo");
+
+	if(descrip.length == 40){
+
+		desc = descrip;
+
+	}else if(descrip.length < 40){
+
+		desc = this.iface.espaciosDerecha(descrip, 40); 
+
+	}else if (descrip.length > 40){
+
+		desc = descrip.mid(0, 40);
+	}
+	
+	cne = num.partInteger(cn)*1;
+
+	cnd = num.partDecimal(cn)*1;
+
+	pricee = num.partInteger(price)*1;
+
+	priced = num.partDecimal(price)*1;
+
+	var tmpP:String = price.toString();
+
+	var tmpC:String = cn.toString();
+
+	var arrayCn:Array = tmpC.split(".");
+
+	var arrayPriceEnt:Array = tmpP.split(".");
+
+	cante =  this.iface.cerosIzquierda(tmpC.left(arrayCn.length), 5);
+
+	cantd =  this.iface.cerosDerecha(tmpC.mid(arrayCn.length+1, 3), 3);
+
+	prie =  this.iface.cerosIzquierda(tmpP.left(arrayPriceEnt.length), 8);
+
+	prid =  this.iface.cerosDerecha(tmpP.mid(arrayPriceEnt.length+1, 2), 2);
+
+	comando = imp + prie + prid + cante + cantd + desc;
+
+	if(fis.readStatus()==4 || fis.readStatus()==1 ){
+		fis.sendCmd(comando);
+		return true;
+	}else{
+		if(fis.readStatus()==0){
+			MessageBox.information(util.translate("Enviar Articulo",  " Status Desconocido " ),MessageBox.Ok,MessageBox.NoButton);
+		}else if(fis.readStatus()==2){
+			MessageBox.information(util.translate("Enviar Articulo",  " En Modo Prueba y Emisión de Documentos fiscales " ),MessageBox.Ok,MessageBox.NoButton);	
+		}else if(fis.readStatus()==3){
+			MessageBox.information(util.translate("Enviar Articulo",  " En Modo Prueba y Emisión de Documentos No fiscales " ),MessageBox.Ok,MessageBox.NoButton);
+		}else if(fis.readStatus()==5){
+			MessageBox.information(util.translate("Enviar Articulo",  " En Modo Fiscal y Emisión de Documentos fiscales " ),MessageBox.Ok,MessageBox.NoButton);
+		}else if(fis.readStatus()==6){
+			MessageBox.information(util.translate("Enviar Articulo",  " En modo Fiscal y Emisión de Documentos No fiscales " ),MessageBox.Ok,MessageBox.NoButton);
+		}else if(fis.readStatus()==7){
+			MessageBox.information(util.translate("Enviar Articulo",  " En Modo Fiscal y cercana carga completa de la memoria Fiscal y en Espera " ),MessageBox.Ok,MessageBox.NoButton);
+		}else if(fis.readStatus()==8){
+			MessageBox.information(util.translate("Enviar Articulo",  " En Modo Fiscal y cercana carga completa de la memoria Fiscal y en Emision de documentos Fiscales " ),MessageBox.Ok,MessageBox.NoButton);
+		}else if(fis.readStatus()==9){
+			MessageBox.information(util.translate("Enviar Articulo",  " En Modo Fiscal y carga completa de la memoria Fiscal y en Espera " ),MessageBox.Ok,MessageBox.NoButton);
+		}else if(fis.readStatus()==10){
+			MessageBox.information(util.translate("Enviar Articulo",  " En Modo Fiscal y carga completa de la memoria Fiscal y en Espera " ),MessageBox.Ok,MessageBox.NoButton);
+		}else if(fis.readStatus()==11){
+			MessageBox.information(util.translate("Enviar Articulo",  " En Modo Fiscal y carga completa de la memoria Fiscal y en Emision de documentos Fiscales " ),MessageBox.Ok,MessageBox.NoButton);
+		}else if(fis.readStatus()==12){
+			MessageBox.information(util.translate("Enviar Articulo",  " En Modo Fiscal y carga completa de la memoria Fiscal y en Emision de documentos No Fiscales " ),MessageBox.Ok,MessageBox.NoButton);
+		}
+
+		return false;
+	}
+}
+function oficial_datosCliente():Boolean
+{
+	var fis:FLFiscalBixolon;
+	var cursor:FLSqlCursor = this.cursor();
+	var util:FLUtil = new FLUtil();
+	var util1:FLUtil = new FLUtil();
+	var util2:FLUtil = new FLUtil();
+	var nombre:String;
+	var cedula:String;
+	var direccion:String;
+	var nom:String;
+	var ced:String;
+	var dir:String;
+	var cmd1:String;
+	var cmd2:String;
+	var cmd3:String;
+	
+	nombre = util.sqlSelect("tpv_comandas", "nombrecliente", "idtpv_comanda = " + cursor.valueBuffer("idtpv_comanda"));
+	cedula = util1.sqlSelect("tpv_comandas", "cifnif", "idtpv_comanda = " + cursor.valueBuffer("idtpv_comanda"));
+	direccion = util2.sqlSelect("tpv_comandas", "direccion", "idtpv_comanda = " + cursor.valueBuffer("idtpv_comanda"));
+
+	if (nombre.length < 39){
+		nom = this.iface.espaciosDerecha(nombre, 39);
+	}
+	else if (nombre.length > 39){
+		nom = nombre.mid(0, 39);
+	}else {
+		nom = nombre;
+	}
+		
+       cmd1 = "i01" + nom;
+       
+       	if (cedula.length < 39){
+		ced = this.iface.espaciosDerecha(cedula, 39);
+	}
+	else if (cedula.length > 39){
+		ced = cedula.mid(0, 39);
+	}else {
+		ced = cedula;
+	}
+
+       cmd2 = "i02" + ced; 
+
+       if (direccion.length < 39){
+		dir = this.iface.espaciosDerecha(direccion, 39);
+	}
+	else if (direccion.length > 39){
+		dir = direccion.mid(0, 39);
+	}else {
+		dir = direccion;
+	}
+
+	cmd3 = "i03" + dir;
+
+	if( fis.readStatus()==1 || fis.readStatus() == 4 ){
+		fis.sendCmd(cmd1);
+
+		if( fis.readStatus() == 1 || fis.readStatus() == 4 ){
+			fis.sendCmd(cmd2);
+		}
+
+		if( fis.readStatus() == 1 || fis.readStatus() == 4 ){
+			fis.sendCmd(cmd3);
+		}
+		
+		return true;	
+	}else {
+		return false;
+	}
+
+}
+
+function oficial_corregirCmd():Boolean
+{
+	var fis:FLFiscalBixolon;
+
+	var cmd:String = "k";
+
+	if(fis.readStatus() == 1 || fis.readStatus() == 4) {
+	
+		fis.sendCmd(cmd);
+	
+		return true;
+	
+	} else {
+		return false;
+	}
+}
+
+function oficial_restarLinea(idLinea:Number):Boolean
+{
+	if(!idLinea)
+		return false;
+	
+	var util:FLUtil = new FLUtil();
+	var curLinea:FLSqlCursor = new FLSqlCursor("tpv_lineascomanda");
+	curLinea.select("idtpv_linea = " + idLinea);
+	curLinea.first();
+	var res:Number = MessageBox.warning(util.translate("scripts", "La linea ") + idLinea + util.translate("scripts", " será eliminada ¿Seguro que desea eliminarla?"),MessageBox.Yes, MessageBox.No, MessageBox.NoButton);
+		if(res != MessageBox.Yes)
+			return false;
+		curLinea.setModeAccess(curLinea.Del);
+	
+	if(!curLinea.commitBuffer())
+		return false;
+	this.iface.calcularTotales();
+	return true;
+}
+
+function oficial_menosLinea()
+{
+	var cursor:FLSqlCursor = this.cursor();
+	var curTrans:FLSqlCursor = new FLSqlCursor("tpv_lineascomanda");
+
+	if (this.iface.seleccionado){
+		var qry:FLSqlQuery = new FLSqlQuery();
+		qry.setTablesList("tpv_lineascomanda");
+		qry.setSelect("idtpv_linea");
+		qry.setFrom("tpv_lineascomanda");
+		qry.setWhere("idtpv_comanda = '" + cursor.valueBuffer("idtpv_comanda") + "'");
+		if (!qry.exec())
+			return;
+		while (qry.next()) {
+			curTrans.transaction(false);
+			try {
+				if (this.iface.restarLinea(qry.value(0))){
+					this.iface.corregirCmd();
+					curTrans.commit();
+				} else {
+					curTrans.rollback();
+				}
+			} catch (e) {
+				curTrans.rollback();
+			}
+		}
+	} else {
+		curTrans.transaction(false);
+		try {
+			if (this.iface.restarLinea(this.child("tdbLineasComanda").cursor().valueBuffer("idtpv_linea"))) {
+				this.iface.corregirCmd();
+				curTrans.commit();
+			} else {
+				curTrans.rollback();
+			}
+		} catch (e) {
+			curTrans.rollback();
+		}
+	}
+	this.child("tdbLineasComanda").refresh();
+}
+
+function oficial_unoMenosBix()
+{
+	var cursor:FLSqlCursor = this.cursor();
+	var curTrans:FLSqlCursor = new FLSqlCursor("tpv_lineascomanda");
+	
+	var fis:FLFiscalBixolon;
+	var imp:String;
+	var cn:Number;
+	var price:Number;
+	var desc:String;
+	var descrip:String;
+	var cne:Number;
+	var cnd:Number;
+	var pricee:Number;
+	var priced:Number;
+	var cante:String;
+	var cantd:String;
+	var prie:String;
+	var prid:String;
+	var comando:String;
+ 	var status:Number; 
+ 	var error:Number;
+	var comando:String;
+
+
+	if (this.iface.seleccionado){
+		var qry:FLSqlQuery = new FLSqlQuery();
+		qry.setTablesList("tpv_lineascomanda");
+		qry.setSelect("idtpv_linea","codimpuesto","cantidad","descripcion","pvpunitario");
+		qry.setFrom("tpv_lineascomanda");
+		qry.setWhere("idtpv_comanda = '" + cursor.valueBuffer("idtpv_comanda") + "'");
+		if (!qry.exec())
+			return;
+		while (qry.next()) {
+
+			if(qry.value(1) == "EXENTO"){
+				imp = "0";
+			}else if(qry.value(1) == "TASA1") { 
+				imp = "1";
+			}else if(qry.value(1) == "TASA2") { 
+				imp = "2";
+			}else if(qry.value(1) == "TASA3") { 
+				imp = "3";
+			}
+	
+			cn = parseFloat(qry.value(2));
+
+			price = parseFloat(qry.value(4));
+
+			descrip = qry.value(3);
+
+			if(descrip.length == 40){
+
+				desc = descrip;
+
+			}else if(descrip.length < 40){
+
+				desc = this.iface.espaciosDerecha(descrip, 40); 
+
+			}else if (descrip.length > 40){
+
+				desc = descrip.mid(0, 40);
+			}
+			var tmpP:String = price.toString();
+
+			var tmpC:String = cn.toString();
+
+			var arrayCn:Array = tmpC.split(".");
+
+			var arrayPriceEnt:Array = tmpP.split(".");
+
+			cante =  this.iface.cerosIzquierda(tmpC.left(arrayCn.length), 5);
+
+			cantd =  this.iface.cerosDerecha(tmpC.mid(arrayCn.length+1, 3), 3);
+
+			prie =  this.iface.cerosIzquierda(tmpP.left(arrayPriceEnt.length), 8);
+
+			prid =  this.iface.cerosDerecha(tmpP.mid(arrayPriceEnt.length+1, 2), 2);
+		
+			comando = "ä" + imp + prie + prid + cante + cantd + desc;
+			
+			curTrans.transaction(false);
+			try {
+				if (this.iface.restarUno(qry.value(0))){
+					if(fis.readStatus()==4 || fis.readStatus()==1 ){
+						fis.sendCmd(comando);
+					}
+					curTrans.commit();
+						
+				} else {
+					curTrans.rollback();
+				}
+			} catch (e) {
+				curTrans.rollback();
+			}
+		}
+	} else {
+		curTrans.transaction(false);
+		try {
+			if (this.iface.restarUno(this.child("tdbLineasComanda").cursor().valueBuffer("idtpv_linea"))) {
+				if(fis.readStatus()==4 || fis.readStatus()==1 ){
+					fis.sendCmd(comando);
+				}
+				curTrans.commit();
+			} else {
+				curTrans.rollback();
+			}
+		} catch (e) {
+			curTrans.rollback();
+		}
+	}
+	this.child("tdbLineasComanda").refresh();
+}
+
+function oficial_unoMasBix()
+{
+	var cursor:FLSqlCursor = this.cursor();
+	var curTrans:FLSqlCursor = new FLSqlCursor("tpv_lineascomanda");
+	
+	var fis:FLFiscalBixolon;
+	var imp:String;
+	var cn:Number;
+	var price:Number;
+	var desc:String;
+	var descrip:String;
+	var cne:Number;
+	var cnd:Number;
+	var pricee:Number;
+	var priced:Number;
+	var cante:String;
+	var cantd:String;
+	var prie:String;
+	var prid:String;
+	var comando:String;
+ 	var status:Number; 
+ 	var error:Number;
+	var comando:String;
+
+
+	if (this.iface.seleccionado){
+		var qry:FLSqlQuery = new FLSqlQuery();
+		qry.setTablesList("tpv_lineascomanda");
+		qry.setSelect("idtpv_linea","codimpuesto","cantidad","descripcion","pvpunitario");
+		qry.setFrom("tpv_lineascomanda");
+		qry.setWhere("idtpv_comanda = '" + cursor.valueBuffer("idtpv_comanda") + "'");
+		if (!qry.exec())
+			return;
+		while (qry.next()) {
+
+			if(qry.value(1) == "EXENTO"){
+				imp = " ";
+			}else if(qry.value(1) == "TASA1") { 
+				imp = "!";
+			}else if(qry.value(1) == "TASA2") { 
+				imp = '"';
+			}else if(qry.value(1) == "TASA3") { 
+				imp = "#";
+			}
+	
+			cn = parseFloat(qry.value(2));
+
+			price = parseFloat(qry.value(4));
+
+			descrip = qry.value(3);
+
+			if(descrip.length == 40){
+
+				desc = descrip;
+
+			}else if(descrip.length < 40){
+
+				desc = this.iface.espaciosDerecha(descrip, 40); 
+
+			}else if (descrip.length > 40){
+
+				desc = descrip.mid(0, 40);
+			}
+			var tmpP:String = price.toString();
+
+			var tmpC:String = cn.toString();
+
+			var arrayCn:Array = tmpC.split(".");
+
+			var arrayPriceEnt:Array = tmpP.split(".");
+
+			cante =  this.iface.cerosIzquierda(tmpC.left(arrayCn.length), 5);
+
+			cantd =  this.iface.cerosDerecha(tmpC.mid(arrayCn.length+1, 3), 3);
+
+			prie =  this.iface.cerosIzquierda(tmpP.left(arrayPriceEnt.length), 8);
+
+			prid =  this.iface.cerosDerecha(tmpP.mid(arrayPriceEnt.length+1, 2), 2);
+		
+			comando = "ä" + imp + prie + prid + cante + cantd + desc;
+			
+			curTrans.transaction(false);
+			try {
+				if (this.iface.sumarUno(qry.value(0))){
+					if(fis.readStatus()==4 || fis.readStatus()==1 ){
+						fis.sendCmd(comando);
+					}
+					curTrans.commit();
+						
+				} else {
+					curTrans.rollback();
+				}
+			} catch (e) {
+				curTrans.rollback();
+			}
+		}
+	} else {
+		curTrans.transaction(false);
+		try {
+			if (this.iface.sumarUno(this.child("tdbLineasComanda").cursor().valueBuffer("idtpv_linea"))) {
+				if(fis.readStatus()==4 || fis.readStatus()==1 ){
+					fis.sendCmd(comando);
+				}
+				curTrans.commit();
+			} else {
+				curTrans.rollback();
+			}
+		} catch (e) {
+			curTrans.rollback();
+		}
+	}
+	this.child("tdbLineasComanda").refresh();
+}
+
+function oficial_subtotal():Boolean {
+
+	var fis:FLFiscalBixolon;
+	var sub:String;
+	sub = "3";
+	if (fis.readStatus() == 4 || fis.readStatus() == 1) {
+		fis.sendCmd(sub);
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function oficial_enviarPago():Boolean {
+	var cursor:FLSqlCursor = this.cursor();
+	var fis:FLFiscalBixolon;
+	var tp:String;
+	var monto:Number;
+	var comando:String;
+
+	if(cursor.valueBuffer("tipopago") == "Efectivo") {
+		tp = "01";
+	} else if (cursor.valueBuffer("tipopago") == "Tarjeta") {
+		tp = "09";
+	}
+	monto = parseFloat(this.iface.calculateField("neto"));
+
+	var tmpM:String = monto.toString();
+
+	var arrayMn:Array = tmpM.split(".");
+
+	mne =  this.iface.cerosIzquierda(tmpM.left(arrayMn.length), 10);
+
+	mnd =  this.iface.cerosDerecha(tmpM.mid(arrayMn.length+1, 2), 2);
+	
+	comando = "1" + tp + mne + mnd;
+
+	if(fis.readStatus() == 1 || fis.readStatus() == 4){
+		fis.senCmd(comando);
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function oficial_total():Boolean
+{
+
+}
+function oficial_descuento():Boolean
+{
+
+}
+//	tp = this.cursor().valueBuffer("codpago");
+//		tp = "OOooohhhh";
 //     debug( "Prueba posdiplay" );
 //     var nameSerialPort:String = "/dev/ttyS0";
 //     var serialPort:FLSerialPort = new FLSerialPort( nameSerialPort );
