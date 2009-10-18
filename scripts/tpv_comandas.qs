@@ -86,6 +86,12 @@ class oficial extends interna {
 	function unoMenos(){
 		return this.ctx.oficial_unoMenos();
 	}
+	function unoMasBix(){
+		return this.ctx.oficial_unoMasBix();
+	}
+	function unoMenosBix(){
+		return this.ctx.oficial_unoMenosBix();
+	}
 	function aplicarDescuento(){
 		return this.ctx.oficial_aplicarDescuento();
 	}
@@ -146,7 +152,7 @@ class oficial extends interna {
 	function escribirEnVisor(codPuntoVenta:String, datos:Array) {
 		return this.ctx.oficial_escribirEnVisor(codPuntoVenta, datos);
 	}
-	function enviarBixolon():Boolean {
+	function enviarBixolon() {
 		return this.ctx.oficial_enviarBixolon();
 	}
 	function espaciosDerecha(cad:String, totalCifras:Number):String {
@@ -161,7 +167,7 @@ class oficial extends interna {
 	function datosCliente():Boolean {
 		return this.ctx.oficial_datosCliente();
 	}
-	function corregirCmd():Boolean {
+	function corregirCmd() {
 		return this.ctx.oficial_corregirCmd();
 	}
 	function subtotal():Boolean {
@@ -173,7 +179,7 @@ class oficial extends interna {
 	function menosLinea():Boolean {
 		return this.ctx.oficial_menosLinea();
 	}
-	function enviarPago():Boolean {
+	function enviarPago() {
 		return this.ctx.oficial_enviarPago();
 	}
 
@@ -217,9 +223,17 @@ Al pagar una comanda ésta se cerrará automáticamente creándose la factura, recib
 function interna_init()
 {
 	var util:FLUtil = new FLUtil();
-	
-	MessageBox.information(util.translate("Enviar Articulo", this.iface.enviarPago() ),MessageBox.Ok,MessageBox.NoButton);
+///	var port:String= "COM1";
 
+/////	fis.openPort(port);
+
+/*	MessageBox.information(util.translate("Leer Status", fis.readStatus() ),MessageBox.Ok,MessageBox.NoButton);
+
+	MessageBox.information(util.translate("Check printer", fis.checkPrinter( ) ),MessageBox.Ok,MessageBox.NoButton);
+
+	MessageBox.information(util.translate("Enviar Articulo", this.iface.enviarPago() ),MessageBox.Ok,MessageBox.NoButton);
+	
+	MessageBox.information(util.translate("Cadena", " comando a enviar '" + this.iface.enviarBixolon() + "'" ),MessageBox.Ok,MessageBox.NoButton)*/
 	this.iface.bloqueoProvincia = false;
 
 	if (!this.iface.curLineas)
@@ -258,12 +272,22 @@ function interna_init()
 	connect(this.child("pbnPagar"), "clicked()", this, "iface.realizarPago()");
 	connect(this.child("tbnPrintQuick"),"clicked()", this, "iface.imprimirQuickClicked()");
 	connect(this.child("tbnSelTodo"), "clicked()", this, "iface.seleccionarTodo()");
+
 	connect(this.child("tbnUnoMas"), "clicked()", this, "iface.unoMas()");
 	connect(this.child("tbnUnoMenos"), "clicked()", this, "iface.unoMenos()");
+	////////Para funcionar con impresora Bixolon, aclas
+	//
+/*	connect(this.child("tbnUnoMas"), "clicked()", this, "iface.unoMasBix()");
+	connect(this.child("tbnUnoMenos"), "clicked()", this, "iface.unoMenosBix()");
+*/
 	connect(this.child("tbnDescuento"), "clicked()", this, "iface.aplicarDescuento()");
 	connect(this.child("tbnOpenCash"),"clicked()", this, "iface.abrirCajonClicked()");
 	connect(this.iface.tbnInsertarLinea, "clicked()", this, "iface.insertarLineaClicked()");
+
+	/////////////////Corregir en Impresora
 	connect(this.child("tbnCorregir"), "clicked()", this, "iface.menosLinea()");
+	
+	///////////////////////////
 	connect(this.iface.tbnImprimirVale, "clicked()", this, "iface.imprimirVale()");
 	connect(this.child("toolButtonZoomFactura"), "clicked()", this, "iface.mostrarFactura()");
 
@@ -310,7 +334,6 @@ function interna_init()
 	this.iface.bufferChanged("tipopago");
 	
 	this.iface.importePagado = 0;
-
 }
 
 function interna_calculateField(fN:String):String
@@ -609,7 +632,33 @@ Si el importe entregado es mayor o igual al importe total de las lineas de la co
 function oficial_realizarPago():Boolean
 {
 	var util:FLUtil = new FLUtil();
+
+	/////////////
+	var fis:FLFiscalBixolon;
+	var port:String = "COM1";
+	var subtotal:String = "3";
+	var tipoPago:String;
+	var status:Number;
+	var error:Number;
+	/////////////
+	fis.openPort(port);
+
 	var cursor:FLSqlCursor = this.cursor();
+
+	////////////////////////////
+	
+	if (cursor.valueBuffer("tipopago") == "Efectivo") {
+
+		tipoPago = "01";
+	}else if (cursor.valueBuffer("tipopago") == "Tarjeta") {
+		
+		tipoPago = "09";
+	}else if (cursor.valueBuffer("tipopago") == "Cheque") {
+		
+		tipoPago = "05";
+	}
+
+	/////////////////////////
 
 	this.iface.datosVisorPagar();
 
@@ -657,10 +706,51 @@ function oficial_realizarPago():Boolean
 	curCantidadPago.commitBuffer();
 	
 	var impEntregado:Number = parseFloat(entregado);
+
+	/////////////////////////////////
+
+	var tmpMn:String = impEntregado.toString();
+	var posMn:Number;
+	var mne:String;
+	var mnd:String;
+
+	posMn = tmpMn.search(".");
+
+	if (posMn >= 0){
+
+		mne = this.iface.cerosIzquierda(tmpMn.mid(0 , posMn), 10);
+		
+		mnd = this.iface.cerosDerecha(tmpMn.mid(posMn+1 , 2), 2);
+	} else{
+	
+		mne = this.iface.cerosIzquierda(tmpMn, 10);
+		
+		mnd = this.iface.cerosDerecha(0 , 2);
+	}
+
+	
+	var comando:String;
+
+	comando = "2" + tipoPago + mne + mnd;
+
+	//////////////////////////
+	if(1){	
+	MessageBox.warning(util.translate("scripts", "valor" + subtotal), MessageBox.Ok, MessageBox.NoButton);
+
+	MessageBox.warning(util.translate("scripts", "valor" + comando), MessageBox.Ok, MessageBox.NoButton);
+	}
+	
+	fis.sendCmd(status, error, subtotal);
+
+	fis.sendCmd(status, error, comando);
+
+	/////////////////////////
+
+	////////////////////////////////
+
 	var cambio:Number = 0;
 	if (impEntregado == 0)
 		return false;
-		
 	this.iface.lblEntregado.setText(util.translate("scripts", "Entregado"));
 	this.iface.lblCantEntregada.setText(util.roundFieldValue(impEntregado, "tpv_comandas", "total"));
 	cursor.setValueBuffer("ultentregado", util.roundFieldValue(impEntregado, "tpv_comandas", "total"));
@@ -679,8 +769,11 @@ function oficial_realizarPago():Boolean
 		if (!this.iface.crearPago(impEntregado))
 			return false;
 	}
-
+	
 	this.iface.verificarHabilitaciones();
+	///////////////////////
+	fis.closedPort();
+	//////////////////////
 	return true;
 }
 
@@ -775,7 +868,7 @@ Suma uno a la cantidad de una linea
 @param idLinea identificador de la linea
 @return devuelve true si se ha sumado correctamente y false si ha habido algún error
 */
-function oficial_sumarUno(idLinea:Number):Boolean
+/*function oficial_sumarUno(idLinea:Number):Boolean
 {
 	if (!idLinea)
 		return false;
@@ -793,7 +886,137 @@ function oficial_sumarUno(idLinea:Number):Boolean
 
 	this.iface.calcularTotales();
 	return true;
+}*/
+
+
+
+function oficial_sumarUno(idLinea:Number):Boolean
+{
+////////////////////////////////
+	var fis:FLFiscalBixolon;
+	var imp:String;
+	var cn:Number;
+	var price:Number;
+	var desc:String;
+	var descrip:String;
+	var cante:String;
+	var cantd:String;
+	var prie:String;
+	var prid:String;
+	var comando:String;
+ 	var status:Number; 
+ 	var error:Number;
+	var comando:String;
+	var port:String= "COM1";
+///////////////////////////////////
+	if (!idLinea)
+		return false;
+		
+	var curLinea:FLSqlCursor = new FLSqlCursor("tpv_lineascomanda");
+	curLinea.select("idtpv_linea = " + idLinea);
+	curLinea.first();
+	curLinea.setModeAccess(curLinea.Edit);
+	curLinea.refreshBuffer();
+	curLinea.setValueBuffer("cantidad",parseFloat(curLinea.valueBuffer("cantidad")) + 1);
+	curLinea.setValueBuffer("pvpsindto",this.iface.calcularTotalesLinea("pvpsindto",curLinea));
+	curLinea.setValueBuffer("pvptotal",this.iface.calcularTotalesLinea("pvptotal",curLinea));
+////////////////////////////////////////////////
+
+
+	fis.openPort(port);
+
+	cn = 1;
+
+	price = parseFloat(curLinea.valueBuffer("pvpunitario"));
+
+	var tmpC:String = cn.toString();
+
+	var tmpP:String = price.toString();
+
+	var posCn:Number = tmpC.search(".");
+
+	var posPri:Number = tmpP.search(".");
+
+	if (posCn >= 0){
+
+		
+		cante =  this.iface.cerosIzquierda(tmpC.mid(0 , posCn), 5);
+
+		cantd =  this.iface.cerosDerecha(tmpC.mid(posCn+1, 3), 3);
+	}
+	else{
+		
+		cante =  this.iface.cerosIzquierda(tmpC, 5);
+		cantd =  this.iface.cerosDerecha(0, 3);
+
+	}
+
+	if (posPri >= 0){
+
+		prie =  this.iface.cerosIzquierda(tmpP.mid(0 , posPri), 8);
+		prid =  this.iface.cerosDerecha(tmpP.mid(posPri+1, 2), 2);
+	}
+	else{
+		
+		prie =  this.iface.cerosIzquierda(tmpP, 8);
+		prid =  this.iface.cerosDerecha(0, 2);
+
+	}
+	
+	if(curLinea.valueBuffer("codimpuesto") == "IVAE"){
+
+		descrip = curLinea.valueBuffer("descripcion") + " (E)";
+	}
+	else{
+		descrip = curLinea.valueBuffer("descripcion") + " (G)";
+	}
+
+	if(descrip.length == 40){
+
+		desc = descrip;
+
+	}else if(descrip.length < 40){
+
+		desc = this.iface.espaciosDerecha( descrip, 40 ); 
+
+	}else if ( descrip.length > 40 ){
+
+		desc = descrip.mid(0, 40);
+	}
+
+	if(curLinea.valueBuffer("codimpuesto") == "IVAE"){
+
+		comando = ' ' + prie + prid + cante + cantd + desc;
+
+	}else if(curLinea.valueBuffer("codimpuesto") == "IVA12") {
+
+		comando = "!" + prie + prid + cante + cantd + desc;
+
+	}else if(curLinea.valueBuffer("codimpuesto") == "TASA2") { 
+
+		comando = '"' + prie + prid + cante + cantd + desc;
+
+	}else if(curLinea.valueBuffer("codimpuesto") == "TASA3") { 
+
+		comando = "#" + prie + prid + cante + cantd + desc;
+	}
+
+	fis.sendCmd(status, error, comando);
+		
+	fis.closedPort();
+	
+///////////////////////////////////////////////////
+
+//////////////////////////////////////
+	if (!curLinea.commitBuffer())
+		return false;
+	
+////////////////////////////////////////	
+	
+	this.iface.calcularTotales();
+	return true;
 }
+
 
 
 /** \D
@@ -845,6 +1068,25 @@ Resta uno a la cantidad de una linea
 */
 function oficial_restarUno(idLinea:Number):Boolean
 {
+///////////////////////	
+	var fis:FLFiscalBixolon;
+	var imp:String;
+	var cn:Number;
+	var price:Number;
+	var desc:String;
+	var descrip:String;
+	var cante:String;
+	var cantd:String;
+	var prie:String;
+	var prid:String;
+	var comando:String;
+ 	var status:Number; 
+ 	var error:Number;
+	var comando:String;
+	var port:String= "COM1";
+
+//////////////////
+//
 	if(!idLinea)
 		return false;
 	
@@ -866,8 +1108,93 @@ function oficial_restarUno(idLinea:Number):Boolean
 		curLinea.setValueBuffer("pvpsindto",this.iface.calcularTotalesLinea("pvpsindto",curLinea));
 		curLinea.setValueBuffer("pvptotal",this.iface.calcularTotalesLinea("pvptotal",curLinea));
 	}
+
+///////////////////////////////////////////////////////
+
+	fis.openPort(port);
+
+	cn = 1;
+
+	price = parseFloat(curLinea.valueBuffer("pvpunitario"));
+
+	var tmpC:String = cn.toString();
+
+	var tmpP:String = price.toString();
+
+	var posCn:Number = tmpC.search(".");
+
+	var posPri:Number = tmpP.search(".");
+
+	if (posCn >= 0){
+
+		
+		cante =  this.iface.cerosIzquierda(tmpC.mid(0 , posCn), 5);
+
+		cantd =  this.iface.cerosDerecha(tmpC.mid(posCn+1, 3), 3);
+	}
+	else{
+		
+		cante =  this.iface.cerosIzquierda(tmpC, 5);
+		cantd =  this.iface.cerosDerecha(0, 3);
+
+	}
+
+	if (posPri >= 0){
+
+		prie =  this.iface.cerosIzquierda(tmpP.mid(0 , posPri), 8);
+		prid =  this.iface.cerosDerecha(tmpP.mid(posPri+1, 2), 2);
+	}
+	else{
+		
+		prie =  this.iface.cerosIzquierda(tmpP, 8);
+		prid =  this.iface.cerosDerecha(0, 2);
+
+	}
+	if(curLinea.valueBuffer("codimpuesto") == "IVAE"){
+
+		descrip = curLinea.valueBuffer("descripcion") + " (E)";
+	}
+	else{
+		descrip = curLinea.valueBuffer("descripcion") + " (G)";
+	}
+
+	if(descrip.length == 40){
+
+		desc = descrip;
+
+	}else if(descrip.length < 40){
+
+		desc = this.iface.espaciosDerecha( descrip, 40 ); 
+
+	}else if ( descrip.length > 40 ){
+
+		desc = descrip.mid(0, 40);
+	}
+
+	if(curLinea.valueBuffer("codimpuesto") == "IVAE"){
+
+		comando = "ä" + "0" + prie + prid + cante + cantd + desc;
+
+	}else if(curLinea.valueBuffer("codimpuesto") == "IVA12") {
+
+		comando = "ä" + "1" + prie + prid + cante + cantd + desc;
+
+	}else if(curLinea.valueBuffer("codimpuesto") == "TASA2") { 
+
+		comando = "ä" + "2" + prie + prid + cante + cantd + desc;
+
+	}else if(curLinea.valueBuffer("codimpuesto") == "TASA3") { 
+
+		comando = "ä" + "3" + prie + prid + cante + cantd + desc;
+	}
+
+	fis.sendCmd(status, error, comando);
+	fis.closedPort();
+////////////////////////////////////////////////////////
+//
 	if(!curLinea.commitBuffer())
 		return false;
+
 	this.iface.calcularTotales();
 	return true;
 }
@@ -1016,6 +1343,8 @@ function oficial_desconectar()
 	disconnect(this.child("tbnSelTodo"), "clicked()", this, "iface.seleccionarTodo()");
 	disconnect(this.child("tbnUnoMas"), "clicked()", this, "iface.unoMas()");
 	disconnect(this.child("tbnUnoMenos"), "clicked()", this, "iface.unoMenos()");
+	/*disconnect(this.child("tbnUnoMas"), "clicked()", this, "iface.unoMasBix()");
+	disconnect(this.child("tbnUnoMenos"), "clicked()", this, "iface.unoMenosBix()");*/
 	disconnect(this.child("tbnDescuento"), "clicked()", this, "iface.aplicarDescuento()");
 	disconnect(this.child("tbnOpenCash"),"clicked()", this, "iface.abrirCajonClicked()");
 }
@@ -1057,7 +1386,6 @@ function oficial_crearPago(importe:Number):Boolean
 	this.iface.refrescoActivo = true;
 	return true;
 }
-
 /** \D Refresca el display con la cantidad pendiente de pago
 \end */
 function oficial_refrescarPte() 
@@ -1100,10 +1428,6 @@ function oficial_insertarLineaClicked()
 {
 	var util:FLUtil = new FLUtil;
 
-	/*var fis:FLFiscalBixolon;
-
-	var port:String="COM1";*/
-
 	if (isNaN(parseFloat(this.iface.txtCanArticulo.text)))
 		return;
 	if (isNaN(parseFloat(this.iface.txtPvpArticulo.text)))
@@ -1120,27 +1444,26 @@ function oficial_insertarLineaClicked()
 			return;
 		}
 	}
+
 	this.iface.curLineas.refreshBuffer();
 	if (!this.iface.datosLineaVenta()){
 		return;
 	}
 
-/*	if(fis.openPort(port)){
-
-		if(!this.iface.control) {
-		MessageBox.information(util.translate("Enviar Articulo", this.iface.datosCliente() ),MessageBox.Ok,MessageBox.NoButton);
-		this.iface.control = true;
-	}
-	
-		this.iface.enviarBixolon();
-	
-	}*/
 
 	this.iface.datosVisorArt(this.iface.curLineas);
 
 	if (!this.iface.curLineas.commitBuffer()){
 		return;
 	}
+
+/////////////////////////Enviar Datos a la Impresora Bixolon y aclas
+
+	//this.iface.datosCliente();
+	//this.iface.enviarBixolon();
+
+////////////////////////
+
 	this.iface.txtCanArticulo.text = "";
 	this.child("fdbReferencia").setValue("");
 	this.iface.txtDesArticulo.text = "";
@@ -1148,8 +1471,8 @@ function oficial_insertarLineaClicked()
 	this.iface.ivaArticulo = "";
 	this.iface.txtCanArticulo.text = "1";
 	this.child("fdbReferencia").setFocus();
-
 	this.child("tdbLineasComanda").refresh();
+
 }
 
 /** |D Establece los datos de la línea de ventas a crear mediante la inserción rápida
@@ -1607,7 +1930,9 @@ function oficial_cerosDerecha(numero:String, totalCifras:Number):String
 				return ret;
 }
 
-function oficial_enviarBixolon():Boolean {
+function oficial_enviarBixolon() {
+
+	var cursor:FLSqlCursor = this.cursor();
 
 	var fis:FLFiscalBixolon;
 	var num:FLUtil = new FLUtil(); 
@@ -1616,10 +1941,6 @@ function oficial_enviarBixolon():Boolean {
 	var price:Number;
 	var desc:String;
 	var descrip:String;
-	var cne:Number;
-	var cnd:Number;
-	var pricee:Number;
-	var priced:Number;
 	var cante:String;
 	var cantd:String;
 	var prie:String;
@@ -1628,103 +1949,99 @@ function oficial_enviarBixolon():Boolean {
  	var status:Number; 
  	var error:Number;
 	var comando:String;
-        
-	var cmd:String = "Prueba";
+	var port:String= "COM1";
+	fis.openPort(port);
 
-	var cursor:FLSqlCursor = this.cursor();
-		
-		        
 	if (!this.iface.curLineas){
 
 		this.iface.curLineas = this.child("tdbLineasComanda").cursor();
 	}
 
-	
-	if(this.iface.calculateField("ivaarticulo") == "EXENTO"){
-		imp = " ";
-	}else if(this.iface.calculateField("ivaarticulo") == "TASA1") { 
-		imp = "!";
-	}else if(this.iface.calculateField("ivaarticulo") == "TASA2") { 
-		imp = '"';
-	}else if(this.iface.calculateField("ivaarticulo") == "TASA3") { 
-		imp = "#";
-	}
-	
 	cn = parseFloat(this.iface.curLineas.valueBuffer("cantidad"));
 
 	price = parseFloat(this.iface.curLineas.valueBuffer("pvpunitario"));
 
-	descrip = this.iface.calculateField("desarticulo");
+	var tmpC:String = cn.toString();
 
+	var tmpP:String = price.toString();
+
+	var posCn:Number = tmpC.search(".");
+
+	var posPri:Number = tmpP.search(".");
+
+	if (posCn >= 0){
+
+		
+		cante =  this.iface.cerosIzquierda(tmpC.mid(0 , posCn), 5);
+
+		cantd =  this.iface.cerosDerecha(tmpC.mid(posCn+1, 3), 3);
+	}
+	else{
+		
+		cante =  this.iface.cerosIzquierda(tmpC, 5);
+		cantd =  this.iface.cerosDerecha(0, 3);
+
+	}
+
+	if (posPri >= 0){
+
+		prie =  this.iface.cerosIzquierda(tmpP.mid(0 , posPri), 8);
+		prid =  this.iface.cerosDerecha(tmpP.mid(posPri+1, 2), 2);
+	}
+	else{
+		
+		prie =  this.iface.cerosIzquierda(tmpP, 8);
+		prid =  this.iface.cerosDerecha(0, 2);
+
+	}
+	if(this.iface.calculateField("ivaarticulo") == "IVAE"){
+
+		descrip = this.iface.calculateField("desarticulo") + " (E)";
+	}
+	else{
+		descrip = this.iface.calculateField("desarticulo") + " (G)";
+	}
 	if(descrip.length == 40){
 
 		desc = descrip;
 
 	}else if(descrip.length < 40){
 
-		desc = this.iface.espaciosDerecha(descrip, 40); 
+		desc = this.iface.espaciosDerecha( descrip, 40 ); 
 
-	}else if (descrip.length > 40){
+	}else if ( descrip.length > 40 ){
 
 		desc = descrip.mid(0, 40);
 	}
-	
-	cne = num.partInteger(cn)*1;
 
-	cnd = num.partDecimal(cn)*1;
+	if(this.iface.calculateField("ivaarticulo") == "IVAE"){
 
-	pricee = num.partInteger(price)*1;
+		comando = ' ' + prie + prid + cante + cantd + desc;
 
-	priced = num.partDecimal(price)*1;
+	}else if(this.iface.calculateField("ivaarticulo") == "IVA12") {
 
-	var tmpP:String = price.toString();
+		comando = "!" + prie + prid + cante + cantd + desc;
 
-	var tmpC:String = cn.toString();
+	}else if(this.iface.calculateField("ivaarticulo") == "TASA2") { 
 
-	var arrayCn:Array = tmpC.split(".");
+		comando = '"' + prie + prid + cante + cantd + desc;
 
-	var arrayPriceEnt:Array = tmpP.split(".");
+	}else if(this.iface.calculateField("ivaarticulo") == "TASA3") { 
 
-	cante =  this.iface.cerosIzquierda(tmpC.left(arrayCn.length), 5);
-
-	cantd =  this.iface.cerosDerecha(tmpC.mid(arrayCn.length+1, 3), 3);
-
-	prie =  this.iface.cerosIzquierda(tmpP.left(arrayPriceEnt.length), 8);
-
-	prid =  this.iface.cerosDerecha(tmpP.mid(arrayPriceEnt.length+1, 2), 2);
-
-	comando = imp + prie + prid + cante + cantd + desc;
-
-	if(fis.readStatus()==4 || fis.readStatus()==1 ){
-		fis.sendCmd(comando);
-		return true;
-	}else{
-		if(fis.readStatus()==0){
-			MessageBox.information(util.translate("Enviar Articulo",  " Status Desconocido " ),MessageBox.Ok,MessageBox.NoButton);
-		}else if(fis.readStatus()==2){
-			MessageBox.information(util.translate("Enviar Articulo",  " En Modo Prueba y Emisión de Documentos fiscales " ),MessageBox.Ok,MessageBox.NoButton);	
-		}else if(fis.readStatus()==3){
-			MessageBox.information(util.translate("Enviar Articulo",  " En Modo Prueba y Emisión de Documentos No fiscales " ),MessageBox.Ok,MessageBox.NoButton);
-		}else if(fis.readStatus()==5){
-			MessageBox.information(util.translate("Enviar Articulo",  " En Modo Fiscal y Emisión de Documentos fiscales " ),MessageBox.Ok,MessageBox.NoButton);
-		}else if(fis.readStatus()==6){
-			MessageBox.information(util.translate("Enviar Articulo",  " En modo Fiscal y Emisión de Documentos No fiscales " ),MessageBox.Ok,MessageBox.NoButton);
-		}else if(fis.readStatus()==7){
-			MessageBox.information(util.translate("Enviar Articulo",  " En Modo Fiscal y cercana carga completa de la memoria Fiscal y en Espera " ),MessageBox.Ok,MessageBox.NoButton);
-		}else if(fis.readStatus()==8){
-			MessageBox.information(util.translate("Enviar Articulo",  " En Modo Fiscal y cercana carga completa de la memoria Fiscal y en Emision de documentos Fiscales " ),MessageBox.Ok,MessageBox.NoButton);
-		}else if(fis.readStatus()==9){
-			MessageBox.information(util.translate("Enviar Articulo",  " En Modo Fiscal y carga completa de la memoria Fiscal y en Espera " ),MessageBox.Ok,MessageBox.NoButton);
-		}else if(fis.readStatus()==10){
-			MessageBox.information(util.translate("Enviar Articulo",  " En Modo Fiscal y carga completa de la memoria Fiscal y en Espera " ),MessageBox.Ok,MessageBox.NoButton);
-		}else if(fis.readStatus()==11){
-			MessageBox.information(util.translate("Enviar Articulo",  " En Modo Fiscal y carga completa de la memoria Fiscal y en Emision de documentos Fiscales " ),MessageBox.Ok,MessageBox.NoButton);
-		}else if(fis.readStatus()==12){
-			MessageBox.information(util.translate("Enviar Articulo",  " En Modo Fiscal y carga completa de la memoria Fiscal y en Emision de documentos No Fiscales " ),MessageBox.Ok,MessageBox.NoButton);
-		}
-
-		return false;
+		comando = "#" + prie + prid + cante + cantd + desc;
 	}
+
+//	if(fis.readStatus() == 4 || fis.readStatus() == 5 ){
+
+		fis.sendCmd(status, error, comando);
+		
+		fis.closedPort();
+		
+//	}else{
+		
+//		fis.closedPort();
+
+//	}
 }
 function oficial_datosCliente():Boolean
 {
@@ -1742,6 +2059,9 @@ function oficial_datosCliente():Boolean
 	var cmd1:String;
 	var cmd2:String;
 	var cmd3:String;
+	var port:String= "COM1";
+
+	fis.openPort(port);
 	
 	nombre = util.sqlSelect("tpv_comandas", "nombrecliente", "idtpv_comanda = " + cursor.valueBuffer("idtpv_comanda"));
 	cedula = util1.sqlSelect("tpv_comandas", "cifnif", "idtpv_comanda = " + cursor.valueBuffer("idtpv_comanda"));
@@ -1780,42 +2100,174 @@ function oficial_datosCliente():Boolean
 
 	cmd3 = "i03" + dir;
 
-	if( fis.readStatus()==1 || fis.readStatus() == 4 ){
+	if( fis.readStatus() == 5 || fis.readStatus() == 4 ){
+		
 		fis.sendCmd(cmd1);
 
-		if( fis.readStatus() == 1 || fis.readStatus() == 4 ){
+		if( fis.readStatus() == 5 || fis.readStatus() == 4 ){
 			fis.sendCmd(cmd2);
 		}
 
-		if( fis.readStatus() == 1 || fis.readStatus() == 4 ){
+		if( fis.readStatus() == 5 || fis.readStatus() == 4 ){
 			fis.sendCmd(cmd3);
 		}
+		fis.closedPort();
 		
 		return true;	
 	}else {
+		fis.closedPort();
 		return false;
 	}
-
 }
 
-function oficial_corregirCmd():Boolean
+function oficial_corregirCmd()
 {
 	var fis:FLFiscalBixolon;
 
+	var status:Number;
+
+	var error:Number;
+
+	var port:String= "COM1";
+
 	var cmd:String = "k";
 
-	if(fis.readStatus() == 1 || fis.readStatus() == 4) {
-	
-		fis.sendCmd(cmd);
-	
-		return true;
-	
-	} else {
-		return false;
-	}
+	fis.openPort(port);
+
+	fis.sendCmd(status, error, cmd);
+
+	fis.closedPort();
 }
 
 function oficial_restarLinea(idLinea:Number):Boolean
+{
+///////////////////////	
+
+	var fis:FLFiscalBixolon;
+	var imp:String;
+	var cn:Number;
+	var price:Number;
+	var desc:String;
+	var descrip:String;
+	var cante:String;
+	var cantd:String;
+	var prie:String;
+	var prid:String;
+	var comando:String;
+ 	var status:Number; 
+ 	var error:Number;
+	var comando:String;
+	var port:String= "COM1";
+
+//////////////////
+
+	if(!idLinea)
+		return false;
+	
+	var util:FLUtil = new FLUtil();
+	var curLinea:FLSqlCursor = new FLSqlCursor("tpv_lineascomanda");
+	curLinea.select("idtpv_linea = " + idLinea);
+	curLinea.first();
+	var res:Number = MessageBox.warning(util.translate("scripts", "La linea ") + idLinea + util.translate("scripts", " será eliminada ¿Seguro que desea eliminarla?"),MessageBox.Yes, MessageBox.No, MessageBox.NoButton);
+		if(res != MessageBox.Yes)
+			return false;
+		curLinea.setModeAccess(curLinea.Del);
+
+///////////////////////////////////////////////////////
+
+	fis.openPort(port);
+
+	cn = parseFloat(curLinea.valueBuffer("cantidad"));
+
+	price = parseFloat(curLinea.valueBuffer("pvpunitario"));
+
+	var tmpC:String = cn.toString();
+
+	var tmpP:String = price.toString();
+
+	var posCn:Number = tmpC.search(".");
+
+	var posPri:Number = tmpP.search(".");
+
+	if (posCn >= 0){
+
+		
+		cante =  this.iface.cerosIzquierda(tmpC.mid(0 , posCn), 5);
+
+		cantd =  this.iface.cerosDerecha(tmpC.mid(posCn+1, 3), 3);
+	}
+	else{
+		
+		cante =  this.iface.cerosIzquierda(tmpC, 5);
+		cantd =  this.iface.cerosDerecha(0, 3);
+
+	}
+
+	if (posPri >= 0){
+
+		prie =  this.iface.cerosIzquierda(tmpP.mid(0 , posPri), 8);
+		prid =  this.iface.cerosDerecha(tmpP.mid(posPri+1, 2), 2);
+	}
+	else{
+		
+		prie =  this.iface.cerosIzquierda(tmpP, 8);
+		prid =  this.iface.cerosDerecha(0, 2);
+
+	}
+	
+	if(curLinea.valueBuffer("codimpuesto") == "IVAE"){
+
+		descrip = curLinea.valueBuffer("descripcion") + " (E)";
+	}
+	else{
+		descrip = curLinea.valueBuffer("descripcion") + " (G)";
+	}
+
+	if(descrip.length == 40){
+
+		desc = descrip;
+
+	}else if(descrip.length < 40){
+
+		desc = this.iface.espaciosDerecha( descrip, 40 ); 
+
+	}else if ( descrip.length > 40 ){
+
+		desc = descrip.mid(0, 40);
+	}
+
+	if(curLinea.valueBuffer("codimpuesto") == "IVAE"){
+
+		comando = "ä" + "0" + prie + prid + cante + cantd + desc;
+
+	}else if(curLinea.valueBuffer("codimpuesto") == "IVA12") {
+
+		comando = "ä" + "1" + prie + prid + cante + cantd + desc;
+
+	}else if(curLinea.valueBuffer("codimpuesto") == "TASA2") { 
+
+		comando = "ä" + "2" + prie + prid + cante + cantd + desc;
+
+	}else if(curLinea.valueBuffer("codimpuesto") == "TASA3") { 
+
+		comando = "ä" + "3" + prie + prid + cante + cantd + desc;
+	}
+
+	fis.sendCmd(status, error, comando);
+
+	fis.closedPort();
+
+////////////////////////////////////////////////////////
+
+	if(!curLinea.commitBuffer())
+		return false;
+	this.iface.calcularTotales();
+	return true;
+}
+
+
+
+/*function oficial_restarLinea(idLinea:Number):Boolean
 {
 	if(!idLinea)
 		return false;
@@ -1833,7 +2285,7 @@ function oficial_restarLinea(idLinea:Number):Boolean
 		return false;
 	this.iface.calcularTotales();
 	return true;
-}
+}*/
 
 function oficial_menosLinea()
 {
@@ -1852,7 +2304,6 @@ function oficial_menosLinea()
 			curTrans.transaction(false);
 			try {
 				if (this.iface.restarLinea(qry.value(0))){
-					this.iface.corregirCmd();
 					curTrans.commit();
 				} else {
 					curTrans.rollback();
@@ -1865,7 +2316,6 @@ function oficial_menosLinea()
 		curTrans.transaction(false);
 		try {
 			if (this.iface.restarLinea(this.child("tdbLineasComanda").cursor().valueBuffer("idtpv_linea"))) {
-				this.iface.corregirCmd();
 				curTrans.commit();
 			} else {
 				curTrans.rollback();
@@ -1900,33 +2350,25 @@ function oficial_unoMenosBix()
  	var status:Number; 
  	var error:Number;
 	var comando:String;
-
+	var port:String= "COM1";
+	
+	fis.openPort(port);
 
 	if (this.iface.seleccionado){
 		var qry:FLSqlQuery = new FLSqlQuery();
 		qry.setTablesList("tpv_lineascomanda");
-		qry.setSelect("idtpv_linea","codimpuesto","cantidad","descripcion","pvpunitario");
+		qry.setSelect("idtpv_linea","codimpuesto","descripcion","pvpunitario");
 		qry.setFrom("tpv_lineascomanda");
 		qry.setWhere("idtpv_comanda = '" + cursor.valueBuffer("idtpv_comanda") + "'");
 		if (!qry.exec())
 			return;
 		while (qry.next()) {
 
-			if(qry.value(1) == "EXENTO"){
-				imp = "0";
-			}else if(qry.value(1) == "TASA1") { 
-				imp = "1";
-			}else if(qry.value(1) == "TASA2") { 
-				imp = "2";
-			}else if(qry.value(1) == "TASA3") { 
-				imp = "3";
-			}
-	
-			cn = parseFloat(qry.value(2));
+			cn = 1;
 
-			price = parseFloat(qry.value(4));
+			price = parseFloat(qry.value(3));
 
-			descrip = qry.value(3);
+			descrip = qry.value(2);
 
 			if(descrip.length == 40){
 
@@ -1940,46 +2382,75 @@ function oficial_unoMenosBix()
 
 				desc = descrip.mid(0, 40);
 			}
-			var tmpP:String = price.toString();
+		var tmpC:String = cn.toString();
 
-			var tmpC:String = cn.toString();
+		var tmpP:String = price.toString();
 
-			var arrayCn:Array = tmpC.split(".");
+		var posCn:Number = tmpC.search(".");
 
-			var arrayPriceEnt:Array = tmpP.split(".");
+		var posPri:Number = tmpP.search(".");
 
-			cante =  this.iface.cerosIzquierda(tmpC.left(arrayCn.length), 5);
+		if (posCn >= 0){
+			cante =  this.iface.cerosIzquierda(tmpC.mid(0 , posCn), 5);
+			cantd =  this.iface.cerosDerecha(tmpC.mid(posCn+1, 3), 3);
+		}
+		else{		
+			cante =  this.iface.cerosIzquierda(tmpC, 5);
+			cantd =  this.iface.cerosDerecha(0, 3);
+		}
 
-			cantd =  this.iface.cerosDerecha(tmpC.mid(arrayCn.length+1, 3), 3);
-
-			prie =  this.iface.cerosIzquierda(tmpP.left(arrayPriceEnt.length), 8);
-
-			prid =  this.iface.cerosDerecha(tmpP.mid(arrayPriceEnt.length+1, 2), 2);
+		if (posPri >= 0){
+			prie =  this.iface.cerosIzquierda(tmpP.mid(0 , posPri), 8);
+			prid =  this.iface.cerosDerecha(tmpP.mid(posPri+1, 2), 2);
+		}
+		else{		
+			prie =  this.iface.cerosIzquierda(tmpP, 8);
+			prid =  this.iface.cerosDerecha(0, 2);
+		}
 		
-			comando = "ä" + imp + prie + prid + cante + cantd + desc;
-			
-			curTrans.transaction(false);
-			try {
-				if (this.iface.restarUno(qry.value(0))){
-					if(fis.readStatus()==4 || fis.readStatus()==1 ){
-						fis.sendCmd(comando);
-					}
-					curTrans.commit();
-						
-				} else {
-					curTrans.rollback();
-				}
-			} catch (e) {
+		if(qry.value(1) == "IVAE"){
+			comando = "ä" + "0" + prie + prid + cante + cantd + desc;
+			}else if(qry.value(1) == "IVA12") { 
+				comando = "ä" + "1" + prie + prid + cante + cantd + desc;
+			}else if(qry.value(1) == "TASA2") { 
+				comando = "ä" + "2" + prie + prid + cante + cantd + desc;
+			}else if(qry.value(1) == "TASA3") { 
+				comando = "ä" + "3" + prie + prid + cante + cantd + desc;
+			}
+
+		curTrans.transaction(false);
+
+		try {
+
+			if (this.iface.restarUno(qry.value(0))){
+
+				//if(fis.readStatus()==4 || fis.readStatus()==5 ){
+					fis.sendCmd(status, error, comando);
+					fis.closedPort();
+			//	}
+
+				curTrans.commit();
+			}else {
+
 				curTrans.rollback();
 			}
+
+				
+		} catch (e) {
+
+			curTrans.rollback();
+		}
+
+		
 		}
 	} else {
 		curTrans.transaction(false);
 		try {
 			if (this.iface.restarUno(this.child("tdbLineasComanda").cursor().valueBuffer("idtpv_linea"))) {
-				if(fis.readStatus()==4 || fis.readStatus()==1 ){
-					fis.sendCmd(comando);
-				}
+			//	if(fis.readStatus()==4 || fis.readStatus()==5 ){
+					fis.sendCmd(status, error, comando);
+					fis.closedPort();
+			//	}
 				curTrans.commit();
 			} else {
 				curTrans.rollback();
@@ -1989,23 +2460,19 @@ function oficial_unoMenosBix()
 		}
 	}
 	this.child("tdbLineasComanda").refresh();
+	fis.closedPort();
+	
 }
 
-function oficial_unoMasBix()
-{
+/*function oficial_unoMasBix() {
 	var cursor:FLSqlCursor = this.cursor();
 	var curTrans:FLSqlCursor = new FLSqlCursor("tpv_lineascomanda");
-	
 	var fis:FLFiscalBixolon;
 	var imp:String;
 	var cn:Number;
 	var price:Number;
 	var desc:String;
 	var descrip:String;
-	var cne:Number;
-	var cnd:Number;
-	var pricee:Number;
-	var priced:Number;
 	var cante:String;
 	var cantd:String;
 	var prie:String;
@@ -2014,33 +2481,25 @@ function oficial_unoMasBix()
  	var status:Number; 
  	var error:Number;
 	var comando:String;
-
+	var port:String= "COM1";
+	
+	fis.openPort(port);
 
 	if (this.iface.seleccionado){
 		var qry:FLSqlQuery = new FLSqlQuery();
 		qry.setTablesList("tpv_lineascomanda");
-		qry.setSelect("idtpv_linea","codimpuesto","cantidad","descripcion","pvpunitario");
+		qry.setSelect("idtpv_linea","codimpuesto","descripcion","pvpunitario");
 		qry.setFrom("tpv_lineascomanda");
 		qry.setWhere("idtpv_comanda = '" + cursor.valueBuffer("idtpv_comanda") + "'");
 		if (!qry.exec())
 			return;
 		while (qry.next()) {
 
-			if(qry.value(1) == "EXENTO"){
-				imp = " ";
-			}else if(qry.value(1) == "TASA1") { 
-				imp = "!";
-			}else if(qry.value(1) == "TASA2") { 
-				imp = '"';
-			}else if(qry.value(1) == "TASA3") { 
-				imp = "#";
-			}
-	
-			cn = parseFloat(qry.value(2));
+			cn = 1;
 
-			price = parseFloat(qry.value(4));
+			price = parseFloat(qry.value(3));
 
-			descrip = qry.value(3);
+			descrip = qry.value(2);
 
 			if(descrip.length == 40){
 
@@ -2054,30 +2513,49 @@ function oficial_unoMasBix()
 
 				desc = descrip.mid(0, 40);
 			}
-			var tmpP:String = price.toString();
+		var tmpC:String = cn.toString();
 
-			var tmpC:String = cn.toString();
+		var tmpP:String = price.toString();
 
-			var arrayCn:Array = tmpC.split(".");
+		var posCn:Number = tmpC.search(".");
 
-			var arrayPriceEnt:Array = tmpP.split(".");
+		var posPri:Number = tmpP.search(".");
 
-			cante =  this.iface.cerosIzquierda(tmpC.left(arrayCn.length), 5);
+		if (posCn >= 0){
+			cante =  this.iface.cerosIzquierda(tmpC.mid(0 , posCn), 5);
+			cantd =  this.iface.cerosDerecha(tmpC.mid(posCn+1, 3), 3);
+		}
+		else{		
+			cante =  this.iface.cerosIzquierda(tmpC, 5);
+			cantd =  this.iface.cerosDerecha(0, 3);
+		}
 
-			cantd =  this.iface.cerosDerecha(tmpC.mid(arrayCn.length+1, 3), 3);
-
-			prie =  this.iface.cerosIzquierda(tmpP.left(arrayPriceEnt.length), 8);
-
-			prid =  this.iface.cerosDerecha(tmpP.mid(arrayPriceEnt.length+1, 2), 2);
+		if (posPri >= 0){
+			prie =  this.iface.cerosIzquierda(tmpP.mid(0 , posPri), 8);
+			prid =  this.iface.cerosDerecha(tmpP.mid(posPri+1, 2), 2);
+		}
+		else{		
+			prie =  this.iface.cerosIzquierda(tmpP, 8);
+			prid =  this.iface.cerosDerecha(0, 2);
+		}
 		
-			comando = "ä" + imp + prie + prid + cante + cantd + desc;
-			
+		if(qry.value(1) == "IVAE"){
+			comando = " " + prie + prid + cante + cantd + desc;
+			}else if(qry.value(1) == "IVA12") { 
+				comando = "!" + prie + prid + cante + cantd + desc;
+			}else if(qry.value(1) == "TASA2") { 
+				comando = '"' + prie + prid + cante + cantd + desc;
+			}else if(qry.value(1) == "TASA3") { 
+				comando = "#" + prie + prid + cante + cantd + desc;
+			}
+
 			curTrans.transaction(false);
 			try {
 				if (this.iface.sumarUno(qry.value(0))){
-					if(fis.readStatus()==4 || fis.readStatus()==1 ){
-						fis.sendCmd(comando);
-					}
+					//if(fis.readStatus()==4 || fis.readStatus()==5 ){
+						fis.sendCmd(status, error, comando);
+						fis.closedPort();
+				//	}
 					curTrans.commit();
 						
 				} else {
@@ -2087,13 +2565,15 @@ function oficial_unoMasBix()
 				curTrans.rollback();
 			}
 		}
+		
 	} else {
 		curTrans.transaction(false);
 		try {
 			if (this.iface.sumarUno(this.child("tdbLineasComanda").cursor().valueBuffer("idtpv_linea"))) {
-				if(fis.readStatus()==4 || fis.readStatus()==1 ){
-					fis.sendCmd(comando);
-				}
+				//if(fis.readStatus()==4 || fis.readStatus()==5 ){
+					fis.sendCmd(status, error, comando);
+					fis.closedPort();
+				//}
 				curTrans.commit();
 			} else {
 				curTrans.rollback();
@@ -2103,27 +2583,71 @@ function oficial_unoMasBix()
 		}
 	}
 	this.child("tdbLineasComanda").refresh();
-}
+	fis.closedPort();
+}*/
 
-function oficial_subtotal():Boolean {
+/*function oficial_subtotal():Boolean {
 
-	var fis:FLFiscalBixolon;
+	//var fis:FLFiscalBixolon;
 	var sub:String;
+//	var port:String= "COM1";
+	
+//	fis.openPort(port);
 	sub = "3";
-	if (fis.readStatus() == 4 || fis.readStatus() == 1) {
+//	if (fis.readStatus() == 5) {
 		fis.sendCmd(sub);
+		fis.closedPort();
 		return true;
 	} else {
+		fis.closedPort();
 		return false;
 	}
-}
+}*/
 
-function oficial_enviarPago():Boolean {
+
+/*function oficial_enviarPago() {
 	var cursor:FLSqlCursor = this.cursor();
 	var fis:FLFiscalBixolon;
 	var tp:String;
 	var monto:Number;
 	var comando:String;
+	var sub:String = "3";
+	var status:Number;
+	var error:String;
+	var resul:Number;
+
+	var port:String= "COM1";
+	
+	fis.openPort(port);
+
+	if(cursor.valueBuffer("tipopago") == "Efectivo") {
+		tp = "01";
+	} else if (cursor.valueBuffer("tipopago") == "Tarjeta") {
+		tp = "09";
+	}
+
+
+	comando = "101"; 
+
+	fis.senCmd(status, error, sub);
+	fis.senCmd(status, error, comando);
+	fis.closedPort();
+}*/
+
+/*function oficial_enviarPago():Boolean {
+	var cursor:FLSqlCursor = this.cursor();
+	var fis:FLFiscalBixolon;
+	var tp:String;
+	var monto:Number;
+	var comando:String;
+	var sub:String = "3";
+	var status:Number;
+	var error:String;
+	var resul:Number;
+
+	var port:String= "COM1";
+	
+	fis.openPort(port);
 
 	if(cursor.valueBuffer("tipopago") == "Efectivo") {
 		tp = "01";
@@ -2134,21 +2658,33 @@ function oficial_enviarPago():Boolean {
 
 	var tmpM:String = monto.toString();
 
-	var arrayMn:Array = tmpM.split(".");
-
-	mne =  this.iface.cerosIzquierda(tmpM.left(arrayMn.length), 10);
-
-	mnd =  this.iface.cerosDerecha(tmpM.mid(arrayMn.length+1, 2), 2);
-	
-	comando = "1" + tp + mne + mnd;
-
-	if(fis.readStatus() == 1 || fis.readStatus() == 4){
-		fis.senCmd(comando);
-		return true;
-	} else {
-		return false;
+	var posMn:Number = tmpM.search(".");
+	if (posMn >= 0){
+		mne =  this.iface.cerosIzquierda(tmpM.mid(0 , posMn), 10);
+		mnd =  this.iface.cerosDerecha(tmpM.mid(posMn+1, 2), 2);
 	}
-}
+	else{		
+		mne =  this.iface.cerosIzquierda(tmpM, 10);
+		mnd =  this.iface.cerosDerecha(0, 2);
+	}
+
+//	comando = "1" + tp + mne + mnd;
+
+	comando = "1" + tp; 
+
+		if(resul = fis.senCmd(status, error, sub)){
+		
+			resul = fis.senCmd(status, error, comando);		
+			fis.closedPort();
+			return true;
+		} else {
+		
+			MessageBox.warning(util.translate("scripts", "No se envió el comando"),MessageBox.Ok,MessageBox.NoButton,MessageBox.NoButton);
+			fis.closedPort();
+			return false;			
+		}
+
+}*/
 
 function oficial_total():Boolean
 {
