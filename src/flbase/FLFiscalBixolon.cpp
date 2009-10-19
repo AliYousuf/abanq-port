@@ -187,6 +187,7 @@ bool FLFiscalBixolon::sendCmd( int status, int _error, QString cmd ){
       				qDebug("FLFiscalBixolon sendCmd, No se Envió");
       				QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "No se Envió el comando" );
     			}
+	}else{
 	
 		qDebug("FLFiscalBixolon sendCmd");
 
@@ -221,7 +222,8 @@ int FLFiscalBixolon::sendCmd( QString cmd ) {
               qDebug("FLFiscalBixolon sendCmd, No se Envió");
               QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "No se Envió el comando" );
           }
-
+  }
+  else{
     qDebug("FLFiscalBixolon sendCmd");
 
     QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "Error en la Función" );
@@ -255,6 +257,7 @@ int FLFiscalBixolon::sendNcmd( int status, int _error,  QString cmd ){
 			qDebug("FLFiscalBixolon sendNcmd, No se Envió lotes de Comandos");
   			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "No se envió Comando" );
 		}
+	}else{
 		qDebug("FLFiscalBixolon sendNcmd");
   		QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "Hubo un error en la Función" );
 	}
@@ -290,6 +293,7 @@ int FLFiscalBixolon::sendNcmd( QString cmd ){
               QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "No se Envió el comando" );
 
           }
+  }else{
 
     qDebug("FLFiscalBixolon sendNcmd");
 
@@ -327,6 +331,7 @@ int FLFiscalBixolon::sendFile( int status, int _error,  QString file ){
   			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "Hubo error en el envío");
 
 		}
+	}else{
 
 		qDebug("FLFiscalBixolon sendFile");
   		QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "Hubo error en la función" );
@@ -367,6 +372,7 @@ int FLFiscalBixolon::sendFile( QString file ){
               QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "No se Envió el Archivo" );
 
           }
+  }else{
 
     qDebug("FLFiscalBixolon sendFile");
 
@@ -403,6 +409,7 @@ bool FLFiscalBixolon::uploadStatus( int status, int _error,  QString cmd,  QStri
 			qDebug("FLFiscalBixolon uploadStatus, Ocurrió un Error en el envio de status");
   			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", " error enviando status " );
 		}
+	}else{
 
 
 	qDebug("FLFiscalBixolon uploadStatus");
@@ -437,7 +444,7 @@ int FLFiscalBixolon::uploadStatus( QString cmd,  QString file ){
 			qDebug("FLFiscalBixolon uploadStatus, Ocurrió un Error en el envio de status");
   			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", " error enviando status " );
 		}
-
+	}else{
 
 	qDebug("FLFiscalBixolon uploadStatus");
   	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "Error en la Función" );
@@ -474,7 +481,7 @@ bool FLFiscalBixolon::uploadReport( int status, int _error,  QString cmd,  QStri
   			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", " error enviando reporte " );
 		}
 
-
+	}else{
 	qDebug("FLFiscalBixolon uploadReport");
   	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "Error en la Función" );
 	}
@@ -507,7 +514,7 @@ int FLFiscalBixolon::uploadReport( QString cmd,  QString file ){
   			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", " error enviando reporte " );
 		}
 
-
+	}else{
 	qDebug("FLFiscalBixolon uploadReport");
   	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "Error en la Función" );
 	}
