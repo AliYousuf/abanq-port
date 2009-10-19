@@ -16,9 +16,9 @@ FLFiscalBixolon::FLFiscalBixolon() {
 
 	lib = new QLibrary("fbix");
 
-	//qDebug("FLFiscalBixolon Constructor");
+	qDebug("FLFiscalBixolon Constructor");
 
-  	//QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "Constructor" );
+  	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "Constructor" );
 
   error = 0;
 	//verificado y OK!	
@@ -36,8 +36,8 @@ bool FLFiscalBixolon::openPort( QString port ) {
   // esta verificacion es iportante para asegurar que este definido el apuntador
   if(pFn) {
     result = pFn(const_cast<char *>(port.ascii()));
-    //qDebug(QString("openPort(%1), abierto correcto").arg(port).ascii());
-    //QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("openPort(%1), abierto correcto").arg(port) );
+    qDebug(QString("openPort(%1), abierto correcto").arg(port).ascii());
+    QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("openPort(%1), abierto correcto").arg(port) );
   } else {
     qDebug(QString("openPort(%1, Error)").arg(port).ascii());
     QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("openPort(%1, Error)").arg(port) );
@@ -64,8 +64,8 @@ bool FLFiscalBixolon::closedPort(){
     
   	  result = pFn();
   }
-  //qDebug("FLFiscalBixolon closedPort");
-  //QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "closedPort" );
+  qDebug("FLFiscalBixolon closedPort");
+  QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "closedPort" );
   return result;
 }
 
@@ -82,7 +82,10 @@ bool FLFiscalBixolon::checkPrinter( ){
 
     if(pFn){
     result = pFn();
-    if( !result ) {
+    if( result ) {
+      qDebug("FLFiscalBixolon checkPrinter, impresora lista");
+      QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "impresora lista" );
+    } else {
       qDebug("FLFiscalBixolon checkPrinter, impresora con error");
       QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "impresora con error" );
     }
@@ -111,9 +114,8 @@ bool FLFiscalBixolon::readStatus( int status, int _error ){
 	
 		result = pFn( st, err );
 		 if( result ) {
-      			//qDebug("FLFiscalBixolon readStatus, Lectura de Status");
-          //QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("readStatus( status=%1, error=%2)").arg(*st).arg(*err).ascii() );
-	  		QString("readStatus( status=%1, error=%2)").arg(*st).arg(*err).ascii();
+      			qDebug("FLFiscalBixolon readStatus, Lectura de Status");
+          QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("readStatus( status=%1, error=%2)").arg(*st).arg(*err).ascii() );
     		} else {
       			qDebug("FLFiscalBixolon readStatus, No hubo Retorno");
       			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "Sin Retorno de Status" );
@@ -144,9 +146,8 @@ int FLFiscalBixolon::readStatus(){
 
     result = pFn( &status, &error );
      if( result ) {
-            //qDebug("FLFiscalBixolon readStatus, Lectura de Status");
-	    // QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("readStatus( status=%1, error=%2)").arg(status).arg(error).ascii() );
-	    QString("readStatus( status=%1, error=%2)").arg(status).arg(error).ascii();
+            qDebug("FLFiscalBixolon readStatus, Lectura de Status");
+          QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("readStatus( status=%1, error=%2)").arg(status).arg(error).ascii() );
         } else {
             qDebug("FLFiscalBixolon readStatus, No hubo Retorno");
             QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "Sin Retorno de Status" );
@@ -180,9 +181,8 @@ bool FLFiscalBixolon::sendCmd( int status, int _error, QString cmd ){
 		result = pFn( st, err, const_cast<char *>(cmd.ascii()) );
 
 		 	if( result ) {
-      				//qDebug("FLFiscalBixolon sendCmd, Envío de Comando");
-            			//QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("sendCmd( status=%1, error=%2 cmd=%3").arg(*st).arg(*err).arg(cmd).ascii() );
-				QString("sendCmd( status=%1, error=%2 cmd=%3").arg(*st).arg(*err).arg(cmd).ascii();
+      				qDebug("FLFiscalBixolon sendCmd, Envío de Comando");
+            QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("sendCmd( status=%1, error=%2 cmd=%3").arg(*st).arg(*err).arg(cmd).ascii() );
     			} else {
       				qDebug("FLFiscalBixolon sendCmd, No se Envió");
       				QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "No se Envió el comando" );
@@ -216,9 +216,8 @@ int FLFiscalBixolon::sendCmd( QString cmd ) {
     result = pFn( &status, &error, const_cast<char *>(cmd.ascii()) );
 
       if( result ) {
-            //qDebug("FLFiscalBixolon sendCmd, Envío de Comando");
-            //QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("sendCmd( status=%1, error=%2 cmd=%3").arg(status).arg(error).arg(cmd).ascii() );
-	    QString("sendCmd( status=%1, error=%2 cmd=%3").arg(status).arg(error).arg(cmd).ascii();
+            qDebug("FLFiscalBixolon sendCmd, Envío de Comando");
+            QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("sendCmd( status=%1, error=%2 cmd=%3").arg(status).arg(error).arg(cmd).ascii() );
           } else {
               qDebug("FLFiscalBixolon sendCmd, No se Envió");
               QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "No se Envió el comando" );
@@ -251,9 +250,8 @@ int FLFiscalBixolon::sendNcmd( int status, int _error,  QString cmd ){
 
 		if(result){
 
-			//qDebug("FLFiscalBixolon sendNcmd, Envío de Lotes de Comandos");
-  			//QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("sendNCmd( status=%1, cmd=%2").arg(*st).arg(cmd).ascii() );	
-			QString("sendNCmd( status=%1, cmd=%2").arg(*st).arg(cmd).ascii();
+			qDebug("FLFiscalBixolon sendNcmd, Envío de Lotes de Comandos");
+  			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("sendNCmd( status=%1, cmd=%2").arg(*st).arg(cmd).ascii() );	
 
 		}else{
 			qDebug("FLFiscalBixolon sendNcmd, No se Envió lotes de Comandos");
@@ -284,10 +282,10 @@ int FLFiscalBixolon::sendNcmd( QString cmd ){
 
       if( result != 99 ) {
 
-            //qDebug("FLFiscalBixolon sendNcmd, Envío de lotes de Comandos");
+            qDebug("FLFiscalBixolon sendNcmd, Envío de lotes de Comandos");
 
-            //QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("sendNcmd( status=%1, error=%2 cmd=%3").arg(status).arg(error).arg(cmd).ascii() );
-	    QString("sendNcmd( status=%1, error=%2 cmd=%3").arg(status).arg(error).arg(cmd).ascii();
+            QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("sendNcmd( status=%1, error=%2 cmd=%3").arg(status).arg(error).arg(cmd).ascii() );
+	    
       } else {
 
               qDebug("FLFiscalBixolon sendNcmd, No se Envió lotes de comandos");
@@ -324,9 +322,8 @@ int FLFiscalBixolon::sendFile( int status, int _error,  QString file ){
 		result = pFn( st, err, const_cast<char *>(file.ascii()) );
 		if(result != 99){
 
-			//qDebug("FLFiscalBixolon sendFile, Se Envío Archivo");
-  			//QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("sendFile( status=%1, file=%2").arg(*st).arg(file).ascii());
-			QString("sendFile( status=%1, file=%2").arg(*st).arg(file).ascii();
+			qDebug("FLFiscalBixolon sendFile, Se Envío Archivo");
+  			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("sendFile( status=%1, file=%2").arg(*st).arg(file).ascii());
 
 		}else{
 
@@ -364,10 +361,10 @@ int FLFiscalBixolon::sendFile( QString file ){
 
       if( result != 99 ) {
 
-            //qDebug("FLFiscalBixolon sendFile, Envío de Archivo");
+            qDebug("FLFiscalBixolon sendFile, Envío de Archivo");
 
-            //QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("sendFile( status=%1, error=%2 cmd=%3").arg(status).arg(error).arg(file).ascii() );
-	    QString("sendFile( status=%1, error=%2 cmd=%3").arg(status).arg(error).arg(file).ascii();
+            QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("sendFile( status=%1, error=%2 cmd=%3").arg(status).arg(error).arg(file).ascii() );
+	    
       } else {
 
               qDebug("FLFiscalBixolon sendFile, No se Envió Archivo");
@@ -405,9 +402,9 @@ bool FLFiscalBixolon::uploadStatus( int status, int _error,  QString cmd,  QStri
 
 		if(result){
 
-			//qDebug("FLFiscalBixolon uploadStatus, Se envió correctamente Archivo de Status");
-  			//QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("uploadStatus( status=%1, cmd=%2 file=%3").arg(*st).arg(cmd).arg(file).ascii() );
-			QString("uploadStatus( status=%1, cmd=%2 file=%3").arg(*st).arg(cmd).arg(file).ascii();
+			qDebug("FLFiscalBixolon uploadStatus, Se envió correctamente Archivo de Status");
+  			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("uploadStatus( status=%1, cmd=%2 file=%3").arg(*st).arg(cmd).arg(file).ascii() );
+
 		}else{
 			qDebug("FLFiscalBixolon uploadStatus, Ocurrió un Error en el envio de status");
   			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", " error enviando status " );
@@ -440,9 +437,9 @@ int FLFiscalBixolon::uploadStatus( QString cmd,  QString file ){
 
 		if(result){
 
-			//qDebug("FLFiscalBixolon uploadStatus, Se envió correctamente Archivo de Status");
-  			//QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("uploadStatus( status=%1, cmd=%2 file=%3").arg(status).arg(cmd).arg(file).ascii() );
-			QString("uploadStatus( status=%1, cmd=%2 file=%3").arg(status).arg(cmd).arg(file).ascii();
+			qDebug("FLFiscalBixolon uploadStatus, Se envió correctamente Archivo de Status");
+  			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("uploadStatus( status=%1, cmd=%2 file=%3").arg(status).arg(cmd).arg(file).ascii() );
+
 		}else{
 			qDebug("FLFiscalBixolon uploadStatus, Ocurrió un Error en el envio de status");
   			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", " error enviando status " );
@@ -476,9 +473,8 @@ bool FLFiscalBixolon::uploadReport( int status, int _error,  QString cmd,  QStri
 
 		if(result){
 
-			//qDebug("FLFiscalBixolon uploadReport, Se envió correctamente Archivo de Reporte");
-  			//QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("uploadReport( status=%1, cmd=%2 file=%3").arg(*st).arg(cmd).arg(file).ascii() );
-			QString("uploadReport( status=%1, cmd=%2 file=%3").arg(*st).arg(cmd).arg(file).ascii();
+			qDebug("FLFiscalBixolon uploadReport, Se envió correctamente Archivo de Reporte");
+  			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("uploadReport( status=%1, cmd=%2 file=%3").arg(*st).arg(cmd).arg(file).ascii() );
 
 		}else{
 			qDebug("FLFiscalBixolon uploadReport, Ocurrió un Error en el envio de reporte");
@@ -510,9 +506,9 @@ int FLFiscalBixolon::uploadReport( QString cmd,  QString file ){
 
 		if(result){
 
-			//qDebug("FLFiscalBixolon uploadReport, Se envió correctamente Archivo de Reporte");
-  			//QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("uploadReport( status=%1, cmd=%2 file=%3").arg(status).arg(cmd).arg(file).ascii() );
-			QString("uploadReport( status=%1, cmd=%2 file=%3").arg(status).arg(cmd).arg(file).ascii();
+			qDebug("FLFiscalBixolon uploadReport, Se envió correctamente Archivo de Reporte");
+  			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", QString("uploadReport( status=%1, cmd=%2 file=%3").arg(status).arg(cmd).arg(file).ascii() );
+
 		}else{
 			qDebug("FLFiscalBixolon uploadReport, Ocurrió un Error en el envio de reporte");
   			QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", " error enviando reporte " );
@@ -532,7 +528,7 @@ FLFiscalBixolon::~FLFiscalBixolon(){
 
 	lib->unload();
 	
-	//qDebug("FLFiscalBixolon Destructor");
+	qDebug("FLFiscalBixolon Destructor");
   	
-	//QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "Destructor" );	
+	QMessageBox::information( qApp->mainWidget(), "FLFiscalBixolon", "Destructor" );	
 };
