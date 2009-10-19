@@ -35,6 +35,22 @@ class interna {
 	function calculateField(fN:String):String {
 		return this.ctx.interna_calculateField(fN);
 	}
+		/////////////////////////////////////////
+	function cerosIzquierda(numero:String, totalCifras:Number):String{
+		return this.ctx.oficial_cerosIzquierda(numero, totalCifras);
+	}
+	function cerosDerecha(numero:String, totalCifras:Number):String{
+		return this.ctx.oficial_cerosDerecha(numero, totalCifras);
+	}
+
+	function espaciosDerecha(cad:String, totalCifras:Number):String {
+		return this.ctx.oficial_espaciosDerecha( cad, totalCifras );
+	}
+	function enviarLinea() {
+		return this.ctx.oficial_enviarLinea( );
+	}
+
+	////////////////////////////////////////
 }
 //// INTERNA /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
@@ -48,15 +64,7 @@ class oficial extends interna {
 	function bufferChanged(fN:String) {
 		return this.ctx.oficial_bufferChanged(fN);
 	}
-	function enviarBixolon():Boolean {
-		return this.ctx.oficial_enviarBixolon();
-	}
-	function cerosIzquierda() {
-		return this.ctx.oficial_cerosIzquierda();
-	}
-	function cerosDerecha() {
-		return this.ctx.oficial_cerosDerecha();
-	}
+
 }
 //// OFICIAL /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
@@ -66,6 +74,7 @@ class oficial extends interna {
 //// DESARROLLO /////////////////////////////////////////////////
 class head extends oficial {
 	function head( context ) { oficial ( context ); }
+
 }
 //// DESARROLLO /////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
@@ -75,7 +84,10 @@ class head extends oficial {
 //// INTERFACE  /////////////////////////////////////////////////
 class ifaceCtx extends head {
     function ifaceCtx( context ) { head( context ); }
+    
+
 }
+
 
 const iface = new ifaceCtx( this );
 //// INTERFACE  /////////////////////////////////////////////////
@@ -97,7 +109,7 @@ function interna_init()
 
 	var idComanda:String = util.sqlSelect("tpv_vales", "idtpv_comanda", "referencia = '" + cursor.valueBuffer("refvale") + "'");
 	this.child("fdbIdLinea").setFilter("idtpv_comanda = " + idComanda);
-
+	
 	switch (cursor.modeAccess()) {
 		case cursor.Insert: {
 			var codTerminal:String = util.readSettingEntry("scripts/fltpv_ppal/codTerminal");
@@ -111,110 +123,9 @@ function interna_init()
 			break;
 		}
 	}
-	connect(cursor, "bufferChanged(QString)", this, "iface.bufferChanged");
-
-	this.iface.enviarBixolon();
-}
-
-function oficial_enviarBixolon():Boolean
-{
-		/* Pedazo de Software para enviar datos a la impresora*/
-		   /* Variable para Instanciar la clase FLFiscalBixolon*/
-			
-		   	var cursor:FLSqlCursor = this.cursor();
-		   	var fis:FLFiscalBixolon;
-		  	var num:FLUtilInterface; 
-		   	var imp:String;
-		   	var cn:Double;
-		   	var price:Double;
-		   	var descrip:String;
-		   	var desc:String;
-		   	var cne:Number;
-			var cnd:Number;
-			var pricee:Number;
-			var priced:Number;
-			var cante:String;
-			var cantd:String;
-			var prie:String;
-			var prid:String;
-			var comando:String;
-			var status:Number; 
-		        var error:Number;
-		        var comando:String;
-
-			if(!fis.OpenPort("COM1")){
-				return false;
-			}
-			if(this.iface.calculateField("iva") == 0){
-				imp = " ";
-			}
-			else { 
-				imp = "!";
-			}
-			
-			cn = parseFloat(cursor.valueBuffer("cantidad"));
-			price = parseFloat(this.iface.calculateField("pvptotal"));
-			descrip = this.iface.calculateField("descripcion");
-
-			if(descrip.length == 40)
-				desc = descrip;
-			else if(descrip.length < 40)
-				desc = this.iface.espaciosDerecha(descrip, 40); 
-			else if (descrip.length > 40)
-				desc = descrip.mid(0,40);
-				
-			cne = num.partInteger(cn);
-			cnd = num.partDecimal(cn);
-			pricee = num.partInteger(price);
-			priced = num.partDecimal(price);
-			cante =  this.iface.cerosIzquierda(cne, 8);
-			cantd =  this.iface.cerosDerecha(cnd, 3);
-			prie =  this.iface.cerosIzquierda(pricee, 8);
-			prid =  this.iface.cerosDerecha(priced, 2);
-			
-			comando = "d" + imp + prie + prid + cante + cantd + desc;
-			
-			if (fis.SendCmd(status, error, comando))
-				return true;
-			else
-				return false;
-		/* Hasta Aquí*/
-
 	
+	connect(cursor, "bufferChanged(QString)", this, "iface.bufferChanged");
 }
-
-
-
-function oficial_cerosIzquierda(numero:String, totalCifras:Number):String
-{
-				var ret:String = numero.toString();
-				var numCeros:Number = totalCifras - ret.length;
-				for ( ; numCeros > 0 ; --numCeros)
-					ret = "0" + ret;
-				return ret;
-}
-
-function oficial_cerosDerecha(numero:String, totalCifras:Number):String
-{
-				var ret:String = numero.toString();
-				var numCeros:Number = totalCifras - ret.length;
-				for ( ; numCeros > 0 ; --numCeros)
-					ret = ret + "0";
-				return ret;
-}
-
-function oficial_espaciosDerecha(cad:String, totalCifras:Number):String
-{
-				var ret:String = cad.toString();
-				var numEsp:Number = totalCifras - ret.length;
-				for ( ; numEsp > 0 ; --numEsp)
-					ret = ret + " ";
-				return ret;
-}
-
-
-
-
 
 function interna_validateForm():Boolean
 {
@@ -234,6 +145,8 @@ function interna_validateForm():Boolean
 			}
 		}
 	}
+	this.iface.enviarLinea();
+	
 	return true;
 }
 
@@ -255,19 +168,42 @@ function interna_calculateField(fN:String):String
 			valor = util.roundFieldValue(valor, "tpv_lineasvale", "pvptotal");
 			break;
 		}
-
-		case "iva": {
+		case "pvpunitario": {
 			var idLinea:String = cursor.valueBuffer("idtpv_linea");
-			var valor:Number = util.sqlSelect("tpv_lineascomanda", "iva", "idtpv_linea = " + idLinea);
-			if (!porIva || isNaN(porIva))
-				porIva = 0;
+
+			var porIva:Number = util.sqlSelect("tpv_lineascomanda", "pvpunitario", "idtpv_linea = " + idLinea);
+			valor = porIva.toString();
+			
 			break;
+		}
+		case "iva": {
+			
+			var idLinea:String = cursor.valueBuffer("idtpv_linea");
+
+			valor = util.sqlSelect("tpv_lineascomanda", "codimpuesto", "idtpv_linea = " + idLinea);
+			
+			break;
+			
 		}
 		case "descripcion": {
+
 			var idLinea:String = cursor.valueBuffer("idtpv_linea");
-			var valor:Number = util.sqlSelect("tpv_lineascomanda", "descripcion", "idtpv_linea = " + idLinea);
+
+			valor = util.sqlSelect("tpv_lineascomanda", "descripcion", "idtpv_linea = " + idLinea);
+
 			break;
 		}
+
+		case "cantidad": {
+
+			var idLinea:String = cursor.valueBuffer("idtpv_linea");
+
+			var porIva:Number = util.sqlSelect("tpv_lineascomanda", "cantidad", "idtpv_linea = " + idLinea);
+			valor = porIva.toString();
+			
+			break;
+		}
+		
 	}
 	return valor;
 }
@@ -275,7 +211,7 @@ function interna_calculateField(fN:String):String
 /** @class_definition oficial */
 /////////////////////////////////////////////////////////////////
 //// OFICIAL ////////////////////////////////////////////////////
-function oficial_bufferChanged(fN:String)
+function oficial_bufferChanged(fN:String)	
 {
 	var cursor:FLSqlCursor = this.cursor();
 	switch (fN) {
@@ -283,8 +219,127 @@ function oficial_bufferChanged(fN:String)
 			this.child("fdbPvpTotal").setValue(this.iface.calculateField("pvptotal"));
 			break;
 		}
+
 	}
 }
+
+function oficial_enviarLinea()
+{
+	var fis:FLFiscalBixolon;
+	var error:Number;
+	var status:Number;
+	var port:String = "COM1";
+	var imp:String;
+	var cn:Number;
+	var price:Number;
+	var cante:String;
+	var cantd:String;
+	var prie:String;
+	var prid:String;
+	var cmd:String;
+
+	fis.openPort(port);
+	
+	if(this.iface.calculateField("iva") == "IVAE")
+		imp = "0";
+	else if(this.iface.calculateField("iva") == "IVA12") 
+		imp = "1";
+	else if(this.iface.calculateField("iva") == "TASA2") 
+		imp = "2";
+	else if(this.iface.calculateField("iva") == "TASA3") 
+		imp = "3";
+
+	var desc:String = this.iface.calculateField("descripcion");
+	var descrip:String;
+
+	if(this.iface.calculateField("iva") == "IVAE")
+		desc = desc + " (E)";
+	else 
+		desc = desc + " (G)";
+
+	if (desc.length < 39){
+		descrip = this.iface.espaciosDerecha(desc, 39);
+	}else if (desc.length > 39){
+		descrip = desc.mid(0, 39);
+	}else {
+		descrip = desc;
+	}
+
+	
+	cn = parseFloat(this.iface.calculateField("cantidad"));
+
+	price = parseFloat(this.iface.calculateField("pvpunitario"));
+
+	var tmpC:String = cn.toString();
+
+	var tmpP:String = price.toString();
+
+	var posCn:Number = tmpC.search(".");
+
+	var posPri:Number = tmpP.search(".");
+
+	if (posCn >= 0){
+
+		
+		cante =  this.iface.cerosIzquierda(tmpC.mid(0 , posCn), 5);
+
+		cantd =  this.iface.cerosDerecha(tmpC.mid(posCn+1, 3), 3);
+	}
+	else{
+		
+		cante =  this.iface.cerosIzquierda(tmpC, 5);
+		cantd =  this.iface.cerosDerecha(0, 3);
+
+	}
+
+	if (posPri >= 0){
+
+		prie =  this.iface.cerosIzquierda(tmpP.mid(0 , posPri), 8);
+		prid =  this.iface.cerosDerecha(tmpP.mid(posPri+1, 2), 2);
+	}
+	else{
+		
+		prie =  this.iface.cerosIzquierda(tmpP, 8);
+		prid =  this.iface.cerosDerecha(0, 2);
+
+	}
+	
+	cmd = "d" + imp + prie + prid + cante + cantd + descrip;
+	fis.sendCmd(status, error, cmd);
+	fis.closedPort();
+}
+
+
+
+function oficial_espaciosDerecha(cad:String, totalCifras:Number):String
+{
+	var ret:String = cad.toString();
+	var numEsp:Number = totalCifras - ret.length;
+	for ( ; numEsp > 0 ; --numEsp)
+		ret = ret + " ";
+		return ret;
+}
+
+function oficial_cerosIzquierda(numero:String, totalCifras:Number):String
+{
+				var ret:String = numero.toString();
+				var numCeros:Number = totalCifras - ret.length;
+				for ( ; numCeros > 0 ; --numCeros)
+					ret = "0" + ret;
+				return ret;
+}
+
+function oficial_cerosDerecha(numero:String, totalCifras:Number):String
+{
+				var ret:String = numero.toString();
+				var numCeros:Number = totalCifras - ret.length;
+				for ( ; numCeros > 0 ; --numCeros)
+					ret = ret + "0";
+				return ret;
+}
+
+
+
 //// OFICIAL /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
 

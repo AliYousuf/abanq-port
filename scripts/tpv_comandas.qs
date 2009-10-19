@@ -233,7 +233,7 @@ function interna_init()
 
 	MessageBox.information(util.translate("Enviar Articulo", this.iface.enviarPago() ),MessageBox.Ok,MessageBox.NoButton);
 	
-	MessageBox.information(util.translate("Cadena", " comando a enviar '" + this.iface.enviarBixolon() + "'" ),MessageBox.Ok,MessageBox.NoButton)*/
+//	MessageBox.information(util.translate("Cadena", " comando a enviar '" + this.iface.enviarBixolon() + "'" ),MessageBox.Ok,MessageBox.NoButton)*/
 	this.iface.bloqueoProvincia = false;
 
 	if (!this.iface.curLineas)
@@ -734,11 +734,11 @@ function oficial_realizarPago():Boolean
 	comando = "2" + tipoPago + mne + mnd;
 
 	//////////////////////////
-	if(1){	
+	/*if(1){	
 	MessageBox.warning(util.translate("scripts", "valor" + subtotal), MessageBox.Ok, MessageBox.NoButton);
 
 	MessageBox.warning(util.translate("scripts", "valor" + comando), MessageBox.Ok, MessageBox.NoButton);
-	}
+	}*/
 	
 	fis.sendCmd(status, error, subtotal);
 
@@ -1459,8 +1459,8 @@ function oficial_insertarLineaClicked()
 
 /////////////////////////Enviar Datos a la Impresora Bixolon y aclas
 
-	//this.iface.datosCliente();
-	//this.iface.enviarBixolon();
+	this.iface.datosCliente();
+	this.iface.enviarBixolon();
 
 ////////////////////////
 
@@ -2076,7 +2076,7 @@ function oficial_datosCliente():Boolean
 		nom = nombre;
 	}
 		
-       cmd1 = "i01" + nom;
+       cmd1 = "i01Nombre: " + nom;
        
        	if (cedula.length < 39){
 		ced = this.iface.espaciosDerecha(cedula, 39);
@@ -2087,7 +2087,7 @@ function oficial_datosCliente():Boolean
 		ced = cedula;
 	}
 
-       cmd2 = "i02" + ced; 
+       cmd2 = "i02RIF/CI: " + ced; 
 
        if (direccion.length < 39){
 		dir = this.iface.espaciosDerecha(direccion, 39);
@@ -2098,7 +2098,7 @@ function oficial_datosCliente():Boolean
 		dir = direccion;
 	}
 
-	cmd3 = "i03" + dir;
+	cmd3 = "i03Direccion: " + dir;
 
 	if( fis.readStatus() == 5 || fis.readStatus() == 4 ){
 		

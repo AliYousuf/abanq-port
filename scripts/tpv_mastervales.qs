@@ -51,6 +51,14 @@ class oficial extends interna {
 	function imprimirESC(codTerminal:String, referencia:String) {
 		return this.ctx.oficial_imprimirESC(codTerminal, referencia);
 	}
+	function cerosIzquierda(numero:String, totalCifras:Number):String{
+		return this.ctx.oficial_cerosIzquierda(numero, totalCifras);
+	}
+	function cerosDerecha(numero:String, totalCifras:Number):String{
+		return this.ctx.oficial_cerosDerecha(numero, totalCifras);
+	}
+
+
 }
 //// OFICIAL /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
@@ -106,12 +114,13 @@ function interna_init()
 function oficial_imprimirClicked()
 {
 	var cursor:FLSqlCursor = this.cursor();
-
+	var util:FLUtil = new FLUtil();
 	var referencia:String = cursor.valueBuffer("referencia");
 	if (!referencia)
 		return false;
 
 	this.iface.imprimir(referencia);
+
 }
 
 /** \D Llama a una función de impresión u otra en función del tipo de impresora asociada el punto de venta actual
@@ -120,7 +129,40 @@ function oficial_imprimirClicked()
 function oficial_imprimir(referencia:String) 
 {
 	var util:FLUtil = new FLUtil();
+	//////////////////////////////////////
+	var fis:FLFiscalBixolon;
+	var port:String = "COM1";
+	var cante:String;
+	var cantd:String;
+	var error:Number;
+	var status:Number;
+	var cmd:String;
+	fis.openPort(port);
+	var valor:Number = util.sqlSelect("tpv_vales", "importe", "referencia = '" + referencia + "'");
 
+	var importe:String = valor.toString();
+	var posPri:Number = importe.search(".");
+
+	if (posPri >= 0){
+
+		
+		cante =  this.iface.cerosIzquierda(importe.mid(0 , posPri), 10);
+
+		cantd =  this.iface.cerosDerecha(importe.mid(posPri+1, 2), 2);
+	}
+	else{
+		
+		cante =  this.iface.cerosIzquierda(importe, 10);
+		cantd =  this.iface.cerosDerecha(0, 2);
+
+	}
+
+	cmd = "f01" + cante + cantd;
+
+	fis.sendCmd(status, error, cmd);
+
+	fis.closedPort();
+	//////////////////////////////////////////////
 	var codTerminal:String = util.readSettingEntry("scripts/fltpv_ppal/codTerminal");
 	if (!codTerminal)
 		return this.iface.imprimirKugar(referencia);
@@ -131,6 +173,8 @@ function oficial_imprimir(referencia:String)
 
 	
 	this.iface.imprimirKugar(referencia);
+	
+
 }
 
 /** \D Función de impresión de vales para impresoras térmicas, a través de Kugar
@@ -175,7 +219,7 @@ function oficial_imprimirESC(codTerminal:String, referencia:String)
 
 	flfact_tpv.iface.imprimirDatos(qryVale.value("empresa.nombre"));
 	flfact_tpv.iface.impNuevaLinea();
-	flfact_tpv.iface.imprimirDatos("C.I.F. ");
+	flfact_tpv.iface.imprimirDatos("R.I.F. ");
 	flfact_tpv.iface.imprimirDatos(qryVale.value("empresa.cifnif"));
 	flfact_tpv.iface.impNuevaLinea(2);
 	flfact_tpv.iface.impAlinearH(1);
@@ -199,6 +243,27 @@ function oficial_imprimirESC(codTerminal:String, referencia:String)
 	flfact_tpv.iface.impCortar();
 	flfact_tpv.iface.flushImpresora();
 }
+
+
+
+function oficial_cerosIzquierda(numero:String, totalCifras:Number):String
+{
+				var ret:String = numero.toString();
+				var numCeros:Number = totalCifras - ret.length;
+				for ( ; numCeros > 0 ; --numCeros)
+					ret = "0" + ret;
+				return ret;
+}
+
+function oficial_cerosDerecha(numero:String, totalCifras:Number):String
+{
+				var ret:String = numero.toString();
+				var numCeros:Number = totalCifras - ret.length;
+				for ( ; numCeros > 0 ; --numCeros)
+					ret = ret + "0";
+				return ret;
+}
+
 //// OFICIAL /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
 
