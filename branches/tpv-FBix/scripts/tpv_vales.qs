@@ -49,15 +49,23 @@ class oficial extends interna {
 	function calcularTotales() {
 		return this.ctx.oficial_calcularTotales();
 	}
-	function cierreDevolucion() {
-		return this.ctx.oficial_cierreDevolucion();
+	/////////////////////////////////////////
+	function cerosIzquierda(numero:String, totalCifras:Number):String{
+		return this.ctx.oficial_cerosIzquierda(numero, totalCifras);
 	}
-	function cerosIzquierda() {
-		return this.ctx.oficial_cerosIzquierda();
+	function cerosDerecha(numero:String, totalCifras:Number):String{
+		return this.ctx.oficial_cerosDerecha(numero, totalCifras);
 	}
-	function cierreDevolucion() {
-		return this.ctx.oficial_cerosDerecha();
+	function encontrarSerial():String {
+		return this.ctx.oficial_encontrarSerial();
 	}
+	function espaciosDerecha(cad:String, totalCifras:Number):String {
+		return this.ctx.oficial_espaciosDerecha( cad, totalCifras );
+	}
+	function enviarNotaCredito() {
+		return this.ctx.oficial_enviarNotaCredito( );
+	}
+	////////////////////////////////////////
 }
 //// OFICIAL /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
@@ -67,6 +75,14 @@ class oficial extends interna {
 //// DESARROLLO /////////////////////////////////////////////////
 class head extends oficial {
 	function head( context ) { oficial ( context ); }
+	///////////////////////////////////
+	function pub_calculateField(fN:String):String {
+		return this.calculateField(fN);
+	}
+	function pub_encontrarSerial():String {
+		return this.encontrarSerial();
+	}
+	///////////////////////////////////
 }
 //// DESARROLLO /////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
@@ -103,8 +119,21 @@ function interna_init()
 
 	connect(cursor, "bufferChanged(QString)", this, "iface.bufferChanged");
 	connect(this.iface.tdbLineasVale.cursor(), "bufferCommited()", this, "iface.calcularTotales()");
+
+	//////////////////////////////////////////////////
+	/*if(1){
+		MessageBox.warning(util.translate("scripts", "valor1 " + parseFloat(this.iface.calculateField("comanda"))), MessageBox.Ok, MessageBox.NoButton);
+		MessageBox.warning(util.translate("scripts", "valor2 " + this.iface.calculateField("nombrecliente")), MessageBox.Ok, MessageBox.NoButton);
+		MessageBox.warning(util.translate("scripts", "valor3 " + this.iface.calculateField("cedrif")), MessageBox.Ok, MessageBox.NoButton);
+		MessageBox.warning(util.translate("scripts", "valor4 " + this.iface.calculateField("fecha")), MessageBox.Ok, MessageBox.NoButton);
+		//MessageBox.warning(util.translate("scripts", "valor5 " + this.iface.enviarNotaCredito()), MessageBox.Ok, MessageBox.NoButton);
+	}
+	MessageBox.warning(util.translate("scripts", "valor6 " + this.iface.encontrarSerial()), MessageBox.Ok, MessageBox.NoButton);*/
+
+	this.iface.enviarNotaCredito();
+
+	/////////////////////////////////////////////////
 	
-	this.iface.cierreDevolucion();
 	switch (cursor.modeAccess()) {
 		case cursor.Insert: {
 			this.child("fdbReferencia").setValue(this.iface.calculateField("referencia"));
@@ -153,6 +182,48 @@ function interna_calculateField(fN:String):String
 			valor = util.sqlSelect("tpv_comandas", "codigo", "idtpv_comanda = " + idComanda) + "-" + flfacturac.iface.cerosIzquierda(numRefs, 3);
 			break;
 		}
+		////////////////////////////////////////////////////////
+		case "comanda": {
+			var idComanda:String = cursor.valueBuffer("idtpv_comanda");
+			if (!idComanda)
+				break;
+			valor = util.sqlSelect("tpv_comandas", "codigo", "idtpv_comanda = " + idComanda);
+			break;
+		}
+
+		case "nombrecliente": {
+			var idComanda:String = cursor.valueBuffer("idtpv_comanda");
+			if (!idComanda)
+				break;
+			valor = util.sqlSelect("tpv_comandas", "nombrecliente", "idtpv_comanda = " + idComanda);
+			break;
+		}
+		case "cedrif": {
+			var idComanda:String = cursor.valueBuffer("idtpv_comanda");
+			if (!idComanda)
+				break;
+			var codcli:String = util.sqlSelect("tpv_comandas", "codcliente", "idtpv_comanda = " + idComanda);
+			if (!codcli)
+				break;
+
+			valor = util.sqlSelect("clientes", "cifnif", "codcliente = '" + codcli + "'");
+			break;
+		}
+		case "fecha": {
+			var idComanda:String = cursor.valueBuffer("idtpv_comanda");
+			if (!idComanda)
+				break;
+			valor = util.sqlSelect("tpv_comandas", "fecha", "idtpv_comanda = " + idComanda);
+			break;
+		}
+		case "hora": {
+			var idComanda:String = cursor.valueBuffer("idtpv_comanda");
+			if (!idComanda)
+				break;
+			valor = util.sqlSelect("tpv_comandas", "hora", "idtpv_comanda = " + idComanda);
+			break;
+		}
+		/////////////////////////////////////////////////////////
 	}
 	return valor;
 }
@@ -202,30 +273,38 @@ function oficial_calcularTotales()
 	this.child("fdbImporte").setValue(totalVale);
 }
 
-function oficial_cierreDevolucion(){
+function oficial_encontrarSerial():String
+{
+	var fis:FLFiscalBixolon;
+	var error:Number;
+	var status:Number;
+	var port:String = "COM1";
+	var cmd:String = "S1";
+	var temporal = System.getenv( "TMP" );
+	if ( temporal.isEmpty() )
+		temporal = System.getenv( "TMPDIR" );
+	if ( temporal.isEmpty() )
+		temporal = System.getenv( "HOME" );
+	if ( temporal.isEmpty() )
+		temporal = sys.installPrefix() + "/share/facturalux/tmp";
 
-			var cursor:FLSqlCursor = this.cursor();
-		   	var fis:FLFiscalBixolon;
-		  	var num:FLUtilInterface; 
-		   	var price:Double;
-			var pricee:Number;
-			var priced:Number;
-			var pent:String;
-			var pdec:String;
-			var status:Number; 
-		        var error:Number;
-			var cmd:String;
-			price=parseFloat(this.child("fdbImporte").value());
-			pricee=num.partInteger(price);
-			priced=num.partDecimal(price);	
-			pent = this.face.cerosIzquierda(pricee, 10);
-			pdec = this.face.cerosDerecha(priced, 2);
+	fis.openPort(port);
 
-			cmd = "f01" + pent + pdec;
-		       	fis.SendCmd(status, error, cmd);	
+	var arch:String = temporal + "\\status.txt";
 
+	fis.uploadStatus(status, error, cmd, arch);
 
+	fis.closedPort();
+
+	var archivo = new File(arch);
+	archivo.open( File.ReadOnly );
+	var linea:String = archivo.read();
+	archivo.close();
+
+	var serial:String = linea.mid(66,10);
+	return serial;
 }
+
 function oficial_cerosIzquierda(numero:String, totalCifras:Number):String
 {
 				var ret:String = numero.toString();
@@ -242,6 +321,88 @@ function oficial_cerosDerecha(numero:String, totalCifras:Number):String
 				for ( ; numCeros > 0 ; --numCeros)
 					ret = ret + "0";
 				return ret;
+}
+
+function oficial_enviarNotaCredito()
+{
+	var fis:FLFiscalBixolon;
+	var error:Number;
+	var status:Number;
+	var port:String = "COM1";
+	var cmd1:String;
+	var cmd2:String;
+	var cmd3:String;
+	var cmd4:String;
+	var cmd5:String;
+	fis.openPort(port);
+	var c1:String = "i01Nombre: " + this.iface.calculateField("nombrecliente");
+	if (c1.length < 39){
+		cmd1 = this.iface.espaciosDerecha(c1, 39);
+	}else if (c1.length > 39){
+		cmd1 = c1.mid(0, 39);
+	}else {
+		cmd1 = c1;
+	}
+
+	fis.sendCmd(status, error, cmd1);
+
+	var c2:String = "i02RIF/Ced.: " + this.iface.calculateField("cedrif");
+	if (c2.length < 39){
+		cmd2 = this.iface.espaciosDerecha(c2, 39);
+	}else if (c2.length > 39){
+		cmd2 = c2.mid(0, 39);
+	}else {
+		cmd2 = c2;
+	}
+
+	fis.sendCmd(status, error, cmd2);
+
+	var fact:Number = parseFloat(this.iface.calculateField("comanda"));
+
+	var factura:String = this.iface.cerosIzquierda(fact.toString(),8);
+
+	var c3:String = "i03Nro.Fact.Devol:  " + factura;
+	if (c3.length < 39){
+		cmd3 = this.iface.espaciosDerecha(c3, 39);
+	}else if (c3.length > 39){
+		cmd3 = c3.mid(0, 39);
+	}else {
+		cmd3 = c3;
+	}
+
+	fis.sendCmd(status, error, cmd3);
+
+	fis.closedPort();
+
+	var c4:String = "i04Nro.Reg.Maquina:  " + this.iface.encontrarSerial();
+	if (c4.length < 39){
+		cmd4 = this.iface.espaciosDerecha(c4, 39);
+	}else if (c4.length > 39){
+		cmd4 = c4.mid(0, 39);
+	}else {
+		cmd4 = c4;
+	}
+	fis.openPort(port);
+	fis.sendCmd(status, error, cmd4);
+	var c5:String = "i05Fecha:  " + this.iface.calculateField("fecha") + " Hora: " + this.iface.calculateField("hora");
+	if (c5.length < 39){
+		cmd5 = this.iface.espaciosDerecha(c5, 39);
+	}else if (c5.length > 39){
+		cmd5 = c5.mid(0, 39);
+	}else {
+		cmd5 = c5;
+	}
+	fis.sendCmd(status, error, cmd5);
+	fis.closedPort();
+}
+
+function oficial_espaciosDerecha(cad:String, totalCifras:Number):String
+{
+	var ret:String = cad.toString();
+	var numEsp:Number = totalCifras - ret.length;
+	for ( ; numEsp > 0 ; --numEsp)
+		ret = ret + " ";
+		return ret;
 }
 
 //// OFICIAL /////////////////////////////////////////////////////

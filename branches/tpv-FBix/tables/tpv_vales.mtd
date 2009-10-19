@@ -51,6 +51,7 @@
 		<null>false</null>
 		<pk>false</pk>
 		<type>date</type>
+		<length>10</length>
 	</field>
 
 	<field>
@@ -60,6 +61,7 @@
 		<null>false</null>
 		<pk>false</pk>
 		<type>date</type>
+		<length>10</length>
 	</field>
 
 	<field>
