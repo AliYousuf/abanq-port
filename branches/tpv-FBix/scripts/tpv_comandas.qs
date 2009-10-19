@@ -1950,8 +1950,9 @@ function oficial_enviarBixolon() {
  	var error:Number;
 	var comando:String;
 	var port:String= "COM1";
-	fis.openPort(port);
-
+	
+	if(fis.openPort(port)){
+	
 	if (!this.iface.curLineas){
 
 		this.iface.curLineas = this.child("tdbLineasComanda").cursor();
@@ -2031,9 +2032,11 @@ function oficial_enviarBixolon() {
 		comando = "#" + prie + prid + cante + cantd + desc;
 	}
 
-//	if(fis.readStatus() == 4 || fis.readStatus() == 5 ){
+	fis.sendCmd(status, error, comando);
 
-		fis.sendCmd(status, error, comando);
+	}else{
+		MessageBox.information(util.translate("enviarBixolon", "Error abriendo puerto" ),MessageBox.Ok,MessageBox.NoButton);
+	}
 		
 		fis.closedPort();
 		
@@ -2059,9 +2062,11 @@ function oficial_datosCliente():Boolean
 	var cmd1:String;
 	var cmd2:String;
 	var cmd3:String;
+	var error:Number;
+	var status:Number;
 	var port:String= "COM1";
 
-	fis.openPort(port);
+	if(fis.openPort(port)){
 	
 	nombre = util.sqlSelect("tpv_comandas", "nombrecliente", "idtpv_comanda = " + cursor.valueBuffer("idtpv_comanda"));
 	cedula = util1.sqlSelect("tpv_comandas", "cifnif", "idtpv_comanda = " + cursor.valueBuffer("idtpv_comanda"));
@@ -2102,21 +2107,26 @@ function oficial_datosCliente():Boolean
 
 	if( fis.readStatus() == 5 || fis.readStatus() == 4 ){
 		
-		fis.sendCmd(cmd1);
+		fis.sendCmd(status, error, cmd1);
 
 		if( fis.readStatus() == 5 || fis.readStatus() == 4 ){
-			fis.sendCmd(cmd2);
+			fis.sendCmd(status, error, cmd2);
 		}
 
 		if( fis.readStatus() == 5 || fis.readStatus() == 4 ){
-			fis.sendCmd(cmd3);
+			fis.sendCmd(status, error, cmd3);
 		}
 		fis.closedPort();
 		
 		return true;	
+
 	}else {
 		fis.closedPort();
+
 		return false;
+	}
+	}else{
+		MessageBox.information(util.translate("datosCliente", "Error abriendo puerto" ),MessageBox.Ok,MessageBox.NoButton)
 	}
 }
 
